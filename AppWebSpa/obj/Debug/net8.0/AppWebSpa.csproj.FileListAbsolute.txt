@@ -757,3 +757,5 @@ C:\Users\SAUL PEREZ\Desktop\NATHIVA SPA\NathivaSpa\AppWebSpa\obj\Debug\net8.0\sc
 C:\Users\SAUL PEREZ\Desktop\NATHIVA SPA\NathivaSpa\AppWebSpa\obj\Debug\net8.0\AppWebSpa.csproj.Up2Date
 C:\Users\SAUL PEREZ\Desktop\NATHIVA SPA\NathivaSpa\AppWebSpa\obj\Debug\net8.0\AppWebSpa.genruntimeconfig.cache
 C:\Users\SAUL PEREZ\Desktop\NATHIVA SPA\NathivaSpa\AppWebSpa\obj\Debug\net8.0\ref\AppWebSpa.dll
+C:\Users\SAUL PEREZ\Desktop\NATHIVA SPA\NathivaSpa\AppWebSpa\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\SAUL PEREZ\Desktop\NATHIVA SPA\NathivaSpa\AppWebSpa\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
