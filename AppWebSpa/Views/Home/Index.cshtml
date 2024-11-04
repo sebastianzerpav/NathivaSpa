@@ -1,0 +1,132 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi página web</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        /*  body {
+                    font-family: Arial, sans-serif;
+                    margin: 0;
+                    padding: 0;
+                    background-color: #f4f4f4;
+                    height: 100vh;
+                    overflow: hidden;
+                    overflow-y: scroll;
+                } */
+
+        header {
+            background-color: #d1e18a;
+            color: black;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+
+        main {
+            padding: 0px 0px 20px 0px;
+            background-color: #fff;
+            height: calc(85vh - 200px);
+            margin-bottom: 30px;
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+            width: 200px;
+            height: 150px;
+            border-radius: 10px;
+            margin: 20px;
+        }
+
+            .card:hover {
+                box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+            }
+
+            .card img {
+                border-radius: 10px 10px 0 0;
+                width: 100%;
+                height: auto;
+            }
+
+        .container {
+            padding: 10px;
+            height: calc(100% - 20px);
+        }
+
+
+
+        footer {
+            background-color: #d1e18a;
+            color: black;
+            text-align: center;
+            padding: 10px 10px 10px 100px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Nathiva Spa</h1>
+    </header>
+
+    <main>
+
+        <div class="card-container">
+            <div class="card">
+                <a href="/Users/Index"> 
+                    <img src="images/Usuarios.png" alt="ImgUsuarios">
+                    </a>
+                <div class="container" style="text-align: center;">
+                    <h4><b>Usuarios</b></h4>
+                    <p>Registrate</p>
+                </div>
+            </div>
+            <div class="card">
+                <a href="/SpaServices/Index">
+                    <img src="images/Servicios.png" alt="ImgServicios">
+                </a>
+                <div class="container" style="text-align: center;">
+                    <h4><b>Servicios</b></h4>
+                    <p>Conoce nuestros servicios</p>
+                </div>
+            </div>
+        </div>
+
+
+
+    </main>
+
+    <footer>
+        <p>Siguenos en nuestras redes</p>
+    </footer>
+
+</body>
+
+</html>

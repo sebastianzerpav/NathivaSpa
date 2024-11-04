@@ -1,0 +1,158 @@
+﻿@model AppWebSpa.Models.SpaService
+
+@{
+    ViewData["Title"] = "Detalles del Servicio de Spa";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background: linear-gradient(135deg, #d1e18a, #eaf3c7); /* Degradado de fondo */
+            color: #333;
+            margin: 0;
+            font-family: 'Helvetica Neue', sans-serif; /* Fuente moderna */
+            padding: 20px; /* Espaciado alrededor */
+        }
+
+        .container-all {
+            margin-top: 4rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container-general {
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra más pronunciada */
+            width: 100%; /* Cambiado a 100% para más flexibilidad */
+            max-width: 600px; /* Ancho máximo para mantener el diseño */
+            padding: 1.5rem; /* Aumentado el padding */
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9); /* Fondo blanco semi-transparente */
+        }
+
+        .container-title {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+            .container-title h3 {
+                font-size: 1.75rem;
+                font-weight: 700; /* Negrita */
+            }
+
+        .details-card {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.5rem;
+        }
+
+        .detail-item {
+            background-color: #f9f9f9;
+            padding: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+            .detail-item .label {
+                font-weight: bold;
+                color: #555;
+            }
+
+            .detail-item .value {
+                color: #333;
+                font-size: 1rem;
+            }
+
+        .container-button {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #b0c876, #d1e18a);
+            color: #333;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 24px; /* Padding aumentado */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            transition: background 0.3s, transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+            text-decoration: none; /* Sin subrayado */
+            font-weight: bold; /* Texto en negrita */
+            cursor: pointer; /* Cambiar cursor a pointer */
+        }
+
+            .btn-primary:hover {
+                background: linear-gradient(135deg, #a0b76e, #c0d478);
+                transform: scale(1.05);
+                box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Sombra más intensa al pasar el ratón */
+            }
+
+        .link-view-users {
+            text-align: center;
+            margin-top: 1rem;
+            display: block; /* Asegura que esté centrado */
+            color: #fff; /* Color del texto */
+            text-decoration: none; /* Sin subrayado */
+            font-weight: bold; /* Texto en negrita */
+            background: linear-gradient(135deg, #2196F3, #1E88E5); /* Degradado azul */
+            padding: 12px 24px; /* Padding aumentado */
+            border-radius: 5px; /* Bordes redondeados */
+            transition: background 0.3s, transform 0.3s ease, box-shadow 0.3s ease; /* Transiciones suaves */
+        }
+
+            .link-view-users:hover {
+                background: linear-gradient(135deg, #1976D2, #1565C0); /* Color al pasar el ratón */
+                transform: scale(1.05); /* Efecto de aumento al pasar el ratón */
+                text-decoration: none; /* Mantener sin subrayado */
+            }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container-all">
+        <div class="container-general">
+            <div class="container-title">
+                <h3>Detalles del servicio</h3>
+            </div>
+
+            <div class="details-card">
+                <div class="detail-item">
+                    <span class="label">Nombre</span>
+                    <span class="value">@Html.DisplayFor(model => model.Name)</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Descripción</span>
+                    <span class="value">@Html.DisplayFor(model => model.Description)</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Precio</span>
+                    <span class="value">@Html.DisplayFor(model => model.Price)</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Fecha de registro</span>
+                    <span class="value">@Html.DisplayFor(model => model.RegistrationDateTime)</span>
+                </div>
+            </div>
+
+            <div style="text-align:center; margin-top:1rem; gap:1rem">
+                <a asp-action="Edit" asp-route-id="@Model?.IdSpaService" class="btn btn-primary" style="width: 100%;">Editar</a>
+                <a asp-action="Index" class="link-view-users" style="width: 100%;">Ver todos los servicios</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
