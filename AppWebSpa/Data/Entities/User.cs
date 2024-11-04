@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AppWebSpa.Models
+namespace AppWebSpa.Data.Entities
 {
     public class User
     {

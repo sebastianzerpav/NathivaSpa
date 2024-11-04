@@ -1,5 +1,5 @@
 ﻿using AppWebSpa.Data;
-using AppWebSpa.Models;
+using AppWebSpa.Data.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,9 +7,9 @@ namespace AppWebSpa.Controllers
 {
     public class UsersController : Controller
     {
-        private readonly AppDbContext _context;
+        private readonly DataContext _context;
 
-        public UsersController(AppDbContext context)
+        public UsersController(DataContext context)
         {
             _context = context;
         }

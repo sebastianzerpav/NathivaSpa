@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AppWebSpa.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(DataContext))]
     [Migration("20241007171756_spadb")]
     partial class spadb
     {

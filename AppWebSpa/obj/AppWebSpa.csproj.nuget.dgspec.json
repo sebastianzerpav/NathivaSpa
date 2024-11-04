@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\VisualProjects\\AppWebSpa\\AppWebSpa\\AppWebSpa.csproj": {}
+    "C:\\Users\\SAUL PEREZ\\Desktop\\NATHIVA SPA\\NathivaSpa\\AppWebSpa\\AppWebSpa.csproj": {}
   },
   "projects": {
-    "D:\\VisualProjects\\AppWebSpa\\AppWebSpa\\AppWebSpa.csproj": {
+    "C:\\Users\\SAUL PEREZ\\Desktop\\NATHIVA SPA\\NathivaSpa\\AppWebSpa\\AppWebSpa.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\VisualProjects\\AppWebSpa\\AppWebSpa\\AppWebSpa.csproj",
+        "projectUniqueName": "C:\\Users\\SAUL PEREZ\\Desktop\\NATHIVA SPA\\NathivaSpa\\AppWebSpa\\AppWebSpa.csproj",
         "projectName": "AppWebSpa",
-        "projectPath": "D:\\VisualProjects\\AppWebSpa\\AppWebSpa\\AppWebSpa.csproj",
-        "packagesPath": "C:\\Users\\sebas\\.nuget\\packages\\",
-        "outputPath": "D:\\VisualProjects\\AppWebSpa\\AppWebSpa\\obj\\",
+        "projectPath": "C:\\Users\\SAUL PEREZ\\Desktop\\NATHIVA SPA\\NathivaSpa\\AppWebSpa\\AppWebSpa.csproj",
+        "packagesPath": "C:\\Users\\SAUL PEREZ\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\SAUL PEREZ\\Desktop\\NATHIVA SPA\\NathivaSpa\\AppWebSpa\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\sebas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\SAUL PEREZ\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -80,7 +80,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

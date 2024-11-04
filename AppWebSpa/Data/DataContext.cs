@@ -1,14 +1,15 @@
-﻿using AppWebSpa.Models;
+﻿using AppWebSpa.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace AppWebSpa.Data
 {
-    public class AppDbContext : DbContext
+    public class DataContext : DbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
         }
-        public DbSet<AppWebSpa.Models.User> User { get; set; } = default!;
+        
+        public DbSet<User> User { get; set; } = default!;
 
         //SpaService
         public DbSet<SpaService> spaService { get; set; }
