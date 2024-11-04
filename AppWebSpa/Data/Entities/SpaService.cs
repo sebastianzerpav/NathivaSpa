@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AppWebSpa.Models
+namespace AppWebSpa.Data.Entities
 {
     public class SpaService
     {
@@ -8,12 +8,15 @@ namespace AppWebSpa.Models
         [Key]
         public int IdSpaService { get; set; }
 
+        [Display(Name = "Nombre del servicio")]
         [Required(ErrorMessage = "Debe ingresar un nombre para el servicio")]
         public string Name { get; set; }
 
+        [Display(Name = "Descripción del servicio")]
         [Required(ErrorMessage = "Debe ingresar una descripción del servicio")]
         public string Description { get; set; }
 
+        [Display(Name = "Precio del servicio")]
         [Required(ErrorMessage = "Debe ingresar el precio del servicio")]
         [Range(0, (double)decimal.MaxValue, ErrorMessage ="El precio debe ser mayor o igual que cero")]
         public decimal Price { get; set; }

@@ -2,15 +2,15 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AppWebSpa.Data;
-using AppWebSpa.Models;
+using AppWebSpa.Data.Entities;
 
 namespace AppWebSpa.Controllers
 {
     public class SpaServicesController : Controller
     {
-        private readonly AppDbContext _context;
+        private readonly DataContext _context;
 
-        public SpaServicesController(AppDbContext context)
+        public SpaServicesController(DataContext context)
         {
             _context = context;
         }

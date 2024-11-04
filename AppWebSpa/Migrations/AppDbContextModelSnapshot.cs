@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AppWebSpa.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(DataContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -22,7 +22,7 @@ namespace AppWebSpa.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("AppWebSpa.Models.SpaService", b =>
+            modelBuilder.Entity("AppWebSpa.Data.Entities.SpaService", b =>
                 {
                     b.Property<int>("IdSpaService")
                         .ValueGeneratedOnAdd()
@@ -49,7 +49,7 @@ namespace AppWebSpa.Migrations
                     b.ToTable("spaService");
                 });
 
-            modelBuilder.Entity("AppWebSpa.Models.User", b =>
+            modelBuilder.Entity("AppWebSpa.Data.Entities.User", b =>
                 {
                     b.Property<int>("IdUser")
                         .ValueGeneratedOnAdd()
