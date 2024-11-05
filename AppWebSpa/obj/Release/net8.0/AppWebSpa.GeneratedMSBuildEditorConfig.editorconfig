@@ -17,103 +17,103 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = AppWebSpa
 build_property.RootNamespace = AppWebSpa
-build_property.ProjectDir = C:\Users\SAUL PEREZ\Desktop\NATHIVA SPA\NathivaSpa\AppWebSpa\
+build_property.ProjectDir = C:\Users\lidergestionhumana.COOPROSEGUROS\OneDrive - PROVISION\Escritorio\Personal\01 Programacion de Software\NathivaSpa\AppWebSpa\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\SAUL PEREZ\Desktop\NATHIVA SPA\NathivaSpa\AppWebSpa
+build_property.MSBuildProjectDirectory = C:\Users\lidergestionhumana.COOPROSEGUROS\OneDrive - PROVISION\Escritorio\Personal\01 Programacion de Software\NathivaSpa\AppWebSpa
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/SAUL PEREZ/Desktop/NATHIVA SPA/NathivaSpa/AppWebSpa/Views/Home/Index.cshtml]
+[C:/Users/lidergestionhumana.COOPROSEGUROS/OneDrive - PROVISION/Escritorio/Personal/01 Programacion de Software/NathivaSpa/AppWebSpa/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/SAUL PEREZ/Desktop/NATHIVA SPA/NathivaSpa/AppWebSpa/Views/Home/Privacy.cshtml]
+[C:/Users/lidergestionhumana.COOPROSEGUROS/OneDrive - PROVISION/Escritorio/Personal/01 Programacion de Software/NathivaSpa/AppWebSpa/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/SAUL PEREZ/Desktop/NATHIVA SPA/NathivaSpa/AppWebSpa/Views/Shared/Error.cshtml]
+[C:/Users/lidergestionhumana.COOPROSEGUROS/OneDrive - PROVISION/Escritorio/Personal/01 Programacion de Software/NathivaSpa/AppWebSpa/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/SAUL PEREZ/Desktop/NATHIVA SPA/NathivaSpa/AppWebSpa/Views/Shared/_Footer.cshtml]
+[C:/Users/lidergestionhumana.COOPROSEGUROS/OneDrive - PROVISION/Escritorio/Personal/01 Programacion de Software/NathivaSpa/AppWebSpa/Views/Shared/_Footer.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Gb290ZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/SAUL PEREZ/Desktop/NATHIVA SPA/NathivaSpa/AppWebSpa/Views/Shared/_Header.cshtml]
+[C:/Users/lidergestionhumana.COOPROSEGUROS/OneDrive - PROVISION/Escritorio/Personal/01 Programacion de Software/NathivaSpa/AppWebSpa/Views/Shared/_Header.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9IZWFkZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/SAUL PEREZ/Desktop/NATHIVA SPA/NathivaSpa/AppWebSpa/Views/Shared/_MyLayout.cshtml]
+[C:/Users/lidergestionhumana.COOPROSEGUROS/OneDrive - PROVISION/Escritorio/Personal/01 Programacion de Software/NathivaSpa/AppWebSpa/Views/Shared/_MyLayout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9NeUxheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/SAUL PEREZ/Desktop/NATHIVA SPA/NathivaSpa/AppWebSpa/Views/Shared/_Scripts.cshtml]
+[C:/Users/lidergestionhumana.COOPROSEGUROS/OneDrive - PROVISION/Escritorio/Personal/01 Programacion de Software/NathivaSpa/AppWebSpa/Views/Shared/_Scripts.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9TY3JpcHRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/SAUL PEREZ/Desktop/NATHIVA SPA/NathivaSpa/AppWebSpa/Views/Shared/_Sidebar.cshtml]
+[C:/Users/lidergestionhumana.COOPROSEGUROS/OneDrive - PROVISION/Escritorio/Personal/01 Programacion de Software/NathivaSpa/AppWebSpa/Views/Shared/_Sidebar.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9TaWRlYmFyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/SAUL PEREZ/Desktop/NATHIVA SPA/NathivaSpa/AppWebSpa/Views/Shared/_Styles.cshtml]
+[C:/Users/lidergestionhumana.COOPROSEGUROS/OneDrive - PROVISION/Escritorio/Personal/01 Programacion de Software/NathivaSpa/AppWebSpa/Views/Shared/_Styles.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9TdHlsZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/SAUL PEREZ/Desktop/NATHIVA SPA/NathivaSpa/AppWebSpa/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/lidergestionhumana.COOPROSEGUROS/OneDrive - PROVISION/Escritorio/Personal/01 Programacion de Software/NathivaSpa/AppWebSpa/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/SAUL PEREZ/Desktop/NATHIVA SPA/NathivaSpa/AppWebSpa/Views/SpaServices/Create.cshtml]
+[C:/Users/lidergestionhumana.COOPROSEGUROS/OneDrive - PROVISION/Escritorio/Personal/01 Programacion de Software/NathivaSpa/AppWebSpa/Views/SpaServices/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3BhU2VydmljZXNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/SAUL PEREZ/Desktop/NATHIVA SPA/NathivaSpa/AppWebSpa/Views/SpaServices/Delete.cshtml]
+[C:/Users/lidergestionhumana.COOPROSEGUROS/OneDrive - PROVISION/Escritorio/Personal/01 Programacion de Software/NathivaSpa/AppWebSpa/Views/SpaServices/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3BhU2VydmljZXNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/SAUL PEREZ/Desktop/NATHIVA SPA/NathivaSpa/AppWebSpa/Views/SpaServices/Edit.cshtml]
+[C:/Users/lidergestionhumana.COOPROSEGUROS/OneDrive - PROVISION/Escritorio/Personal/01 Programacion de Software/NathivaSpa/AppWebSpa/Views/SpaServices/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3BhU2VydmljZXNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/SAUL PEREZ/Desktop/NATHIVA SPA/NathivaSpa/AppWebSpa/Views/SpaServices/Index.cshtml]
+[C:/Users/lidergestionhumana.COOPROSEGUROS/OneDrive - PROVISION/Escritorio/Personal/01 Programacion de Software/NathivaSpa/AppWebSpa/Views/SpaServices/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3BhU2VydmljZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/SAUL PEREZ/Desktop/NATHIVA SPA/NathivaSpa/AppWebSpa/Views/SpaServices/ServiceDetails.cshtml]
+[C:/Users/lidergestionhumana.COOPROSEGUROS/OneDrive - PROVISION/Escritorio/Personal/01 Programacion de Software/NathivaSpa/AppWebSpa/Views/SpaServices/ServiceDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3BhU2VydmljZXNcU2VydmljZURldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/SAUL PEREZ/Desktop/NATHIVA SPA/NathivaSpa/AppWebSpa/Views/Users/Create.cshtml]
+[C:/Users/lidergestionhumana.COOPROSEGUROS/OneDrive - PROVISION/Escritorio/Personal/01 Programacion de Software/NathivaSpa/AppWebSpa/Views/Users/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/SAUL PEREZ/Desktop/NATHIVA SPA/NathivaSpa/AppWebSpa/Views/Users/Delete.cshtml]
+[C:/Users/lidergestionhumana.COOPROSEGUROS/OneDrive - PROVISION/Escritorio/Personal/01 Programacion de Software/NathivaSpa/AppWebSpa/Views/Users/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/SAUL PEREZ/Desktop/NATHIVA SPA/NathivaSpa/AppWebSpa/Views/Users/Edit.cshtml]
+[C:/Users/lidergestionhumana.COOPROSEGUROS/OneDrive - PROVISION/Escritorio/Personal/01 Programacion de Software/NathivaSpa/AppWebSpa/Views/Users/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/SAUL PEREZ/Desktop/NATHIVA SPA/NathivaSpa/AppWebSpa/Views/Users/Index.cshtml]
+[C:/Users/lidergestionhumana.COOPROSEGUROS/OneDrive - PROVISION/Escritorio/Personal/01 Programacion de Software/NathivaSpa/AppWebSpa/Views/Users/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/SAUL PEREZ/Desktop/NATHIVA SPA/NathivaSpa/AppWebSpa/Views/Users/UserDetails.cshtml]
+[C:/Users/lidergestionhumana.COOPROSEGUROS/OneDrive - PROVISION/Escritorio/Personal/01 Programacion de Software/NathivaSpa/AppWebSpa/Views/Users/UserDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcVXNlckRldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/SAUL PEREZ/Desktop/NATHIVA SPA/NathivaSpa/AppWebSpa/Views/_ViewImports.cshtml]
+[C:/Users/lidergestionhumana.COOPROSEGUROS/OneDrive - PROVISION/Escritorio/Personal/01 Programacion de Software/NathivaSpa/AppWebSpa/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/SAUL PEREZ/Desktop/NATHIVA SPA/NathivaSpa/AppWebSpa/Views/_ViewStart.cshtml]
+[C:/Users/lidergestionhumana.COOPROSEGUROS/OneDrive - PROVISION/Escritorio/Personal/01 Programacion de Software/NathivaSpa/AppWebSpa/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/SAUL PEREZ/Desktop/NATHIVA SPA/NathivaSpa/AppWebSpa/Views/Shared/_Layout.cshtml]
+[C:/Users/lidergestionhumana.COOPROSEGUROS/OneDrive - PROVISION/Escritorio/Personal/01 Programacion de Software/NathivaSpa/AppWebSpa/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-fcxwum88vx
