@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\SAUL PEREZ\\Desktop\\NATHIVA SPA\\NathivaSpa\\AppWebSpa\\AppWebSpa.csproj": {}
+    "C:\\Users\\lidergestionhumana.COOPROSEGUROS\\OneDrive - PROVISION\\Escritorio\\Personal\\01 Programacion de Software\\NathivaSpa\\AppWebSpa\\AppWebSpa.csproj": {}
   },
   "projects": {
-    "C:\\Users\\SAUL PEREZ\\Desktop\\NATHIVA SPA\\NathivaSpa\\AppWebSpa\\AppWebSpa.csproj": {
+    "C:\\Users\\lidergestionhumana.COOPROSEGUROS\\OneDrive - PROVISION\\Escritorio\\Personal\\01 Programacion de Software\\NathivaSpa\\AppWebSpa\\AppWebSpa.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\SAUL PEREZ\\Desktop\\NATHIVA SPA\\NathivaSpa\\AppWebSpa\\AppWebSpa.csproj",
+        "projectUniqueName": "C:\\Users\\lidergestionhumana.COOPROSEGUROS\\OneDrive - PROVISION\\Escritorio\\Personal\\01 Programacion de Software\\NathivaSpa\\AppWebSpa\\AppWebSpa.csproj",
         "projectName": "AppWebSpa",
-        "projectPath": "C:\\Users\\SAUL PEREZ\\Desktop\\NATHIVA SPA\\NathivaSpa\\AppWebSpa\\AppWebSpa.csproj",
-        "packagesPath": "C:\\Users\\SAUL PEREZ\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\SAUL PEREZ\\Desktop\\NATHIVA SPA\\NathivaSpa\\AppWebSpa\\obj\\",
+        "projectPath": "C:\\Users\\lidergestionhumana.COOPROSEGUROS\\OneDrive - PROVISION\\Escritorio\\Personal\\01 Programacion de Software\\NathivaSpa\\AppWebSpa\\AppWebSpa.csproj",
+        "packagesPath": "C:\\Users\\lidergestionhumana.COOPROSEGUROS\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\lidergestionhumana.COOPROSEGUROS\\OneDrive - PROVISION\\Escritorio\\Personal\\01 Programacion de Software\\NathivaSpa\\AppWebSpa\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\SAUL PEREZ\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\lidergestionhumana.COOPROSEGUROS\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

@@ -1,4 +1,5 @@
 ﻿using AppWebSpa.Data;
+using AppWebSpa.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace AppWebSpa
@@ -13,8 +14,17 @@ namespace AppWebSpa
 
             }
             );
+
+            //services
+            AddServices(builder);
             
             return builder;
         }
+
+        public static void AddServices(WebApplicationBuilder builder)
+        {
+            builder.Services.AddScoped<ISpaServicesService, SpaServicesService>();
+        }
+
     }
 }

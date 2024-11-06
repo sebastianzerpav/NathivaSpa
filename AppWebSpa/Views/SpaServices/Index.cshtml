@@ -5,144 +5,158 @@
     ViewData["Title"] = "Servicios";
 }
 
-<style>
-    body {
-        background: linear-gradient(135deg, #d1e18a, #eaf3c7);
-        font-family: 'Helvetica Neue', sans-serif;
-        margin: 0;
-        padding: 20px; /* Añadido padding para más espacio */
-    }
+<div class="pagetitle">
+    <h1>Servicios</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Inicio</a></li>
+            <li class="breadcrumb-item active">Servicios</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
 
-    h3 {
-        color: #333;
-        font-weight: 700;
-        text-align: center;
-        margin: 0 0 20px; /* Separación con margen inferior */
-    }
+<section class="section dashboard">
 
-    .btn-create {
-        background: linear-gradient(135deg, #b0c876, #d1e18a);
-        color: #333;
-        font-size: 16px;
-        border: none;
-        border-radius: 5px;
-        padding: 12px 24px; /* Aumentado el padding */
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-        transition: background 0.3s, transform 0.3s ease, box-shadow 0.3s ease; /* Añadido box-shadow en la transición */
-        display: block; /* Asegurarse de que ocupe toda la línea */
-        margin: 0 auto 20px; /* Centrar el botón y dar margen inferior */
-        text-align: center;
-        text-decoration: none; /* Sin subrayado */
-        font-weight: bold; /* Texto en negrita */
-    }
-
-        .btn-create:hover {
-            background: linear-gradient(135deg, #a0b76e, #c0d478);
-            transform: scale(1.05);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Sombra más intensa al pasar el ratón */
+    <style>
+        body {
+            background: linear-gradient(135deg, #d1e18a, #eaf3c7);
+            font-family: 'Helvetica Neue', sans-serif;
+            margin: 0;
+            padding: 20px; /* Añadido padding para más espacio */
         }
 
-    table {
-        width: 100%;
-        background: rgba(255, 255, 255, 0.9);
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        margin: 20px 0;
-    }
+        h3 {
+            color: #333;
+            font-weight: 700;
+            text-align: center;
+            margin: 0 0 20px; /* Separación con margen inferior */
+        }
 
-    th, td {
-        background: rgba(255, 255, 255, 0.7);
-        color: #333;
-        padding: 12px 15px; /* Espaciado más uniforme */
-        text-align: center;
-    }
-
-    th {
-        background: #d1e18a;
-        color: #333;
-        font-size: 14px;
-        /*  text-transform: uppercase; */
-        letter-spacing: 0.5px;
-    }
-
-    tr:hover {
-        background: #eaf3c7;
-        cursor: pointer;
-    }
-
-    .actions a {
-        background: linear-gradient(135deg, #d1e18a, #a0b76e);
-        color: #fff;
-        padding: 10px 15px; /* Ajuste del padding */
-        border-radius: 5px;
-        transition: background 0.3s, transform 0.3s ease, box-shadow 0.3s ease; /* Añadido box-shadow en la transición */
-        margin: 0 5px; /* Espaciado entre botones */
-        text-decoration: none; /* Sin subrayado */
-        font-weight: 600; /* Texto en negrita */
-        display: inline-block; /* Mantener el tamaño del botón */
-    }
-
-        .actions a:hover {
+        .btn-create {
             background: linear-gradient(135deg, #b0c876, #d1e18a);
-            transform: scale(1.1);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Sombra más intensa al pasar el ratón */
+            color: #333;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 24px; /* Aumentado el padding */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            transition: background 0.3s, transform 0.3s ease, box-shadow 0.3s ease; /* Añadido box-shadow en la transición */
+            display: block; /* Asegurarse de que ocupe toda la línea */
+            margin: 0 auto 20px; /* Centrar el botón y dar margen inferior */
+            text-align: center;
+            text-decoration: none; /* Sin subrayado */
+            font-weight: bold; /* Texto en negrita */
         }
 
-        .actions a.edit {
-            background: #2196F3;
+            .btn-create:hover {
+                background: linear-gradient(135deg, #a0b76e, #c0d478);
+                transform: scale(1.05);
+                box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Sombra más intensa al pasar el ratón */
+            }
+
+        table {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
         }
 
-        .actions a.details {
-            background: #FFC107;
+        th, td {
+            background: rgba(255, 255, 255, 0.7);
+            color: #333;
+            padding: 12px 15px; /* Espaciado más uniforme */
+            text-align: center;
         }
 
-        .actions a.delete {
-            background: #f44336;
+        th {
+            background: #d1e18a;
+            color: #333;
+            font-size: 14px;
+            /*  text-transform: uppercase; */
+            letter-spacing: 0.5px;
         }
 
-        .actions a.edit:hover {
-            background: #1976D2;
+        tr:hover {
+            background: #eaf3c7;
+            cursor: pointer;
         }
 
-        .actions a.details:hover {
-            background: #FFA000;
+        .actions a {
+            background: linear-gradient(135deg, #d1e18a, #a0b76e);
+            color: #fff;
+            padding: 10px 15px; /* Ajuste del padding */
+            border-radius: 5px;
+            transition: background 0.3s, transform 0.3s ease, box-shadow 0.3s ease; /* Añadido box-shadow en la transición */
+            margin: 0 5px; /* Espaciado entre botones */
+            text-decoration: none; /* Sin subrayado */
+            font-weight: 600; /* Texto en negrita */
+            display: inline-block; /* Mantener el tamaño del botón */
         }
 
-        .actions a.delete:hover {
-            background: #d32f2f;
-        }
-</style>
+            .actions a:hover {
+                background: linear-gradient(135deg, #b0c876, #d1e18a);
+                transform: scale(1.1);
+                box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Sombra más intensa al pasar el ratón */
+            }
 
-<div class="container-title">
-    <h3>Listado de servicios registrados</h3>
-    <a href="@Url.Action("Create")" class="btn-create">Crear nuevo servicio</a>
-</div>
+            .actions a.edit {
+                background: #2196F3;
+            }
 
-<table>
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Precio</th>
-            <th>Fecha de registro</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (SpaService spaService in Model)
-        {
+            .actions a.details {
+                background: #FFC107;
+            }
+
+            .actions a.delete {
+                background: #f44336;
+            }
+
+            .actions a.edit:hover {
+                background: #1976D2;
+            }
+
+            .actions a.details:hover {
+                background: #FFA000;
+            }
+
+            .actions a.delete:hover {
+                background: #d32f2f;
+            }
+    </style>
+
+    <div class="container-title">
+        <h3>Listado de servicios registrados</h3>
+        <a href="@Url.Action("Create")" class="btn-create">Crear nuevo servicio</a>
+    </div>
+
+    <table>
+        <thead>
             <tr>
-                <td>@spaService.Name</td>
-                <td>@spaService.Description</td>
-                <td>@spaService.Price</td>
-                <td>@spaService.RegistrationDateTime</td>
-                <td class="actions">
-                    <a href="@Url.Action("Edit", new { id = spaService.IdSpaService })" class="edit">Editar</a>
-                    <a href="@Url.Action("ServiceDetails", new { id = spaService.IdSpaService })" class="details">Detalle</a>
-                    <a href="@Url.Action("Delete", new { id = spaService.IdSpaService })" class="delete">Eliminar</a>
-                </td>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Fecha de registro</th>
+                <th>Acciones</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (SpaService spaService in Model)
+            {
+                <tr>
+                    <td>@spaService.Name</td>
+                    <td>@spaService.Description</td>
+                    <td>@spaService.Price</td>
+                    <td>@spaService.RegistrationDateTime</td>
+                    <td class="actions">
+                        <a asp-action="ServiceDetails" asp-route-id="@spaService.IdSpaService" class="btn btn-sm btn-primary"><i class="b bi-search"></i></a>
+                        <a asp-action="Edit" asp-route-id="@spaService.IdSpaService" class="btn btn-sm btn-warning"><i class="b bi-pencil"></i></a>
+                        <a asp-action="Delete" asp-route-id="@spaService.IdSpaService" class="btn btn-sm btn-danger"><i class="b bi-trash"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</section>
