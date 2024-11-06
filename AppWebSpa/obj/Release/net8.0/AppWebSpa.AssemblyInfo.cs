@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AppWebSpa")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b939f14c7fe888b8e5aeba905153f73e4a3318d0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6a5a558fe4bc63605537b4158be993e98ee0980c")]
 [assembly: System.Reflection.AssemblyProductAttribute("AppWebSpa")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AppWebSpa")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
