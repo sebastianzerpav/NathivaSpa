@@ -1,5 +1,7 @@
 ﻿using AppWebSpa.Data;
 using AppWebSpa.Services;
+using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace AppWebSpa
@@ -17,7 +19,16 @@ namespace AppWebSpa
 
             //services
             AddServices(builder);
-            
+
+            //Toast Notification
+            builder.Services.AddNotyf(config => 
+            { 
+                config.DurationInSeconds = 10; 
+                config.IsDismissable = true; 
+                config.Position = NotyfPosition.BottomRight; 
+            });
+
+
             return builder;
         }
 
@@ -26,5 +37,11 @@ namespace AppWebSpa
             builder.Services.AddScoped<ISpaServicesService, SpaServicesService>();
         }
 
+        public static WebApplication AddCustomWebAppConfiguration(this WebApplication app)
+        {
+            app.UseNotyf();
+            return app;
+
+        }
     }
 }

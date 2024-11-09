@@ -1,4 +1,4 @@
-﻿@model AppWebSpa.Data.Entities.SpaService
+﻿@model SpaService
 
 @{
     ViewData["Title"] = "Edit";
@@ -6,7 +6,7 @@
 
 <style>
     body {
-        background: linear-gradient(135deg, #d1e18a, #eaf3c7); /* Degradado de fondo */
+        /* background: linear-gradient(135deg, #d1e18a, #eaf3c7); /* Degradado de fondo * *//
         color: #333;
         margin: 0;
         font-family: 'Helvetica Neue', sans-serif; /* Fuente moderna */
@@ -116,15 +116,28 @@
         }
 </style>
 
-<div class="container-all">
-    <div class="container-general">
-        <div class="container-title">
-            <h3>Editar servicio</h3>
-        </div>
-        <div class="container-form">
-            <form asp-action="Edit">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="pagetitle">
+    <h1>Servicios</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Inicio</a></li>
+            <li class="breadcrumb-item"><a asp-controller="SpaServices" asp-action="Index">Servicios</a></li>
+            <li class="breadcrumb-item active">Editar Servicio</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<section class="spaService dashboard">
+
+    <div class="card">
+        <div class="card-body">
+            
+            <h3 class="card-title" text-primary>Editar servicio</h3>
+                      
+            <form  class="row g-3" asp-action="Edit" method="POST">
+                
                 <input type="hidden" asp-for="IdSpaService" />
+               
                 <div class="form-group">
                     <label asp-for="Name" class="control-label">Nombre del servicio</label>
                     <input asp-for="Name" class="form-control" />
@@ -146,15 +159,16 @@
                     <span asp-validation-for="RegistrationDateTime" class="text-danger"></span>
                 </div> *@
                 <div class="container-button">
-                    <input type="submit" value="Guardar cambios" class="btn btn-primary" />
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <a asp-action="Index" class="btn btn-secondary">Volver</a>
                 </div>
             </form>
-        </div>
-        <div style="text-align:center; margin-top:1rem;">
-            <a asp-action="Index" class="link-view-users">Ver todos los servicios</a>
+            
+                  
+        
         </div>
     </div>
-</div>
+</section>
 
 @section Scripts {
     @{

@@ -5,16 +5,22 @@ using AppWebSpa.Data;
 using AppWebSpa.Data.Entities;
 using AppWebSpa.Services;
 using AppWebSpa.Core;
+using AppWebSpa.Helpers;
+using AspNetCoreHero.ToastNotification.Abstractions;
+
+
 
 namespace AppWebSpa.Controllers
 {
     public class SpaServicesController : Controller
     {
         private readonly ISpaServicesService _spaServicesService;
+        public readonly INotyfService _notifyService;
 
-        public SpaServicesController(ISpaServicesService spaServicesService)
+        public SpaServicesController(ISpaServicesService spaServicesService, INotyfService notifyService)
         {
             _spaServicesService = spaServicesService;
+            _notifyService = notifyService;
         }
 
         [HttpGet]
@@ -24,121 +30,103 @@ namespace AppWebSpa.Controllers
             return View(response.Result);
         }
 
-        // View specific Service detail
-        //[HttpGet]
-        //public async Task<IActionResult> ServiceDetails(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // View Create
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
 
-        //    SpaService? spaService = await _context.spaService.FirstOrDefaultAsync(s => s.IdSpaService == id);
-        //    if (spaService == null)
-        //    {
-        //        return NotFound();
-        //    }
+        //Method Create
+        [HttpPost]
+        public async Task<IActionResult> Create(SpaService spaService)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    _notifyService.Error("Debe ajustar los errores de validacion");
+                    return View(spaService);
+                } 
 
-        //    return View(spaService);
-        //}
+                Response<SpaService> response = await _spaServicesService.CreateAsync(spaService);
+                
+                if(response.IsSuccess)
+                {
+                    _notifyService.Success(response.Message);
+                    return RedirectToAction(nameof(Index));
+                }
 
-        //// View Create
-        //[HttpGet]
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
+                _notifyService.Error(response.Message);
+                return View(response);
+            }
+            catch (Exception ex)
+            {
+                return View(spaService);
+            }
+        }
 
-        ////Method Create
-        //[HttpPost]
-        //public async Task<IActionResult> Create(SpaService spaService)
-        //{
-        //    try
-        //    {
-        //        if (!ModelState.IsValid)
-        //        {
-        //            return View(spaService);
-        //        }
-        //        await _context.spaService.AddAsync(spaService);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
+        // View Edit
+        [HttpGet]
+        public async Task<IActionResult> Edit([FromRoute] int id)
+        {
+            Response<SpaService> response = await _spaServicesService.GetOneAsync(id);
+            
+            if (response.IsSuccess)
+            {
+                
+                return View(response.Result);
+            }
+            _notifyService.Error(response.Message);
+            return RedirectToAction(nameof(Index));
+        }
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //}
+        //Method Edit
+        [HttpPost]
+        public async Task<IActionResult> Edit(SpaService spaService)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    _notifyService.Error("Debe ajustar los errores de validacion");
+                    return View(spaService);
+                }
 
-        //// View Edit
-        //[HttpGet]
-        //public async Task<IActionResult> Edit([FromRoute] int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+                Response<SpaService> response = await _spaServicesService.EditAsync(spaService);
+                
+                if (response.IsSuccess)
+                {
+                    _notifyService.Success(response.Message);
+                    return RedirectToAction(nameof(Index));
+                }
 
-        //    SpaService? spaService = await _context.spaService.FirstOrDefaultAsync(s => s.IdSpaService == id);
-        //    if (spaService == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(spaService);
-        //}
+                _notifyService.Error(response.Message);
+                return View(response);
+            }
+            catch (Exception ex)
+            {
+                _notifyService.Error(ex.Message);
+                return View(spaService);
+            }
+        }
 
-        ////Method Edit
-        //[HttpPost]
-        //public async Task<IActionResult> Edit(SpaService spaService)
-        //{
-        //    try
-        //    {
-        //        if (!ModelState.IsValid)
-        //        {
-        //            return View(spaService);
-        //        }
-        //        _context.spaService.Update(spaService);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
+        // Delete
+        [HttpPost]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            Response<SpaService> response = await _spaServicesService.DeleteAsync(id);
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //}
+            if (response.IsSuccess)
+            {
+                _notifyService.Success(response.Message);
+                return View(response.Result);
+            }
+            _notifyService.Error(response.Message);
+            return RedirectToAction(nameof(Index));
+        }
 
-        //// view Delete
-        //[HttpGet]
-        //public async Task<IActionResult> Delete([FromRoute]int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
 
-        //    SpaService? spaService = await _context.spaService.FirstOrDefaultAsync(s => s.IdSpaService == id);
-        //    if (spaService == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(spaService);
-        //}
-
-        //// Method Delete
-        //[HttpPost, ActionName("Delete")]
-        //public async Task<IActionResult> AcceptDelete(int id)
-        //{
-        //    SpaService? spaService = await _context.spaService.FirstOrDefaultAsync(s => s.IdSpaService == id);
-        //    if (spaService != null)
-        //    {
-        //        _context.spaService.Remove(spaService);
-        //    }
-
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
-
+    
     }
 }

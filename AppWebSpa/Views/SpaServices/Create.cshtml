@@ -1,8 +1,9 @@
-﻿@model AppWebSpa.Data.Entities.SpaService
+﻿@model SpaService
 
 @{
-    ViewData["Title"] = "Create SpaService";
+    ViewData["Title"] = "Nuevo Servicio";
 }
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -13,7 +14,7 @@
 
     <style>
         body {
-            background: linear-gradient(135deg, #d1e18a, #eaf3c7); /* Degradado de fondo */
+            /* background: linear-gradient(135deg, #d1e18a, #eaf3c7); */ /* Degradado de fondo */
             color: #333;
             margin: 0;
             font-family: 'Helvetica Neue', sans-serif; /* Fuente moderna */
@@ -125,6 +126,17 @@
     </style>
 
 </head>
+<div class="pagetitle">
+    <h1>Servicios</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Inicio</a></li>
+            <li class="breadcrumb-item"><a asp-controller="SpaServices" asp-action="Index">Servicios</a></li>
+            <li class="breadcrumb-item active">Nuevo Servicio</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
 
 <body>
 
@@ -134,29 +146,24 @@
                 <h3>Crear servicio</h3>
             </div>
             <div class="container-form">
-                <form asp-action="Create">
+                <form class ="row g-3" asp-action="Create" method="POST">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                    <div class="form-group">
-                        <label asp-for="Name" class="control-label">Nombre del servicio</label>
-                        <input asp-for="Name" class="form-control" />
+                    <div class="form-floating">
+                        <input asp-for="Name" class="form-control" id="floatingName" placeholder="@Html.DisplayFor(Model => Model.Name)">
+                        <label asp-for="Name"></label>
                         <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="Description" class="control-label">Descripción</label>
-                        <input asp-for="Description" class="form-control" />
+                    <div class="form-floating">
+                        <input asp-for="Description" class="form-control" id="floatingName" placeholder="@Html.DisplayFor(Model => Model.Description)">
+                        <label asp-for="Description"></label>
                         <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="Price" class="control-label">Precio</label>
-                        <input asp-for="Price" class="form-control" />
+                    <div class="form-floating">
+                        <input asp-for="Price" class="form-control" id="floatingName" placeholder="@Html.DisplayFor(Model => Model.Price)">
+                        <label asp-for="Price"></label>
                         <span asp-validation-for="Price" class="text-danger"></span>
                     </div>
-                    @* <div class="form-group">
-                        <label asp-for="RegistrationDateTime" class="control-label">Fecha de Registro</label>
-                        <input asp-for="RegistrationDateTime" class="form-control" />
-                        <span asp-validation-for="RegistrationDateTime" class="text-danger"></span>
-                    </div> *@
                     <div class="container-button">
                         <input type="submit" value="Crear" class="btn btn-primary" />
                     </div>
