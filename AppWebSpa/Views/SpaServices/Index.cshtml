@@ -150,6 +150,34 @@
                     <td>@spaService.Price</td>
                     <td>@spaService.RegistrationDateTime</td>
                     <td class="actions">
+                        @if (spaService.IsHidden)
+                        {
+                            <form asp-action="Toggle" method="POST" style="display: contents;">
+                                <input type="hidden" name="SpaServiceId" value="@spaService.IdSpaService" />
+                                <input type="hidden" name="Hide" value="false" />
+
+                                <div class="tooltip-container">
+                                    <button class="btn btn-secondary btn-sm showService">
+                                        <i class="bi bi-eye-fill" style="color:#F8F9FC cursor: pointer;"></i>
+                                    </button>
+                                    <span class="tooltip-text">Mostrar Servicio</span>
+                                </div>
+                            </form>
+                        }
+                        else
+                        {
+                            <form asp-action="Toggle" method="POST" style="display: contents;">
+                                <input type="hidden" name="SpaServiceId" value="@spaService.IdSpaService" />
+                                <input type="hidden" name="Hide" value="true" />
+
+                                <div class="tooltip-container">
+                                    <button class="btn btn-info btn-sm showService">
+                                        <i class="bi bi-eye-slash-fill" style="color:#F8F9FC cursor: pointer;"></i>
+                                    </button>
+                                    <span class="tooltip-text">Ocultar Servicio</span>
+                                </div>
+                            </form>
+                        }
                         <a asp-action="Edit" asp-route-id="@spaService.IdSpaService" class="btn btn-sm btn-warning"><i class="b bi-pencil"></i></a>
                         <form asp-action="Delete" asp-route-id="@spaService.IdSpaService" style="display: contents;">
                             <button class="btn btn-danger btn-sm btnDelete"><i class="bi bi-trash-fill"></i></button>

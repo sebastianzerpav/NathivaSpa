@@ -24,6 +24,10 @@ namespace AppWebSpa.Data.Entities
         //RegistrationDateTime
         public DateTime RegistrationDateTime { get; set; }
 
+        [Display(Name = "¿Esta OCulta?")]
+        public bool IsHidden { get; set; }
+
+
         public SpaService() { 
             RegistrationDateTime = DateTime.Now;
         }

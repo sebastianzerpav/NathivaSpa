@@ -7,6 +7,8 @@ using AppWebSpa.Services;
 using AppWebSpa.Core;
 using AppWebSpa.Helpers;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using static System.Collections.Specialized.BitVector32;
+using AppWebSpa.Request;
 
 
 
@@ -131,7 +133,31 @@ namespace AppWebSpa.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Toggle(int SpaServiceId, bool Hide)
+        {
+            ToggleSpaServiceStatusRequest request = new ToggleSpaServiceStatusRequest
+            {
+                Hide = Hide,
+                SpaServiceId = SpaServiceId
+            };
 
-    
+            Response<SpaService> response = await _spaServicesService.ToggleAsync(request);
+
+            if (response.IsSuccess)
+            {
+                _notifyService.Success(response.Message);
+
+            }
+            else
+            {
+                _notifyService.Error(response.Message);
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
+
     }
 }
