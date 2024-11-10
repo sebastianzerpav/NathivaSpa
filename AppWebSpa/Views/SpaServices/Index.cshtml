@@ -150,7 +150,6 @@
                     <td>@spaService.Price</td>
                     <td>@spaService.RegistrationDateTime</td>
                     <td class="actions">
-                        <a asp-action="ServiceDetails" asp-route-id="@spaService.IdSpaService" class="btn btn-sm btn-primary"><i class="b bi-search"></i></a>
                         <a asp-action="Edit" asp-route-id="@spaService.IdSpaService" class="btn btn-sm btn-warning"><i class="b bi-pencil"></i></a>
                         <form asp-action="Delete" asp-route-id="@spaService.IdSpaService" style="display: contents;">
                             <button class="btn btn-danger btn-sm btnDelete"><i class="bi bi-trash-fill"></i></button>

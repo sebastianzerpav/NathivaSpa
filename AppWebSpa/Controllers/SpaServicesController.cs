@@ -120,9 +120,14 @@ namespace AppWebSpa.Controllers
             if (response.IsSuccess)
             {
                 _notifyService.Success(response.Message);
-                return View(response.Result);
+                
             }
-            _notifyService.Error(response.Message);
+            else
+            {
+                _notifyService.Error(response.Message);
+
+            }
+            
             return RedirectToAction(nameof(Index));
         }
 

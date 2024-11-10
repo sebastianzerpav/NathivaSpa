@@ -3,6 +3,8 @@ using AppWebSpa.Data;
 using AppWebSpa.Data.Entities;
 using AppWebSpa.Helpers;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace AppWebSpa.Services
 {
