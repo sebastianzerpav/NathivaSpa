@@ -35,6 +35,8 @@ namespace AppWebSpa.Controllers
         {
             Response<List<SpaService>> response = await _spaServicesService.GetListAsync();
             return View(response.Result);
+            //return View(response.Result ?? new List<SpaService>());
+
         }
 
         // View Create

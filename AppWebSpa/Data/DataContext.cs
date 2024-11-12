@@ -1,9 +1,11 @@
 ﻿using AppWebSpa.Data.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace AppWebSpa.Data
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<User>
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
@@ -17,9 +19,21 @@ namespace AppWebSpa.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<SpaService>().Property(
-                s => s.Price).HasColumnType("decimal(38,2)");
+            // PK
+            modelBuilder.Entity<IdentityUserLogin<string>>()
+                .HasKey(x => new { x.LoginProvider, x.ProviderKey });
+
+            modelBuilder.Entity<IdentityUserRole<string>>()
+                .HasKey(x => new { x.UserId, x.RoleId });
+
+            modelBuilder.Entity<IdentityUserToken<string>>()
+                .HasKey(x => new { x.UserId, x.LoginProvider, x.Name });
+
+            // SpaServices
+            modelBuilder.Entity<SpaService>().Property(s => s.Price)
+                .HasColumnType("decimal(38,2)");
         }
+
 
     }
 }
