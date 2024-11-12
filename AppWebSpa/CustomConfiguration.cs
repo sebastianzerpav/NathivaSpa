@@ -1,4 +1,5 @@
 ﻿using AppWebSpa.Data;
+using AppWebSpa.Helpers;
 using AppWebSpa.Services;
 using AspNetCoreHero.ToastNotification;
 using AspNetCoreHero.ToastNotification.Extensions;
@@ -34,7 +35,13 @@ namespace AppWebSpa
 
         public static void AddServices(WebApplicationBuilder builder)
         {
+            //Services
             builder.Services.AddScoped<ISpaServicesService, SpaServicesService>();
+            builder.Services.AddScoped<ICategoriesService, CategoriesService>();
+
+            //Helpers
+            builder.Services.AddScoped<IConverterHelper, ConverterHelper>();
+            builder.Services.AddScoped<ICombosHelper, CombosHelper>();
         }
 
         public static WebApplication AddCustomWebAppConfiguration(this WebApplication app)

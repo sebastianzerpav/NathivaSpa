@@ -9,6 +9,7 @@ using AppWebSpa.Helpers;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using static System.Collections.Specialized.BitVector32;
 using AppWebSpa.Request;
+using AppWebSpa.DTOs;
 
 
 
@@ -18,11 +19,13 @@ namespace AppWebSpa.Controllers
     {
         private readonly ISpaServicesService _spaServicesService;
         public readonly INotyfService _notifyService;
+        private readonly ICombosHelper _combosHelper;
 
-        public SpaServicesController(ISpaServicesService spaServicesService, INotyfService notifyService)
+        public SpaServicesController(ISpaServicesService spaServicesService, INotyfService notifyService, ICombosHelper combosHelper)
         {
             _spaServicesService = spaServicesService;
             _notifyService = notifyService;
+            _combosHelper = combosHelper;
         }
 
         [HttpGet]
@@ -34,37 +37,46 @@ namespace AppWebSpa.Controllers
 
         // View Create
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            SpaServiceDTO dto = new SpaServiceDTO
+            {
+                Categories = await _combosHelper.GetComboSections(),
+
+            };
+            return View(dto);
         }
 
         //Method Create
         [HttpPost]
-        public async Task<IActionResult> Create(SpaService spaService)
+        public async Task<IActionResult> Create(SpaServiceDTO dto)
         {
             try
             {
                 if (!ModelState.IsValid)
                 {
                     _notifyService.Error("Debe ajustar los errores de validacion");
-                    return View(spaService);
+                    dto.Categories = await _combosHelper.GetComboSections();
+                    return View(dto);
                 } 
 
-                Response<SpaService> response = await _spaServicesService.CreateAsync(spaService);
+                Response<SpaService> response = await _spaServicesService.CreateAsync(dto);
                 
                 if(response.IsSuccess)
                 {
-                    _notifyService.Success(response.Message);
-                    return RedirectToAction(nameof(Index));
+                    _notifyService.Error(response.Message);
+                    dto.Categories = await _combosHelper.GetComboSections();
+                    return View(response);
+                    
                 }
 
-                _notifyService.Error(response.Message);
-                return View(response);
+                _notifyService.Success(response.Message);
+                return RedirectToAction(nameof(Index));
+
             }
             catch (Exception ex)
             {
-                return View(spaService);
+                return View(dto);
             }
         }
 

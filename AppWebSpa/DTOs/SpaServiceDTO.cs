@@ -1,8 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using AppWebSpa.Data.Entities;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
-namespace AppWebSpa.Data.Entities
+namespace AppWebSpa.DTOs
 {
-    public class SpaService
+    public class SpaServiceDTO
     {
         //Properties with DataAnnotations
         [Key]
@@ -18,7 +20,7 @@ namespace AppWebSpa.Data.Entities
 
         [Display(Name = "Precio del servicio")]
         [Required(ErrorMessage = "Debe ingresar el precio del servicio")]
-        [Range(0, (double)decimal.MaxValue, ErrorMessage ="El precio debe ser mayor o igual que cero")]
+        [Range(0, (double)decimal.MaxValue, ErrorMessage = "El precio debe ser mayor o igual que cero")]
         public decimal Price { get; set; }
 
         //RegistrationDateTime
@@ -27,15 +29,19 @@ namespace AppWebSpa.Data.Entities
         [Display(Name = "¿Esta OCulta?")]
         public bool IsHidden { get; set; }
 
-        public CategoryService CategoryService { get; set; }
+        public CategoryService? CategoryService { get; set; }
 
-        public int CategoryId{ get; set; }
+        [Display(Name = "Categorias")]
+        [Required(ErrorMessage = "El campo '{0}' es requerido")]
+        [Range (1, int.MaxValue,ErrorMessage ="Debe seleccionar una categoria")]
+        public int CategoryId { get; set; }
 
-        public SpaService() { 
+        public SpaServiceDTO()
+        {
             RegistrationDateTime = DateTime.Now;
         }
 
-
-       
+      
+        public IEnumerable<SelectListItem>? Categories { get; set; }
     }
 }

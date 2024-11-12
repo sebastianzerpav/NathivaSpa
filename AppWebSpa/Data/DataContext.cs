@@ -9,6 +9,7 @@ namespace AppWebSpa.Data
         {
         }
         
+        public DbSet<CategoryService> CategoryServices { get; set; }
         public DbSet<User> User { get; set; } = default!;
 
         //SpaService

@@ -4,6 +4,7 @@ using AppWebSpa.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppWebSpa.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241110060653_AddCategory")]
+    partial class AddCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,11 +34,9 @@ namespace AppWebSpa.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"));
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
-
-                    b.Property<bool>("IsHidden")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -55,12 +56,6 @@ namespace AppWebSpa.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdSpaService"));
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CategoryServiceCategoryId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -79,8 +74,6 @@ namespace AppWebSpa.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("IdSpaService");
-
-                    b.HasIndex("CategoryServiceCategoryId");
 
                     b.ToTable("spaService");
                 });
@@ -115,17 +108,6 @@ namespace AppWebSpa.Migrations
                     b.HasKey("IdUser");
 
                     b.ToTable("User");
-                });
-
-            modelBuilder.Entity("AppWebSpa.Data.Entities.SpaService", b =>
-                {
-                    b.HasOne("AppWebSpa.Data.Entities.CategoryService", "CategoryService")
-                        .WithMany()
-                        .HasForeignKey("CategoryServiceCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CategoryService");
                 });
 #pragma warning restore 612, 618
         }

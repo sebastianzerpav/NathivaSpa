@@ -1,16 +1,15 @@
-﻿
-@model List<SpaService>
+﻿@model List<CategoryService>
 
 @{
-    ViewData["Title"] = "Servicios";
+    ViewData["Title"] = "Categorias Servicios";
 }
 
 <div class="pagetitle">
-    <h1>Servicios</h1>
+    <h1>Categorias de servicios</h1>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Inicio</a></li>
-            <li class="breadcrumb-item active">Servicios</li>
+            <li class="breadcrumb-item active">Categorias de servicios</li>
         </ol>
     </nav>
 </div><!-- End Page Title -->
@@ -127,8 +126,8 @@
     </style>
 
     <div class="container-title">
-        <h3>Listado de servicios registrados</h3>
-        <a asp-action="Create" class="btn-create">Crear nuevo servicio</a>
+        <h3>Listado de categorias registradas</h3>
+        <a asp-action="Create" class="btn-create">Crear nueva categoria</a>
     </div>
 
     <table>
@@ -136,52 +135,46 @@
             <tr>
                 <th>Nombre</th>
                 <th>Descripción</th>
-                <th>Categoria</th>
-                <th>Precio</th>
-                <th>Fecha de registro</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (SpaService spaService in Model)
+            @foreach (CategoryService categoryService in Model)
             {
                 <tr>
-                    <td>@spaService.Name</td>
-                    <td>@spaService.Description</td>
-                    <td>@spaService.CategoryService.Name</td>
-                    <td>@spaService.Price</td>
-                    <td>@spaService.RegistrationDateTime</td>
+                    <td>@categoryService.Name</td>
+                    <td>@categoryService.Description</td>
                     <td class="actions">
-                        @if (spaService.IsHidden)
+                        @if (categoryService.IsHidden)
                         {
                             <form asp-action="Toggle" method="POST" style="display: contents;">
-                                <input type="hidden" name="SpaServiceId" value="@spaService.IdSpaService" />
+                                <input type="hidden" name="CategoryId" value="@categoryService.CategoryId" />
                                 <input type="hidden" name="Hide" value="false" />
 
                                 <div class="tooltip-container">
-                                    <button class="btn btn-secondary btn-sm showService">
+                                    <button class="btn btn-secondary btn-sm showCategory">
                                         <i class="bi bi-eye-fill" style="color:#F8F9FC cursor: pointer;"></i>
                                     </button>
-                                    <span class="tooltip-text">Mostrar Servicio</span>
+                                    <span class="tooltip-text">Mostrar Categoria</span>
                                 </div>
                             </form>
                         }
                         else
                         {
                             <form asp-action="Toggle" method="POST" style="display: contents;">
-                                <input type="hidden" name="SpaServiceId" value="@spaService.IdSpaService" />
+                                <input type="hidden" name="CategoryId" value="@categoryService.CategoryId" />
                                 <input type="hidden" name="Hide" value="true" />
 
                                 <div class="tooltip-container">
                                     <button class="btn btn-info btn-sm showService">
                                         <i class="bi bi-eye-slash-fill" style="color:#F8F9FC cursor: pointer;"></i>
                                     </button>
-                                    <span class="tooltip-text">Ocultar Servicio</span>
+                                    <span class="tooltip-text">Ocultar Categoria</span>
                                 </div>
                             </form>
                         }
-                        <a asp-action="Edit" asp-route-id="@spaService.IdSpaService" class="btn btn-sm btn-warning"><i class="b bi-pencil"></i></a>
-                        <form asp-action="Delete" asp-route-id="@spaService.IdSpaService" style="display: contents;">
+                        <a asp-action="Edit" asp-route-id="@categoryService.CategoryId" class="btn btn-sm btn-warning"><i class="b bi-pencil"></i></a>
+                        <form asp-action="Delete" asp-route-id="@categoryService.CategoryId" style="display: contents;">
                             <button class="btn btn-danger btn-sm btnDelete"><i class="bi bi-trash-fill"></i></button>
                         </form>
                     </td>
@@ -204,7 +197,7 @@
 
                 Swal.fire({
 
-                    title: "¿Desea Eliminar el servicio?",
+                    title: "¿Desea Eliminar la categoria?",
                     text: "No podra revertirlo",
                     icon: "question",
                     showCancelButton: true,
@@ -221,3 +214,4 @@
         });
     </script>
 }
+

@@ -1,4 +1,4 @@
-﻿@model SpaService
+﻿@model SpaServiceDTO
 
 @{
     ViewData["Title"] = "Nuevo Servicio";
@@ -163,6 +163,11 @@
                         <input asp-for="Price" class="form-control" id="floatingName" placeholder="@Html.DisplayFor(Model => Model.Price)">
                         <label asp-for="Price"></label>
                         <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating">
+                        <select asp-for = "CategoryId" asp-items="Model.Categories" class="form-control"> </select>
+                        <label asp-for="CategoryId"></label>
+                        <span asp-validation-for="CategoryId" class="text-danger"></span>
                     </div>
                     <div class="container-button">
                         <input type="submit" value="Crear" class="btn btn-primary" />

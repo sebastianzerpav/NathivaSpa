@@ -7,13 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using AppWebSpa.Request;
 using static System.Collections.Specialized.BitVector32;
+using AppWebSpa.DTOs;
 //using static System.Collections.Specialized.BitVector32;
 
 namespace AppWebSpa.Services
 {
     public interface ISpaServicesService
     {
-        public Task<Response<SpaService>> CreateAsync(SpaService model);
+        public Task<Response<SpaService>> CreateAsync(SpaServiceDTO dto);
         public Task<Response<SpaService>> DeleteAsync(int id);
         public Task<Response<SpaService>> EditAsync(SpaService model);
         public Task<Response<List<SpaService>>> GetListAsync();
@@ -25,23 +26,22 @@ namespace AppWebSpa.Services
     public class SpaServicesService : ISpaServicesService
     {
         private readonly DataContext _context;
+        private readonly IConverterHelper _converterHelper;
 
-        public SpaServicesService(DataContext context)
+        public SpaServicesService(DataContext context, IConverterHelper converterHelper)
         {
             _context = context;
+            _converterHelper = converterHelper;
         }
 
-        public async Task<Response<SpaService>> CreateAsync(SpaService model)
+        public async Task<Response<SpaService>> CreateAsync(SpaServiceDTO dto)
         {
             try
             {
-                SpaService spaservice = new SpaService
-                {
-                    Name = model.Name,
-                    Description = model.Description,
-                    Price = model.Price,
-                    RegistrationDateTime = model.RegistrationDateTime,
-                };
+                SpaService spaservice = _converterHelper.ToSpaService(dto);
+
+
+                
                 await _context.spaService.AddAsync(spaservice);
                 await _context.SaveChangesAsync();
 
@@ -93,7 +93,7 @@ namespace AppWebSpa.Services
         {
             try
             {
-                List<SpaService> spaservices = await _context.spaService.ToListAsync();
+                List<SpaService> spaservices = await _context.spaService.Include(b => b.CategoryService).ToListAsync();
 
                 return ResponseHelper<List<SpaService>>.MakeResponseSuccess(spaservices);
             }
