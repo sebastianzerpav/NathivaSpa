@@ -1,5 +1,6 @@
 ﻿using AppWebSpa.Data;
 using AppWebSpa.Data.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

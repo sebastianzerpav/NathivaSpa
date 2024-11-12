@@ -10,11 +10,13 @@ using AspNetCoreHero.ToastNotification.Abstractions;
 using static System.Collections.Specialized.BitVector32;
 using AppWebSpa.Request;
 using AppWebSpa.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 
 
 namespace AppWebSpa.Controllers
 {
+    [Authorize]
     public class SpaServicesController : Controller
     {
         private readonly ISpaServicesService _spaServicesService;
@@ -35,6 +37,8 @@ namespace AppWebSpa.Controllers
         {
             Response<List<SpaService>> response = await _spaServicesService.GetListAsync();
             return View(response.Result);
+            //return View(response.Result ?? new List<SpaService>());
+
         }
 
         // View Create
