@@ -6,7 +6,7 @@ namespace AppWebSpa.Helpers
 {
     public interface ICombosHelper
     {
-        public Task<IEnumerable<SelectListItem>> GetComboSections();
+        public Task<IEnumerable<SelectListItem>> GetComboCategories();
     }
 
     public class CombosHelper : ICombosHelper
@@ -18,7 +18,7 @@ namespace AppWebSpa.Helpers
             _context = context;
         }
 
-        public async Task<IEnumerable<SelectListItem>> GetComboSections()
+        public async Task<IEnumerable<SelectListItem>> GetComboCategories()
         {
             List<SelectListItem> List = await _context.CategoryServices.Select(s => new SelectListItem
             {

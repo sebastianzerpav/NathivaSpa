@@ -16,7 +16,7 @@ namespace AppWebSpa.Services
     {
         public Task<Response<SpaService>> CreateAsync(SpaServiceDTO dto);
         public Task<Response<SpaService>> DeleteAsync(int id);
-        public Task<Response<SpaService>> EditAsync(SpaService model);
+        public Task<Response<SpaService>> EditAsync(SpaServiceDTO dto);
         public Task<Response<List<SpaService>>> GetListAsync();
         public Task<Response<SpaService>> GetOneAsync(int id);
         public Task<Response<SpaService>> ToggleAsync(ToggleSpaServiceStatusRequest request);
@@ -74,14 +74,21 @@ namespace AppWebSpa.Services
             }
         }
 
-        public async Task<Response<SpaService>> EditAsync(SpaService model)
+        public async Task<Response<SpaService>> EditAsync(SpaServiceDTO dto)
         {
             try
             {
-                _context.spaService.Update(model);
+                SpaService? spaService = await _context.spaService.FirstOrDefaultAsync(s => s.IdSpaService == dto.IdSpaService);
+                if(spaService is null)
+                {
+                    return ResponseHelper<SpaService>.MakeResponseFail($"No existe Blog con id '{dto.IdSpaService}'");
+                }
+                spaService = _converterHelper.ToSpaService(dto);
+
+                _context.spaService.Update(spaService);
                 await _context.SaveChangesAsync();
 
-                return ResponseHelper<SpaService>.MakeResponseSuccess(model, "Servicio editado con éxito");
+                return ResponseHelper<SpaService>.MakeResponseSuccess(spaService, "Servicio editado con éxito");
             }
             catch (Exception ex)
             {

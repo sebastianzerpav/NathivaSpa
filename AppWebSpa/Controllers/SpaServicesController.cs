@@ -20,12 +20,14 @@ namespace AppWebSpa.Controllers
         private readonly ISpaServicesService _spaServicesService;
         public readonly INotyfService _notifyService;
         private readonly ICombosHelper _combosHelper;
+        private readonly IConverterHelper _converterHelper;
 
-        public SpaServicesController(ISpaServicesService spaServicesService, INotyfService notifyService, ICombosHelper combosHelper)
+        public SpaServicesController(ISpaServicesService spaServicesService, INotyfService notifyService, ICombosHelper combosHelper, IConverterHelper converterHelper)
         {
             _spaServicesService = spaServicesService;
             _notifyService = notifyService;
             _combosHelper = combosHelper;
+            _converterHelper = converterHelper;
         }
 
         [HttpGet]
@@ -41,7 +43,7 @@ namespace AppWebSpa.Controllers
         {
             SpaServiceDTO dto = new SpaServiceDTO
             {
-                Categories = await _combosHelper.GetComboSections(),
+                Categories = await _combosHelper.GetComboCategories(),
 
             };
             return View(dto);
@@ -56,16 +58,16 @@ namespace AppWebSpa.Controllers
                 if (!ModelState.IsValid)
                 {
                     _notifyService.Error("Debe ajustar los errores de validacion");
-                    dto.Categories = await _combosHelper.GetComboSections();
+                    dto.Categories = await _combosHelper.GetComboCategories();
                     return View(dto);
                 } 
 
                 Response<SpaService> response = await _spaServicesService.CreateAsync(dto);
                 
-                if(response.IsSuccess)
+                if(!response.IsSuccess)
                 {
                     _notifyService.Error(response.Message);
-                    dto.Categories = await _combosHelper.GetComboSections();
+                    dto.Categories = await _combosHelper.GetComboCategories();
                     return View(response);
                     
                 }
@@ -76,6 +78,7 @@ namespace AppWebSpa.Controllers
             }
             catch (Exception ex)
             {
+                _notifyService.Error(ex.Message);
                 return View(dto);
             }
         }
@@ -88,8 +91,9 @@ namespace AppWebSpa.Controllers
             
             if (response.IsSuccess)
             {
-                
-                return View(response.Result);
+                SpaServiceDTO dto =await _converterHelper.ToSpaServiceDTO(response.Result);
+                dto.Categories=await _combosHelper.GetComboCategories();
+                return View(dto);
             }
             _notifyService.Error(response.Message);
             return RedirectToAction(nameof(Index));
@@ -97,17 +101,17 @@ namespace AppWebSpa.Controllers
 
         //Method Edit
         [HttpPost]
-        public async Task<IActionResult> Edit(SpaService spaService)
+        public async Task<IActionResult> Edit(SpaServiceDTO dto)
         {
             try
             {
                 if (!ModelState.IsValid)
                 {
                     _notifyService.Error("Debe ajustar los errores de validacion");
-                    return View(spaService);
+                    return View(dto);
                 }
 
-                Response<SpaService> response = await _spaServicesService.EditAsync(spaService);
+                Response<SpaService> response = await _spaServicesService.EditAsync(dto);
                 
                 if (response.IsSuccess)
                 {
@@ -116,12 +120,14 @@ namespace AppWebSpa.Controllers
                 }
 
                 _notifyService.Error(response.Message);
-                return View(response);
+                dto.Categories= await _combosHelper.GetComboCategories();
+                return View(dto);
             }
             catch (Exception ex)
             {
                 _notifyService.Error(ex.Message);
-                return View(spaService);
+                dto.Categories = await _combosHelper.GetComboCategories();
+                return View(dto);
             }
         }
 
