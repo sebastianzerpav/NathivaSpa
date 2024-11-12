@@ -1,5 +1,4 @@
-﻿
-@model List<SpaService>
+﻿@model List<SpaService>
 
 @{
     ViewData["Title"] = "Servicios";
@@ -41,7 +40,7 @@
             padding: 12px 24px; /* Aumentado el padding */
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
             transition: background 0.3s, transform 0.3s ease, box-shadow 0.3s ease; /* Añadido box-shadow en la transición */
-            display: block; /* Asegurarse de que ocupe toda la línea */
+           /*  display: block; /* Asegurarse de que ocupe toda la línea */ */
             margin: 0 auto 20px; /* Centrar el botón y dar margen inferior */
             text-align: center;
             text-decoration: none; /* Sin subrayado */
@@ -143,19 +142,19 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (SpaService spaService in Model)
+            @foreach (SpaService item in Model)
             {
                 <tr>
-                    <td>@spaService.Name</td>
-                    <td>@spaService.Description</td>
-                    <td>@spaService.CategoryService.Name</td>
-                    <td>@spaService.Price</td>
-                    <td>@spaService.RegistrationDateTime</td>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>@item.CategoryService.Name</td>
+                    <td>@item.Price</td>
+                    <td>@item.RegistrationDateTime</td>
                     <td class="actions">
-                        @if (spaService.IsHidden)
+                        @if (item.IsHidden)
                         {
                             <form asp-action="Toggle" method="POST" style="display: contents;">
-                                <input type="hidden" name="SpaServiceId" value="@spaService.IdSpaService" />
+                                <input type="hidden" name="SpaServiceId" value="@item.IdSpaService" />
                                 <input type="hidden" name="Hide" value="false" />
 
                                 <div class="tooltip-container">
@@ -169,7 +168,7 @@
                         else
                         {
                             <form asp-action="Toggle" method="POST" style="display: contents;">
-                                <input type="hidden" name="SpaServiceId" value="@spaService.IdSpaService" />
+                                <input type="hidden" name="SpaServiceId" value="@item.IdSpaService" />
                                 <input type="hidden" name="Hide" value="true" />
 
                                 <div class="tooltip-container">
@@ -180,8 +179,8 @@
                                 </div>
                             </form>
                         }
-                        <a asp-action="Edit" asp-route-id="@spaService.IdSpaService" class="btn btn-sm btn-warning"><i class="b bi-pencil"></i></a>
-                        <form asp-action="Delete" asp-route-id="@spaService.IdSpaService" style="display: contents;">
+                        <a asp-action="Edit" asp-route-id="@item.IdSpaService" class="btn btn-sm btn-warning"><i class="b bi-pencil"></i></a>
+                        <form asp-action="Delete" asp-route-id="@item.IdSpaService" style="display: contents;">
                             <button class="btn btn-danger btn-sm btnDelete"><i class="bi bi-trash-fill"></i></button>
                         </form>
                     </td>

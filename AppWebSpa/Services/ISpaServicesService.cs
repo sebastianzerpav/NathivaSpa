@@ -6,9 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using AppWebSpa.Request;
-using static System.Collections.Specialized.BitVector32;
 using AppWebSpa.DTOs;
-//using static System.Collections.Specialized.BitVector32;
+
 
 namespace AppWebSpa.Services
 {

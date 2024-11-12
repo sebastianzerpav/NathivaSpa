@@ -12,7 +12,6 @@ namespace AppWebSpa.Data
         public DbSet<CategoryService> CategoryServices { get; set; }
         public DbSet<User> User { get; set; } = default!;
 
-        //SpaService
         public DbSet<SpaService> spaService { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
