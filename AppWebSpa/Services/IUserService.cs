@@ -9,10 +9,10 @@ namespace AppWebSpa.Services
     public interface IUserService
     {
         public Task<IdentityResult> AddUserAsync(User user, string password);
-        public Task<IdentityResult> ConfirmEmail(User user, string token);
+        public Task<IdentityResult> ConfirmEmailAsync(User user, string token);
         public Task<string> GenerateEmailConfirmationTokenAsync(User user);
 
-        //public Task<User> GetUserAsync(string email);
+        public Task<User> GetUserAsync(string email);
         public Task<SignInResult> LoginAsync(LoginDTO dto);
         public Task LogoutAsync();
 
@@ -35,7 +35,7 @@ namespace AppWebSpa.Services
             return await _userManager.CreateAsync(user, password);
         }
 
-        public async Task<IdentityResult> ConfirmEmail(User user, string token)
+        public async Task<IdentityResult> ConfirmEmailAsync(User user, string token)
         {
             return await _userManager.ConfirmEmailAsync(user, token);
         }
@@ -45,15 +45,14 @@ namespace AppWebSpa.Services
             return await _userManager.GenerateEmailConfirmationTokenAsync(user);
         }
 
-        //public async Task<User> GetUserAsync(string email)
-        //{
-        //    User? user = 
-        //        await _dataContext.User.Include(
-        //        u => u.Role).FirstOrDefaultAsync(
-        //        u => u.Email == email);
+        public async Task<User> GetUserAsync(string email)
+        {
+            User? user =
+                await _dataContext.User.FirstOrDefaultAsync(
+                u => u.Email == email);
 
-        //    return user;
-        //}
+            return user;
+        }
 
         public async Task<SignInResult> LoginAsync(LoginDTO dto)
         {

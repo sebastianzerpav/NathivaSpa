@@ -1,5 +1,6 @@
 ﻿using AppWebSpa.Data;
 using AppWebSpa.Data.Entities;
+using AppWebSpa.Data.Seeders;
 using AppWebSpa.Helpers;
 using AppWebSpa.Services;
 using AspNetCoreHero.ToastNotification;
@@ -67,7 +68,8 @@ namespace AppWebSpa
             builder.Services.AddScoped<ICategoriesService, CategoriesService>();
             builder.Services.AddScoped<IUserService, UsersService>();
 
-
+            //SeedDb
+            builder.Services.AddTransient<SeedDb>();
             //Helpers
             builder.Services.AddScoped<IConverterHelper, ConverterHelper>();
             builder.Services.AddScoped<ICombosHelper, CombosHelper>();
@@ -77,8 +79,19 @@ namespace AppWebSpa
         public static WebApplication AddCustomWebAppConfiguration(this WebApplication app)
         {
             app.UseNotyf();
+
+            SeedData(app);
             return app;
 
+        }
+
+        private static void SeedData(WebApplication app)
+        {
+            IServiceScopeFactory scopeFactory = app.Services.GetService<IServiceScopeFactory>();
+            using (IServiceScope scope = scopeFactory!.CreateScope()) { 
+                SeedDb service = scope.ServiceProvider.GetService<SeedDb>();
+                service!.SeedAsync().Wait();
+            }
         }
     }
 }

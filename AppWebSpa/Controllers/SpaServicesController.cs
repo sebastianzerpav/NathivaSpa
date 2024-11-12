@@ -10,11 +10,13 @@ using AspNetCoreHero.ToastNotification.Abstractions;
 using static System.Collections.Specialized.BitVector32;
 using AppWebSpa.Request;
 using AppWebSpa.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 
 
 namespace AppWebSpa.Controllers
 {
+    [Authorize]
     public class SpaServicesController : Controller
     {
         private readonly ISpaServicesService _spaServicesService;

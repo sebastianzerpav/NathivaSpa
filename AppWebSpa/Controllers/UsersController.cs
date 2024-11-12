@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AppWebSpa.Controllers
 {
-    //[Authorize]
     public class UsersController : Controller
     {
         private readonly DataContext _context;
