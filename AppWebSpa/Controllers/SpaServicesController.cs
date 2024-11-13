@@ -6,6 +6,7 @@ using AppWebSpa.Helpers;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using AppWebSpa.Request;
 using AppWebSpa.DTOs;
+using AppWebSpa.Core.Pagination;
 
 
 
@@ -27,13 +28,23 @@ namespace AppWebSpa.Controllers
             _combosHelper = combosHelper;
             _converterHelper = converterHelper;
         }
-
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index([FromQuery] int? RecordsPerPage,
+                                              [FromQuery] int? Page,
+                                              [FromQuery] string? Filter)
         {
-            Response<List<SpaService>> response = await _spaServicesService.GetListAsync();
+            PaginationRequest request = new PaginationRequest
+            {
+                RecordsPerPage = RecordsPerPage ?? 15,
+                Page = Page ?? 1,
+                Filter = Filter
+
+            };
+
+            Response<PaginationResponse<SpaService>> response = await _spaServicesService.GetListAsync(request);
             return View(response.Result);
         }
+      
 
         // View Create
         [HttpGet]
