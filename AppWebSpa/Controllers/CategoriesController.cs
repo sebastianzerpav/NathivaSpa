@@ -1,4 +1,5 @@
 ﻿using AppWebSpa.Core;
+using AppWebSpa.Core.Pagination;
 using AppWebSpa.Data.Entities;
 using AppWebSpa.Request;
 using AppWebSpa.Services;
@@ -20,9 +21,19 @@ namespace AppWebSpa.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index([FromQuery] int? RecordsPerPage,
+                                               [FromQuery] int? Page,
+                                               [FromQuery] string? Filter)
         {
-            Response<List<CategoryService>> response =await _categoriesService.GetListAsync();
+            PaginationRequest request = new PaginationRequest
+            {
+                RecordsPerPage= RecordsPerPage ?? 15,
+                Page= Page ?? 1,
+                Filter= Filter
+                
+            };
+
+            Response<PaginationResponse<CategoryService>> response =await _categoriesService.GetListAsync(request);
             return View(response.Result);
         }
 
