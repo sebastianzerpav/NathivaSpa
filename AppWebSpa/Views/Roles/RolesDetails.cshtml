@@ -1,6 +1,148 @@
-﻿namespace AppWebSpa.Views.Roles
-{
-    public class RolesDetails
-    {
-    }
+﻿@model AppWebSpa.Data.Entities.RolesForUser
+
+@{
+    ViewData["Title"] = "Detalles del Rol";
 }
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Mantener el mismo CSS utilizado en las otras vistas para consistencia */
+        body {
+            background: linear-gradient(135deg, #d1e18a, #eaf3c7); 
+            color: #333;
+            margin: 0;
+            font-family: 'Helvetica Neue', sans-serif; 
+            padding: 20px;
+        }
+
+        .container-all {
+            margin-top: 4rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container-general {
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
+            width: 100%; 
+            max-width: 600px; 
+            padding: 1.5rem;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .container-title {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .container-title h3 {
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+
+        .details-card {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.5rem;
+        }
+
+        .detail-item {
+            background-color: #f9f9f9;
+            padding: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .detail-item .label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .detail-item .value {
+            color: #333;
+            font-size: 1rem;
+        }
+
+        .container-button {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #b0c876, #d1e18a);
+            color: #333;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 24px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            transition: background 0.3s, transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #a0b76e, #c0d478);
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .link-view-users {
+            background: linear-gradient(135deg, #2196F3, #1E88E5);
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            display: block;
+            text-align: center;
+            font-weight: bold;
+            transition: background 0.3s, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .link-view-users:hover {
+            background: linear-gradient(135deg, #1976D2, #1565C0);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-all">
+        <div class="container-general">
+            <div class="container-title">
+                <h3>Detalles del Rol</h3>
+            </div>
+
+            <div class="details-card">
+                <div class="detail-item">
+                    <span class="label">Nombre</span>
+                    <span class="value">@Html.DisplayFor(model => model.Name)</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="label">Estado</span>
+                    <span class="value">
+                        <select disabled asp-for="State" class="form-control">
+                            <option value="0">Cerrado</option>
+                            <option value="1">Abierto</option>
+                        </select>
+                    </span>
+                </div>
+            </div>
+
+            <div style="text-align:center; margin-top:1rem;">
+                <a asp-action="Index" class="link-view-users">Ver todos los roles</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

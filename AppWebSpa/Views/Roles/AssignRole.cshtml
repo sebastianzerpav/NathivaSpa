@@ -1,15 +1,15 @@
-﻿@model AppWebSpa.Data.Entities.RolesForUser
+﻿@model AppWebSpa.Models.AssignRoleViewModel
 
 @{
-    ViewData["Title"] = "Editar Rol";
+    ViewData["Title"] = "Asignar Rol";
 }
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <style>
         body {
             background: linear-gradient(135deg, #d1e18a, #eaf3c7);
@@ -29,7 +29,7 @@
         .container-general {
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 500px;
+            max-width: 600px;
             padding: 1.5rem;
             border-radius: 8px;
             background: rgba(255, 255, 255, 0.9);
@@ -40,10 +40,10 @@
             margin-bottom: 1.5rem;
         }
 
-        h3 {
-            font-weight: 700;
-            color: #333;
-        }
+            .container-title h3 {
+                font-size: 1.75rem;
+                font-weight: 700;
+            }
 
         .container-form {
             display: flex;
@@ -55,7 +55,8 @@
             font-weight: 700;
         }
 
-        input, select {
+        select,
+        button {
             display: block;
             width: 100%;
             padding: .375rem .75rem;
@@ -69,7 +70,8 @@
             transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
         }
 
-            input:focus, select:focus {
+            select:focus,
+            button:focus {
                 border-color: #d1e18a;
                 box-shadow: 0 0 0 0.2rem rgba(209, 225, 138, 0.25);
             }
@@ -78,7 +80,6 @@
             margin-top: 2rem;
             display: flex;
             justify-content: center;
-            margin-bottom: 1rem;
         }
 
         .btn-primary {
@@ -90,6 +91,7 @@
             padding: 12px 24px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
             transition: background 0.3s, transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
             font-weight: bold;
             cursor: pointer;
         }
@@ -99,26 +101,6 @@
                 transform: scale(1.05);
                 box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
             }
-
-        .link-view-users {
-            text-align: center;
-            margin-top: 1rem;
-            display: block;
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-            background: linear-gradient(135deg, #2196F3, #1E88E5);
-            padding: 12px 24px;
-            border-radius: 5px;
-            transition: background 0.3s, transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-            .link-view-users:hover {
-                background: linear-gradient(135deg, #1976D2, #1565C0);
-                transform: scale(1.05);
-                text-decoration: none;
-            }
-
     </style>
 </head>
 
@@ -126,30 +108,32 @@
     <div class="container-all">
         <div class="container-general">
             <div class="container-title">
-                <h3>Editar rol</h3>
+                <h3>Asignar Rol a Usuario</h3>
             </div>
             <div class="container-form">
-                <form asp-action="Edit">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="IdRol" />
-
+                <form asp-action="AssignRole" method="post">
                     <div class="form-group">
-                        <label asp-for="Name" class="control-label">Nombre</label>
-                        <input asp-for="Name" />
-                        <span asp-validation-for="Name" class="text-danger"></span>
+                        <label for="User">Seleccione Usuario:</label>
+                        <select id="User" name="UserId" class="form-control">
+                            @foreach (var user in Model.Users)
+                            {
+                                <option value="@user.IdUser">@user.Name</option>
+                            }
+                        </select>
                     </div>
 
                     <div class="form-group">
-                        <label asp-for="State" class="control-label">Estado</label>
-                        <select asp-for="State" class="form-control">
-                            <option value="0">Cerrado</option>
-                            <option value="1">Abierto</option>
+                        <label for="Role">Seleccione Rol:</label>
+                        <select id="Role" name="RoleId" class="form-control">
+                            @foreach (var role in Model.Roles)
+                            {
+                                <option value="@role.IdRol">@role.Name</option>
+                            }
                         </select>
-                        <span asp-validation-for="State" class="text-danger"></span>
                     </div>
 
                     <div class="container-button">
-                        <input type="submit" value="Guardar cambios" class="btn btn-primary" />
+                        <button type="submit" class="btn-primary">Asignar Rol</button>
                     </div>
                     <div style="text-align:center; margin-top:1rem;">
                         <a asp-action="Index" class="link-view-users">Ver todos los roles</a>
@@ -159,4 +143,5 @@
         </div>
     </div>
 </body>
+
 </html>

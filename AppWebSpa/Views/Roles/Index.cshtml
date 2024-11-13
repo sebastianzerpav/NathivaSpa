@@ -1,6 +1,158 @@
-﻿namespace AppWebSpa.Views.NewFolder
-{
-    public class Index
-    {
-    }
+﻿@model IEnumerable<AppWebSpa.Data.Entities.RolesForUser>
+
+@{
+    ViewData["Title"] = "Roles";
 }
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+
+    <!-- Estilos -->
+    <style>
+        body {
+            background: linear-gradient(135deg, #d1e18a, #eaf3c7);
+            font-family: 'Helvetica Neue', sans-serif;
+            margin: 0;
+            padding: 20px; /* Añadido padding para más espacio */
+        }
+
+        h3 {
+            color: #333;
+            font-weight: 700;
+            text-align: center;
+            margin: 0 0 20px; /* Separación con margen inferior */
+        }
+
+        .btn-create {
+            background: linear-gradient(135deg, #b0c876, #d1e18a);
+            color: #333;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 24px; /* Aumentado el padding */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            transition: background 0.3s, transform 0.3s ease, box-shadow 0.3s ease; /* Añadido box-shadow en la transición */
+            display: block; /* Asegurarse de que ocupe toda la línea */
+            margin: 0 auto 20px; /* Centrar el botón y dar margen inferior */
+            text-align: center;
+            text-decoration: none; /* Sin subrayado */
+            font-weight: bold; /* Texto en negrita */
+        }
+
+            .btn-create:hover {
+                background: linear-gradient(135deg, #a0b76e, #c0d478);
+                transform: scale(1.05);
+                box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Sombra más intensa al pasar el ratón */
+            }
+
+        table {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+        }
+
+        th, td {
+            background: rgba(255, 255, 255, 0.7);
+            color: #333;
+            padding: 12px 15px; /* Espaciado más uniforme */
+            text-align: center;
+        }
+
+        th {
+            background: #d1e18a;
+            color: #333;
+            font-size: 14px;
+           /*  text-transform: uppercase; */
+            letter-spacing: 0.5px;
+        }
+
+        tr:hover {
+            background: #eaf3c7;
+            cursor: pointer;
+        }
+
+        .actions a {
+            background: linear-gradient(135deg, #d1e18a, #a0b76e);
+            color: #fff;
+            padding: 10px 15px; /* Ajuste del padding */
+            border-radius: 5px;
+            transition: background 0.3s, transform 0.3s ease, box-shadow 0.3s ease; /* Añadido box-shadow en la transición */
+            margin: 0 5px; /* Espaciado entre botones */
+            text-decoration: none; /* Sin subrayado */
+            font-weight: 600; /* Texto en negrita */
+            display: inline-block; /* Mantener el tamaño del botón */
+        }
+
+            .actions a:hover {
+                background: linear-gradient(135deg, #b0c876, #d1e18a);
+                transform: scale(1.1);
+                box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Sombra más intensa al pasar el ratón */
+            }
+
+            .actions a.edit {
+                background: #2196F3;
+            }
+
+            .actions a.details {
+                background: #FFC107;
+            }
+
+            .actions a.delete {
+                background: #f44336;
+            }
+
+            .actions a.edit:hover {
+                background: #1976D2;
+            }
+
+            .actions a.details:hover {
+                background: #FFA000;
+            }
+
+            .actions a.delete:hover {
+                background: #d32f2f;
+            }
+    </style>
+
+</head>
+<body>
+    <div class="container-title">
+        <h3>Listado de roles registrados</h3>
+        <a href="@Url.Action("Create")" class="btn-create">Crear nuevo rol</a>
+        <a href="@Url.Action("AssignRole")" class="btn-create">Asignar rol a usuario</a>
+
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.State)</td>
+                    <td class="actions">
+                        <a href="@Url.Action("Edit", new { id = item.IdRol })" class="edit">Editar</a>
+                        <a href="@Url.Action("RolesDetails", new { id = item.IdRol })" class="details">Detalles</a>
+                        <a href="@Url.Action("Delete", new { id = item.IdRol })" class="delete">Eliminar</a> 
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</body>
+</html>
