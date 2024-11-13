@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.CodeAnalysis.Operations;
 using AppWebSpa.Request;
 using AppWebSpa.DTOs;
+using AppWebSpa.Core.Pagination;
 
 
 namespace AppWebSpa.Services
@@ -15,7 +16,7 @@ namespace AppWebSpa.Services
         public Task<Response<SpaService>> CreateAsync(SpaServiceDTO dto);
         public Task<Response<SpaService>> DeleteAsync(int id);
         public Task<Response<SpaService>> EditAsync(SpaServiceDTO dto);
-        public Task<Response<List<SpaService>>> GetListAsync();
+        public Task<Response<PaginationResponse<SpaService>>> GetListAsync(PaginationRequest request);
         public Task<Response<SpaService>> GetOneAsync(int id);
         public Task<Response<SpaService>> ToggleAsync(ToggleSpaServiceStatusRequest request);
 
@@ -101,17 +102,34 @@ namespace AppWebSpa.Services
             }
         }
 
-        public async Task<Response<List<SpaService>>> GetListAsync()
+        public async Task<Response<PaginationResponse<SpaService>>> GetListAsync(PaginationRequest request)
         {
             try
             {
-                List<SpaService> spaservices = await _context.spaService.Include(b => b.CategoryService).ToListAsync();
+                IQueryable<SpaService> query = _context.spaService.AsQueryable().Include(b =>b.CategoryService);
 
-                return ResponseHelper<List<SpaService>>.MakeResponseSuccess(spaservices);
+                if (!string.IsNullOrWhiteSpace(request.Filter))
+                {
+                    query = query.Where(s => s.Name.ToLower().Contains(request.Filter.ToLower()));
+                }
+
+                PagedList<SpaService> list = await PagedList<SpaService>.ToPagedListAsync(query, request);
+
+                PaginationResponse<SpaService> result = new PaginationResponse<SpaService>
+                {
+                    List = list,
+                    TotalCount = list.TotalCount,
+                    RecordsPerPage = list.RecordsPerPage,
+                    CurrentPage = list.CurrentPage,
+                    TotalPages = list.TotalPages,
+                    Filter = request.Filter,
+
+                };
+                return ResponseHelper<PaginationResponse<SpaService>>.MakeResponseSuccess(result, "Servicios obtenidos con éxito");
             }
             catch (Exception ex)
             {
-                return ResponseHelper<List<SpaService>>.MakeResponseFail(ex);
+                return ResponseHelper<PaginationResponse<SpaService>>.MakeResponseFail(ex);
             }
 
         }
