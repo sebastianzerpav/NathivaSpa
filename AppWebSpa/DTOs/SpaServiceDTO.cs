@@ -1,6 +1,7 @@
 ﻿using AppWebSpa.Data.Entities;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppWebSpa.DTOs
 {
@@ -27,11 +28,11 @@ namespace AppWebSpa.DTOs
         public DateTime RegistrationDateTime { get; set; }
 
         [Display(Name = "¿Esta OCulta?")]
-        public bool IsHidden { get; set; }
+        public bool IsHidden { get; set; } = false;
 
         public CategoryService? CategoryService { get; set; }
 
-        [Display(Name = "Categorias")]
+        [Display(Name = "Categoria")]
         [Required(ErrorMessage = "El campo '{0}' es requerido")]
         [Range (1, int.MaxValue,ErrorMessage ="Debe seleccionar una categoria")]
         public int CategoryId { get; set; }

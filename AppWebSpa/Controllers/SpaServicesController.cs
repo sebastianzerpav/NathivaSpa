@@ -1,22 +1,18 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using AppWebSpa.Data;
+﻿using Microsoft.AspNetCore.Mvc;
 using AppWebSpa.Data.Entities;
 using AppWebSpa.Services;
 using AppWebSpa.Core;
 using AppWebSpa.Helpers;
 using AspNetCoreHero.ToastNotification.Abstractions;
-using static System.Collections.Specialized.BitVector32;
 using AppWebSpa.Request;
 using AppWebSpa.DTOs;
-using Microsoft.AspNetCore.Authorization;
+
 
 
 
 namespace AppWebSpa.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class SpaServicesController : Controller
     {
         private readonly ISpaServicesService _spaServicesService;
@@ -37,8 +33,6 @@ namespace AppWebSpa.Controllers
         {
             Response<List<SpaService>> response = await _spaServicesService.GetListAsync();
             return View(response.Result);
-            //return View(response.Result ?? new List<SpaService>());
-
         }
 
         // View Create
@@ -57,34 +51,28 @@ namespace AppWebSpa.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(SpaServiceDTO dto)
         {
-            try
+            
+            if (!ModelState.IsValid)
             {
-                if (!ModelState.IsValid)
-                {
-                    _notifyService.Error("Debe ajustar los errores de validacion");
-                    dto.Categories = await _combosHelper.GetComboCategories();
-                    return View(dto);
-                } 
-
-                Response<SpaService> response = await _spaServicesService.CreateAsync(dto);
-                
-                if(!response.IsSuccess)
-                {
-                    _notifyService.Error(response.Message);
-                    dto.Categories = await _combosHelper.GetComboCategories();
-                    return View(response);
-                    
-                }
-
-                _notifyService.Success(response.Message);
-                return RedirectToAction(nameof(Index));
-
-            }
-            catch (Exception ex)
-            {
-                _notifyService.Error(ex.Message);
+                _notifyService.Error("Debe ajustar los errores de validacion");
+                dto.Categories = await _combosHelper.GetComboCategories();
                 return View(dto);
+            } 
+
+            Response<SpaService> response = await _spaServicesService.CreateAsync(dto);
+                
+            if(!response.IsSuccess)
+            {
+                _notifyService.Error(response.Message);
+                dto.Categories = await _combosHelper.GetComboCategories();
+                return View(dto);
+                    
             }
+
+            _notifyService.Success(response.Message);
+            return RedirectToAction(nameof(Index));
+
+            
         }
 
         // View Edit

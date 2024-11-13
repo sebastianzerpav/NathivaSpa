@@ -1,24 +1,28 @@
-﻿using AppWebSpa.Data.Entities;
+﻿using AppWebSpa.Data;
+using AppWebSpa.Data.Entities;
 using AppWebSpa.DTOs;
+using Microsoft.EntityFrameworkCore;
 
 namespace AppWebSpa.Helpers
 {
     public interface IConverterHelper
     {
-        public SpaService ToSpaService(SpaServiceDTO dto);
+        public Task<SpaService> ToSpaService(SpaServiceDTO dto);
         public Task<SpaServiceDTO> ToSpaServiceDTO(SpaService result);
     }
 
     public class ConverterHelper : IConverterHelper
     {
         private readonly ICombosHelper _combosHelper;
+        private readonly DataContext _context;
 
-        public ConverterHelper(ICombosHelper combosHelper)
+        public ConverterHelper(ICombosHelper combosHelper, DataContext context)
         {
             _combosHelper = combosHelper;
+            _context = context;
         }
 
-        public SpaService ToSpaService(SpaServiceDTO dto)
+        public async Task<SpaService> ToSpaService(SpaServiceDTO dto)
         {
             return new SpaService
             {
@@ -28,7 +32,8 @@ namespace AppWebSpa.Helpers
                 Price=dto.Price,
                 RegistrationDateTime = dto.RegistrationDateTime,
                 IsHidden =dto.IsHidden,
-                CategoryId=dto.CategoryId,             
+                CategoryId=dto.CategoryId,
+                CategoryService = await _context.CategoryServices.FirstAsync(c => c.CategoryId == dto.CategoryId),
 
             };
         }

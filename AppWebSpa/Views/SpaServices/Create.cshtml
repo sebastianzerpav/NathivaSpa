@@ -4,128 +4,6 @@
     ViewData["Title"] = "Nuevo Servicio";
 }
 
-
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <style>
-        body {
-            /* background: linear-gradient(135deg, #d1e18a, #eaf3c7); */ /* Degradado de fondo */
-            color: #333;
-            margin: 0;
-            font-family: 'Helvetica Neue', sans-serif; /* Fuente moderna */
-            padding: 20px; /* Espaciado alrededor */
-        }
-
-        .container-all {
-            margin-top: 4rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .container-general {
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra más pronunciada */
-            width: 100%; /* Cambiado a 100% para más flexibilidad */
-            max-width: 500px; /* Ancho máximo para mantener el diseño */
-            padding: 1.5rem; /* Aumentado el padding */
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.9); /* Fondo blanco semi-transparente */
-        }
-
-        .container-title {
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-
-        h3 {
-            font-weight: 700;
-            color: #333; /* Color del título */
-        }
-
-        .container-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        label {
-            font-weight: 700;
-        }
-
-        input {
-            display: block;
-            width: 100%; /* Cambiado a 100% para adaptarse al contenedor */
-            padding: .375rem .75rem;
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.5;
-            color: #212529;
-            background-color: #fff;
-            border: 1px solid #ced4da;
-            border-radius: .25rem;
-            transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-        }
-
-            input:focus {
-                border-color: #d1e18a; /* Color del borde al enfocar */
-                box-shadow: 0 0 0 0.2rem rgba(209, 225, 138, 0.25); /* Sombra al enfocar */
-            }
-
-        .container-button {
-            margin-top: 2rem;
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #b0c876, #d1e18a);
-            color: #333;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            padding: 12px 24px; /* Padding aumentado */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-            transition: background 0.3s, transform 0.3s ease, box-shadow 0.3s ease;
-            text-align: center;
-            text-decoration: none; /* Sin subrayado */
-            font-weight: bold; /* Texto en negrita */
-            cursor: pointer; /* Cambiar cursor a pointer */
-        }
-
-            .btn-primary:hover {
-                background: linear-gradient(135deg, #a0b76e, #c0d478);
-                transform: scale(1.05);
-                box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Sombra más intensa al pasar el ratón */
-            }
-
-        .link-back {
-            text-align: center;
-            margin-top: 1rem;
-            display: block; /* Asegura que esté centrado */
-            color: #fff; /* Color del texto */
-            text-decoration: none; /* Sin subrayado */
-            font-weight: bold; /* Texto en negrita */
-            background: linear-gradient(135deg, #2196F3, #1E88E5); /* Degradado azul */
-            padding: 12px 24px; /* Padding aumentado */
-            border-radius: 5px; /* Bordes redondeados */
-            transition: background 0.3s, transform 0.3s ease, box-shadow 0.3s ease; /* Transiciones suaves */
-        }
-
-            .link-back:hover {
-                background: linear-gradient(135deg, #1976D2, #1565C0); /* Color al pasar el ratón */
-                transform: scale(1.05); /* Efecto de aumento al pasar el ratón */
-                text-decoration: none; /* Mantener sin subrayado */
-            }
-
-    </style>
-
-</head>
 <div class="pagetitle">
     <h1>Servicios</h1>
     <nav>
@@ -138,51 +16,161 @@
 </div><!-- End Page Title -->
 
 
-<body>
+<section class="section dasboard">
+   
+    <style>
+        body {
+            /* background: linear-gradient(135deg, #d1e18a, #eaf3c7); */
+            font-family: 'Helvetica Neue', sans-serif;
+            margin: 0;
+            padding: 20px; /* Añadido padding para más espacio */
+        }
 
-    <div class="container-all">
-        <div class="container-general">
-            <div class="container-title">
-                <h3>Crear servicio</h3>
-            </div>
-            <div class="container-form">
-                <form class ="row g-3" asp-action="Create" method="POST">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        h3 {
+            color: #333;
+            font-weight: 700;
+            text-align: center;
+            margin: 0 0 20px; /* Separación con margen inferior */
+        }
 
+        .btn-create {
+            /*  background: linear-gradient(135deg, #b0c876, #d1e18a); */
+            color: #333;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 24px; /* Aumentado el padding */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            transition: background 0.3s, transform 0.3s ease, box-shadow 0.3s ease; /* Añadido box-shadow en la transición */
+            display: block; /* Asegurarse de que ocupe toda la línea */
+            margin: 0 auto 20px; /* Centrar el botón y dar margen inferior */
+            text-align: center;
+            text-decoration: none; /* Sin subrayado */
+            font-weight: bold; /* Texto en negrita */
+        }
+
+            .btn-create:hover {
+                /* background: linear-gradient(135deg, #a0b76e, #c0d478); */
+                transform: scale(1.05);
+                box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Sombra más intensa al pasar el ratón */
+            }
+
+        table {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+        }
+
+        th, td {
+            background: rgba(255, 255, 255, 0.7);
+            color: #333;
+            padding: 12px 15px; /* Espaciado más uniforme */
+            text-align: center;
+        }
+
+        th {
+            background: #d1e18a;
+            color: #333;
+            font-size: 14px;
+            /*  text-transform: uppercase; */
+            letter-spacing: 0.5px;
+        }
+
+        tr:hover {
+            background: #eaf3c7;
+            cursor: pointer;
+        }
+
+        .actions a {
+            /* background: linear-gradient(135deg, #d1e18a, #a0b76e); */
+            color: #fff;
+            padding: 10px 15px; /* Ajuste del padding */
+            border-radius: 5px;
+            transition: background 0.3s, transform 0.3s ease, box-shadow 0.3s ease; /* Añadido box-shadow en la transición */
+            margin: 0 5px; /* Espaciado entre botones */
+            text-decoration: none; /* Sin subrayado */
+            font-weight: 600; /* Texto en negrita */
+            display: inline-block; /* Mantener el tamaño del botón */
+        }
+
+            .actions a:hover {
+                background: linear-gradient(135deg, #b0c876, #d1e18a);
+                transform: scale(1.1);
+                box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Sombra más intensa al pasar el ratón */
+            }
+
+            .actions a.edit {
+                background: #2196F3;
+            }
+
+            .actions a.details {
+                background: #FFC107;
+            }
+
+            .actions a.delete {
+                background: #f44336;
+            }
+
+            .actions a.edit:hover {
+                background: #1976D2;
+            }
+
+            .actions a.details:hover {
+                background: #FFA000;
+            }
+
+            .actions a.delete:hover {
+                background: #d32f2f;
+            }
+    </style>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title" text-primary>Nuevo Servicio</h5>
+
+            <form class ="row g-3" asp-action="Create" method="POST">
+                <div class="col-md-12">
                     <div class="form-floating">
                         <input asp-for="Name" class="form-control" id="floatingName" placeholder="@Html.DisplayFor(Model => Model.Name)">
                         <label asp-for="Name"></label>
                         <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
+                </div>
+                <div class="col-md-12">
                     <div class="form-floating">
                         <input asp-for="Description" class="form-control" id="floatingName" placeholder="@Html.DisplayFor(Model => Model.Description)">
                         <label asp-for="Description"></label>
                         <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
+                </div>
+                <div class="col-md-12">
                     <div class="form-floating">
                         <input asp-for="Price" class="form-control" id="floatingName" placeholder="@Html.DisplayFor(Model => Model.Price)">
                         <label asp-for="Price"></label>
                         <span asp-validation-for="Price" class="text-danger"></span>
                     </div>
+                </div>
+                <div class="col-md-12">
                     <div class="form-floating">
                         <select asp-for = "CategoryId" asp-items="Model.Categories" class="form-control"> </select>
                         <label asp-for="CategoryId"></label>
                         <span asp-validation-for="CategoryId" class="text-danger"></span>
                     </div>
-                    <div class="container-button">
-                        <input type="submit" value="Crear" class="btn btn-primary" />
-                    </div>
-                </form>
-            </div>
-            <div>
-                <a asp-action="Index" class="link-back">Volver a la lista</a>
-            </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <a asp-action="Index" class="btn btn-secondary">Volver</a>
+                </div>
+            </form>
+                       
         </div>
     </div>
 
-</body>
+</section>
 
-</html>
 
 @section Scripts {
     @{

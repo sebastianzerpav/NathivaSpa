@@ -25,7 +25,7 @@ namespace AppWebSpa.Data.Entities
         public DateTime RegistrationDateTime { get; set; }
 
         [Display(Name = "¿Esta OCulta?")]
-        public bool IsHidden { get; set; }
+        public bool IsHidden { get; set; } = false;
 
         public CategoryService CategoryService { get; set; }
 

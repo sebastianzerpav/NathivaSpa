@@ -3,8 +3,7 @@ using AppWebSpa.Data;
 using AppWebSpa.Data.Entities;
 using AppWebSpa.Helpers;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+using Microsoft.CodeAnalysis.Operations;
 using AppWebSpa.Request;
 using AppWebSpa.DTOs;
 
@@ -37,10 +36,10 @@ namespace AppWebSpa.Services
         {
             try
             {
-                SpaService spaservice = _converterHelper.ToSpaService(dto);
+                SpaService spaservice = await _converterHelper.ToSpaService(dto);
 
+                //spaservice.CategoryService = await _context.CategoryServices.FirstAsync(c => c.CategoryId == dto.CategoryId);
 
-                
                 await _context.spaService.AddAsync(spaservice);
                 await _context.SaveChangesAsync();
 
@@ -78,11 +77,18 @@ namespace AppWebSpa.Services
             try
             {
                 SpaService? spaService = await _context.spaService.FirstOrDefaultAsync(s => s.IdSpaService == dto.IdSpaService);
+                
                 if(spaService is null)
                 {
-                    return ResponseHelper<SpaService>.MakeResponseFail($"No existe Blog con id '{dto.IdSpaService}'");
+                    return ResponseHelper<SpaService>.MakeResponseFail($"No existe servicio con id '{dto.IdSpaService}'");
                 }
-                spaService = _converterHelper.ToSpaService(dto);
+
+                spaService.Name = dto.Name;
+                spaService.Description = dto.Description;
+                spaService.Price = dto.Price;
+                spaService.CategoryId = dto.CategoryId;
+                spaService.CategoryService = await _context.CategoryServices.FirstAsync(c => c.CategoryId == dto.CategoryId);
+
 
                 _context.spaService.Update(spaService);
                 await _context.SaveChangesAsync();
