@@ -25,11 +25,7 @@ namespace AppWebSpa.Data.Entities
         [Required(ErrorMessage = "Debe ingresar una contraseña")]
         public string Password { get; set; }
 
-        ////Relations
-
-        ////¿Prop TipoUsuario?
-
-        //[ForeignKey("IdRole")]
-        //public Role IdRole { get; set; } //RoleManager??
+        public int IdRol { get; set; } = 0; // rol que por determinado es 0 que es usuario.  Al administrador, a nivel de base de datos nosotros lo modificamos y le asignamos el 1 que es ADMIN
+        // y ya este podra asignar los demas roles que cree.
     }
 }

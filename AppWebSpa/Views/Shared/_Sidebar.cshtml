@@ -38,8 +38,14 @@
             </a>
         </li>
 
-        
-
+        <li class="nav-item">
+            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString()=="Roles" ? "":"collapsed")"
+               asp-controller="Roles"
+               asp-action="Index">
+                <i class="bi bi-people"></i>
+                <span>Creación de roles</span>
+            </a>
+        </li>
         
 
     </ul>

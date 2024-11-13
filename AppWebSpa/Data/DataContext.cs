@@ -15,6 +15,8 @@ namespace AppWebSpa.Data
         public DbSet<User> User { get; set; } = default!;
 
         public DbSet<SpaService> spaService { get; set; }
+        public DbSet<RolesForUser> rolesForUser{ get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

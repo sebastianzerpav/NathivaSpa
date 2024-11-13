@@ -1,6 +1,7 @@
 ﻿using AppWebSpa.Data;
 using AppWebSpa.Data.Entities;
 using AppWebSpa.DTOs;
+using Humanizer;
 using Microsoft.EntityFrameworkCore;
 
 namespace AppWebSpa.Helpers
