@@ -1,8 +1,10 @@
 ﻿using AppWebSpa.Core;
+using AppWebSpa.Core.Pagination;
 using AppWebSpa.Data;
 using AppWebSpa.Data.Entities;
 using AppWebSpa.Helpers;
 using AppWebSpa.Request;
+using Azure.Core;
 using Microsoft.EntityFrameworkCore;
 using static System.Collections.Specialized.BitVector32;
 
@@ -14,7 +16,7 @@ namespace AppWebSpa.Services
         public Task<Response<CategoryService>> CreateAsync(CategoryService model);
         public Task<Response<CategoryService>> DeleteAsync(int categoryId);
         public Task<Response<CategoryService>> EditAsync(CategoryService model);
-        public Task<Response<List<CategoryService>>> GetListAsync();
+        public Task<Response<PaginationResponse<CategoryService>>> GetListAsync(PaginationRequest request);
         public Task<Response<CategoryService>> GetOneAsync(int categoryId);
         public Task<Response<CategoryService>> ToggleAsync(ToggleCategoryStatusRequest request);
 
@@ -86,18 +88,35 @@ namespace AppWebSpa.Services
             }
         }
 
-        public async Task<Response<List<CategoryService>>> GetListAsync()
+        public async Task<Response<PaginationResponse<CategoryService>>> GetListAsync(PaginationRequest request)
         {
             try
             {
-                List<CategoryService> list = await _context.CategoryServices.ToListAsync();
+                IQueryable<CategoryService> query = _context.CategoryServices.AsQueryable();
 
-                return ResponseHelper<List<CategoryService>>.MakeResponseSuccess(list);
+                if (!string.IsNullOrWhiteSpace(request.Filter))
+                {
+                    query = query.Where(s =>s.Name.ToLower().Contains(request.Filter.ToLower())); 
+                }
 
+                PagedList<CategoryService> list =await PagedList<CategoryService>.ToPagedListAsync(query, request);
+
+                PaginationResponse<CategoryService> result = new PaginationResponse<CategoryService>
+                {
+                    List=list,
+                    TotalCount=list.TotalCount,
+                    RecordsPerPage=list.RecordsPerPage,
+                    CurrentPage =list.CurrentPage,
+                    TotalPages=list.TotalPages,
+                    Filter=request.Filter,
+
+                };
+
+                return ResponseHelper<PaginationResponse<CategoryService>>.MakeResponseSuccess(result, "Categorias obtenidas con éxito");
             }
             catch (Exception ex) 
             {
-                return ResponseHelper<List<CategoryService>>.MakeResponseFail(ex);
+                return ResponseHelper<PaginationResponse<CategoryService>>.MakeResponseFail(ex);
             }
         }
 
