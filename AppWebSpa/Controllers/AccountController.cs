@@ -1,4 +1,5 @@
-﻿using AppWebSpa.DTOs;
+﻿using AppWebSpa.Data.Entities;
+using AppWebSpa.DTOs;
 using AppWebSpa.Services;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc;
@@ -25,11 +26,12 @@ namespace AppWebSpa.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginDTO dto)
         {
-            if(ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
                 Microsoft.AspNetCore.Identity.SignInResult result = await _userService.LoginAsync(dto);
 
-                if (result.Succeeded) { 
+                if (result.Succeeded)
+                {
                     return RedirectToAction("Index", "Home");
                 }
 
@@ -42,6 +44,7 @@ namespace AppWebSpa.Controllers
             return View(dto);
 
         }
+
 
         [HttpGet]
         public async Task<IActionResult> Logout() { 

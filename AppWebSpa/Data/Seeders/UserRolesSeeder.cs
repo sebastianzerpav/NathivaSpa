@@ -21,17 +21,27 @@ namespace AppWebSpa.Data.Seeders
         }
         private async Task CheckUsers()
         {
-            User? user = await _userService.GetUserAsync("admin@correo.com");
+            User? user = await _userService.GetUserAsync((await _context.User.FirstOrDefaultAsync())?.Email);
+            //(await _context.User.FirstOrDefaultAsync())?.Email
+            //User? user = await _context.User.FirstOrDefault();
+
 
             if (user == null)
             {
                 user = new User
                 {
-                    Email = "admin@correo.com",
-                    Name = "Admin",
+                    //Email = "admin@yopmail.com",
+                    //UserName = "admin@yopmail.com",
+                    //Name = "Admin",
+
+
+                    Email = "manuel@yopmail.com",
+                    Name = "Manuel",
+                    PhoneNumber = "30000000",
+                    UserName = "manuel@yopmail.com",
                 };
 
-                await _userService.AddUserAsync(user, "admin");
+                var result = await _userService.AddUserAsync(user, "admin");
 
                 string token = await _userService.GenerateEmailConfirmationTokenAsync(user);
                 await _userService.ConfirmEmailAsync(user, token);

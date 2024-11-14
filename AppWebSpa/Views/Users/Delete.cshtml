@@ -137,7 +137,7 @@
 
                 <div class="detail-item">
                     <span class="label">Teléfono</span>
-                    <span class="value">@Html.DisplayFor(model => model.Phone)</span>
+                    <span class="value">@Html.DisplayFor(model => model.PhoneNumber)</span>
                 </div>
 
                 <div class="detail-item">
@@ -150,14 +150,10 @@
                     <span class="value">@Html.DisplayFor(model => model.Email)</span>
                 </div>
 
-                <div class="detail-item">
-                    <span class="label">Contraseña</span>
-                    <span class="value">@Html.DisplayFor(model => model.Password)</span>
-                </div>
             </div>
 
             <form asp-action="Delete" style="margin-top: 1.5rem; text-align:center;">
-                <input type="hidden" asp-for="IdUser" />
+                <input type="hidden" asp-for="Id" />
                 <div class="container-button">
                     <input type="submit" value="Eliminar" class="btn btn-danger" />
                 </div>

@@ -147,7 +147,7 @@
 
                 <div class="detail-item">
                     <span class="label">Teléfono</span>
-                    <span class="value">@Html.DisplayFor(model => model.Phone)</span>
+                    <span class="value">@Html.DisplayFor(model => model.PhoneNumber)</span>
                 </div>
 
                 <div class="detail-item">
@@ -160,13 +160,9 @@
                     <span class="value">@Html.DisplayFor(model => model.Email)</span>
                 </div>
 
-                <div class="detail-item">
-                    <span class="label">Contraseña</span>
-                    <span class="value">@Html.DisplayFor(model => model.Password)</span>
-                </div>
             </div>
             <div style="text-align:center; margin-top:1rem; gap:1rem">
-                <a asp-action="Edit" asp-route-id="@Model?.IdUser" class="btn btn-primary" style="width: 100%;">Editar</a>
+                <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary" style="width: 100%;">Editar</a>
                 <a asp-action="Index" class="link-view-users" style="width: 100%;">Ver todos los usuarios</a>
             </div>
 

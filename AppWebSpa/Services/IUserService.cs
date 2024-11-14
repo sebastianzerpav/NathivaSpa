@@ -14,6 +14,7 @@ namespace AppWebSpa.Services
 
         public Task<User> GetUserAsync(string email);
         public Task<SignInResult> LoginAsync(LoginDTO dto);
+
         public Task LogoutAsync();
 
     }
@@ -57,8 +58,10 @@ namespace AppWebSpa.Services
         public async Task<SignInResult> LoginAsync(LoginDTO dto)
         {
             return await _signInManager.PasswordSignInAsync(dto.Email, dto.Password, false, false);
+
         }
 
+        
         public async Task LogoutAsync()
         {
             await _signInManager.SignOutAsync();

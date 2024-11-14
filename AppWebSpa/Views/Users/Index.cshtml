@@ -143,14 +143,14 @@
             @foreach (var item in Model) {
                 <tr>
                     <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Phone)</td>
+                    <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
                     <td>@Html.DisplayFor(modelItem => item.BirthDate)</td>
                     <td>@Html.DisplayFor(modelItem => item.Email)</td>
                     @* <td>@Html.DisplayFor(modelItem => item.Password)</td> *@
                     <td class="actions">
-                        <a href="@Url.Action("Edit", new { id = item.IdUser })" class="edit">Editar</a>
-                        <a href="@Url.Action("UserDetails", new { id = item.IdUser })" class="details">Detalles</a>
-                        <a href="@Url.Action("Delete", new { id = item.IdUser })" class="delete">Eliminar</a>
+                        <a href="@Url.Action("Edit", new { id = item.Id })" class="edit">Editar</a>
+                        <a href="@Url.Action("UserDetails", new { id = item.Id })" class="details">Detalles</a>
+                        <a href="@Url.Action("Delete", new { id = item.Id })" class="delete">Eliminar</a>
                     </td>
                 </tr>
             }

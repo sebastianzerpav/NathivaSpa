@@ -7,13 +7,14 @@ using AspNetCoreHero.ToastNotification.Abstractions;
 using AppWebSpa.Request;
 using AppWebSpa.DTOs;
 using AppWebSpa.Core.Pagination;
+using Microsoft.AspNetCore.Authorization;
 
 
 
 
 namespace AppWebSpa.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class SpaServicesController : Controller
     {
         private readonly ISpaServicesService _spaServicesService;

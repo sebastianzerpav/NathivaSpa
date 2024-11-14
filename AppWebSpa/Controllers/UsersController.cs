@@ -1,5 +1,6 @@
 ﻿using AppWebSpa.Data;
 using AppWebSpa.Data.Entities;
+using AppWebSpa.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,9 +11,11 @@ namespace AppWebSpa.Controllers
     {
         private readonly DataContext _context;
 
-        public UsersController(DataContext context)
+        IUserService _userService;
+        public UsersController(DataContext context, IUserService userService)
         {
             _context = context;
+            _userService = userService;
         }
 
         //View Index with list of Users
@@ -25,7 +28,7 @@ namespace AppWebSpa.Controllers
 
         //View specific user details
         [HttpGet]
-        public async Task<IActionResult> UserDetails(int? id)
+        public async Task<IActionResult> UserDetails(string? id)
         {
             if (id == null)
             {
@@ -33,7 +36,7 @@ namespace AppWebSpa.Controllers
             }
             else
             {
-                User? user = await _context.User.FirstOrDefaultAsync(u => u.IdUser == id);
+                User? user = await _context.User.FirstOrDefaultAsync(u => u.Id == id);
                 if (user == null) { return NotFound(); } //x2
                 else { return View(user); }
             }
@@ -56,6 +59,7 @@ namespace AppWebSpa.Controllers
                     return View(user);
                 }
                 await _context.User.AddAsync(user);
+                await _userService.AddUserAsync(user, "111");
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -65,7 +69,7 @@ namespace AppWebSpa.Controllers
 
         // View Edit
         [HttpGet]
-        public async Task<IActionResult> Edit([FromRoute] int? id)
+        public async Task<IActionResult> Edit([FromRoute] string? id)
         {
             if (id == null)
             {
@@ -73,7 +77,7 @@ namespace AppWebSpa.Controllers
             }
             else
             {
-                User? user = await _context.User.FirstOrDefaultAsync(u => u.IdUser == id);
+                User? user = await _context.User.FirstOrDefaultAsync(u => u.Id == id);
                 if (user == null)
                 {
                     return NotFound();
@@ -102,7 +106,7 @@ namespace AppWebSpa.Controllers
 
         // View Delete specific user
         [HttpGet]
-        public async Task<IActionResult> Delete([FromRoute] int? id)
+        public async Task<IActionResult> Delete([FromRoute] string? id)
         {
             if (id == null)
             {
@@ -110,7 +114,7 @@ namespace AppWebSpa.Controllers
             }
             else
             {
-                User? user = await _context.User.FirstOrDefaultAsync(u => u.IdUser == id);
+                User? user = await _context.User.FirstOrDefaultAsync(u => u.Id == id);
                 if (user == null)
                 { return NotFound(); }
 
@@ -120,9 +124,9 @@ namespace AppWebSpa.Controllers
 
         // Method Delete
         [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> EffectiveDelete(int id)
+        public async Task<IActionResult> EffectiveDelete(string id)
         {
-            User? user = await _context.User.FirstOrDefaultAsync(u => u.IdUser == id);
+            User? user = await _context.User.FirstOrDefaultAsync(u => u.Id == id);
             if (user != null)
             {
                 _context.User.Remove(user);
