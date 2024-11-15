@@ -39,7 +39,7 @@ namespace AppWebSpa.Services
             {
                 SpaService spaservice = await _converterHelper.ToSpaService(dto);
 
-                //spaservice.CategoryService = await _context.CategoryServices.FirstAsync(c => c.CategoryId == dto.CategoryId);
+                //spaservice.CategoryService = await _context.Categories.FirstAsync(c => c.CategoryId == dto.CategoryId);
 
                 await _context.spaService.AddAsync(spaservice);
                 await _context.SaveChangesAsync();
@@ -88,7 +88,7 @@ namespace AppWebSpa.Services
                 spaService.Description = dto.Description;
                 spaService.Price = dto.Price;
                 spaService.CategoryId = dto.CategoryId;
-                spaService.CategoryService = await _context.CategoryServices.FirstAsync(c => c.CategoryId == dto.CategoryId);
+                spaService.CategoryService = await _context.Categories.FirstAsync(c => c.CategoryId == dto.CategoryId);
 
 
                 _context.spaService.Update(spaService);

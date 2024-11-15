@@ -1,138 +1,137 @@
-﻿using AppWebSpa.Data;
+﻿using AppWebSpa.Core;
+using AppWebSpa.Core.Pagination;
+using AppWebSpa.Data;
 using AppWebSpa.Data.Entities;
+using AppWebSpa.DTOs;
+using AppWebSpa.Helpers;
 using AppWebSpa.Services;
+using AspNetCoreHero.ToastNotification.Abstractions;
+using Humanizer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace AppWebSpa.Controllers
 {
+    [Authorize]
     public class UsersController : Controller
     {
-        private readonly DataContext _context;
-
-        IUserService _userService;
-        public UsersController(DataContext context, IUserService userService)
+        private readonly ICombosHelper _combosHelper;
+        private readonly INotyfService _notifyService;
+        private readonly IUsersService _userService;
+        private readonly IConverterHelper _converterHelper;
+        public UsersController(IUsersService userService, ICombosHelper combosHelper, INotyfService notifyService, IConverterHelper converterHelper)
         {
-            _context = context;
             _userService = userService;
+            _combosHelper = combosHelper;
+            _notifyService = notifyService;
+            _converterHelper = converterHelper;
         }
 
         //View Index with list of Users
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index([FromQuery] int? RecordsPerPage,
+                                               [FromQuery] int? Page,
+                                               [FromQuery] string? Filter)
         {
-            IEnumerable<User> Users = await _context.User.ToListAsync();
-            return View(Users);
+            PaginationRequest request = new PaginationRequest
+            {
+                RecordsPerPage = RecordsPerPage ?? 15,
+                Page = Page ?? 1,
+                Filter = Filter
+
+            };
+
+            Response<PaginationResponse<User>> response = await _userService.GetListAsync(request);
+            return View(response.Result);
         }
 
-        //View specific user details
         [HttpGet]
-        public async Task<IActionResult> UserDetails(string? id)
+        public async Task<IActionResult> Create()
         {
-            if (id == null)
+            UserDTO dto = new UserDTO
             {
-                return NotFound(); //Podemos personalizar error
-            }
-            else
-            {
-                User? user = await _context.User.FirstOrDefaultAsync(u => u.Id == id);
-                if (user == null) { return NotFound(); } //x2
-                else { return View(user); }
-            }
+                NathivaRoles = await _combosHelper.GetComboNathivaRolesAsync(),
+            };
+            return View(dto);
         }
 
-        // View create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // Method Create - Register user
         [HttpPost]
-        public async Task<IActionResult> Create(User user)
+        public async Task<IActionResult> Create(UserDTO dto)
         {
             try
             {
                 if (!ModelState.IsValid)
                 {
-                    return View(user);
+                    _notifyService.Error("Debe ajustar los errores de validacion");
+                    dto.NathivaRoles = await _combosHelper.GetComboNathivaRolesAsync();
+                    return View(dto);
                 }
-                await _context.User.AddAsync(user);
-                await _userService.AddUserAsync(user, "111");
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                Response<User> response = await _userService.CreateAsync(dto);
+
+                if (response.IsSuccess)
+                {
+                    _notifyService.Success(response.Message);
+                    return RedirectToAction(nameof(Index));
+                }
+
+                _notifyService.Error(response.Message);
+                dto.NathivaRoles = await _combosHelper.GetComboNathivaRolesAsync();
+                return View(dto);
             }
             catch (Exception ex)
-            { return RedirectToAction(nameof(Index)); }
+            {
+                dto.NathivaRoles = await _combosHelper.GetComboNathivaRolesAsync();
+                return View(dto);
+            }
+
         }
 
-        // View Edit
         [HttpGet]
-        public async Task<IActionResult> Edit([FromRoute] string? id)
+        public async Task<IActionResult> Edit(Guid id)
         {
-            if (id == null)
+            if (Guid.Empty.Equals(id))
             {
                 return NotFound();
             }
-            else
+
+            User user = await _userService.GetUserAsync(id);
+
+            if (user == null)
             {
-                User? user = await _context.User.FirstOrDefaultAsync(u => u.Id == id);
-                if (user == null)
-                {
-                    return NotFound();
-                }
-                return View(user);
+                return NotFound();
             }
+
+            UserDTO dto = await _converterHelper.ToUserDTOAsync(user, false);
+
+            return View(dto);
         }
 
-        // Method Edit user 
         [HttpPost]
-        public async Task<IActionResult> Edit(User user)
+        [ValidateAntiForgeryToken] //Metodo para evitar secuestros de seccion, genera tokens unicos
+        public async Task<IActionResult> Edit(UserDTO dto)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                if (!ModelState.IsValid)
-                {
-                    return View(user);
-                }
-                _context.User.Update(user);
-                await _context.SaveChangesAsync();
+                _notifyService.Error("Debe ajustar los errores de validacion");
+                dto.NathivaRoles = await _combosHelper.GetComboNathivaRolesAsync();
+                return View(dto);
+            }
+
+            Response<User> response = await _userService.UpdateUserAsync(dto);
+
+            if (response.IsSuccess)
+            {
+                _notifyService.Success(response.Message);
                 return RedirectToAction(nameof(Index));
             }
-            catch (Exception ex)
-            { return RedirectToAction(nameof(Index)); }
-        }
 
-        // View Delete specific user
-        [HttpGet]
-        public async Task<IActionResult> Delete([FromRoute] string? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                User? user = await _context.User.FirstOrDefaultAsync(u => u.Id == id);
-                if (user == null)
-                { return NotFound(); }
+            _notifyService.Error(response.Message);
+            dto.NathivaRoles = await _combosHelper.GetComboNathivaRolesAsync();
+            return View(dto);
 
-                return View(user);
-            }
-        }
 
-        // Method Delete
-        [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> EffectiveDelete(string id)
-        {
-            User? user = await _context.User.FirstOrDefaultAsync(u => u.Id == id);
-            if (user != null)
-            {
-                _context.User.Remove(user);
-            }
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
     }
 }

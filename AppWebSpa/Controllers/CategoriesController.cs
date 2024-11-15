@@ -4,11 +4,13 @@ using AppWebSpa.Data.Entities;
 using AppWebSpa.Request;
 using AppWebSpa.Services;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static System.Collections.Specialized.BitVector32;
 
 namespace AppWebSpa.Controllers
 {
+    [Authorize]
     public class CategoriesController : Controller
     {
         private readonly ICategoriesService _categoriesService;
@@ -33,7 +35,7 @@ namespace AppWebSpa.Controllers
                 
             };
 
-            Response<PaginationResponse<CategoryService>> response =await _categoriesService.GetListAsync(request);
+            Response<PaginationResponse<Category>> response =await _categoriesService.GetListAsync(request);
             return View(response.Result);
         }
 
@@ -44,7 +46,7 @@ namespace AppWebSpa.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CategoryService categoryService)
+        public async Task<IActionResult> Create(Category categoryService)
         {
             try
             {
@@ -54,7 +56,7 @@ namespace AppWebSpa.Controllers
                     return View(categoryService);
                 }
 
-                Response<CategoryService> response = await _categoriesService.CreateAsync(categoryService);
+                Response<Category> response = await _categoriesService.CreateAsync(categoryService);
 
                 if (response.IsSuccess)
                 {
@@ -75,7 +77,7 @@ namespace AppWebSpa.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit([FromRoute] int id)
         {
-            Response<CategoryService> response = await _categoriesService.GetOneAsync(id);
+            Response<Category> response = await _categoriesService.GetOneAsync(id);
             if (response.IsSuccess)
             {
                 return View(response.Result);
@@ -86,7 +88,7 @@ namespace AppWebSpa.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(CategoryService categoryService)
+        public async Task<IActionResult> Edit(Category categoryService)
         {
             try
             {
@@ -96,7 +98,7 @@ namespace AppWebSpa.Controllers
                     return View(categoryService);
                 }
 
-                Response<CategoryService> response = await _categoriesService.EditAsync(categoryService);
+                Response<Category> response = await _categoriesService.EditAsync(categoryService);
 
                 if (response.IsSuccess)
                 {
@@ -117,7 +119,7 @@ namespace AppWebSpa.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            Response<CategoryService> response = await _categoriesService.DeleteAsync(id);
+            Response<Category> response = await _categoriesService.DeleteAsync(id);
             
             if (response.IsSuccess)
             {
@@ -141,7 +143,7 @@ namespace AppWebSpa.Controllers
                 CategoryId = CategoryId
             };
 
-            Response<CategoryService> response = await _categoriesService.ToggleAsync(request);
+            Response<Category> response = await _categoriesService.ToggleAsync(request);
 
             if (response.IsSuccess)
             {

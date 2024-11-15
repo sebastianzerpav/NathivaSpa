@@ -10,6 +10,8 @@ namespace AppWebSpa.Helpers
     {
         public Task<SpaService> ToSpaService(SpaServiceDTO dto);
         public Task<SpaServiceDTO> ToSpaServiceDTO(SpaService result);
+        public User ToUser(UserDTO dto);
+        public Task<UserDTO> ToUserDTOAsync(User user, bool isNew = true);
     }
 
     public class ConverterHelper : IConverterHelper
@@ -34,7 +36,7 @@ namespace AppWebSpa.Helpers
                 RegistrationDateTime = dto.RegistrationDateTime,
                 IsHidden =dto.IsHidden,
                 CategoryId=dto.CategoryId,
-                CategoryService = await _context.CategoryServices.FirstAsync(c => c.CategoryId == dto.CategoryId),
+                CategoryService = await _context.Categories.FirstAsync(c => c.CategoryId == dto.CategoryId),
 
             };
         }
@@ -51,6 +53,37 @@ namespace AppWebSpa.Helpers
                 IsHidden = result.IsHidden,
                 CategoryId = result.CategoryId,
                 Categories = await _combosHelper.GetComboCategories()
+            };
+        }
+
+        public User ToUser(UserDTO dto)
+        {
+            return new User
+            {
+                Id = dto.Id.ToString(),
+                Document = dto.Document,
+                Name = dto.Name,
+                BirthDate = dto.BirthDate,
+                Email = dto.Email,
+                UserName = dto.Email,
+                NathivaRoleId = dto.NathivaRoleId,
+                PhoneNumber = dto.PhoneNumber,
+
+            };
+        }
+
+        public async Task<UserDTO> ToUserDTOAsync(User user, bool isNew= true)
+        {
+            return new UserDTO
+            {
+                Id = isNew ? Guid.NewGuid() : Guid.Parse(user.Id),
+                Document = user.Document,
+                Name = user.Name,
+                Email = user.Email,
+                NathivaRoles = await _combosHelper.GetComboNathivaRolesAsync(),
+                NathivaRoleId=user.NathivaRoleId,
+                PhoneNumber=user.PhoneNumber
+
             };
         }
     }

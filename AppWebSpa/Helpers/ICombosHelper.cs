@@ -7,6 +7,7 @@ namespace AppWebSpa.Helpers
     public interface ICombosHelper
     {
         public Task<IEnumerable<SelectListItem>> GetComboCategories();
+        Task<IEnumerable<SelectListItem>> GetComboNathivaRolesAsync();
     }
 
     public class CombosHelper : ICombosHelper
@@ -20,7 +21,7 @@ namespace AppWebSpa.Helpers
 
         public async Task<IEnumerable<SelectListItem>> GetComboCategories()
         {
-            List<SelectListItem> List = await _context.CategoryServices.Select(s => new SelectListItem
+            List<SelectListItem> List = await _context.Categories.Select(s => new SelectListItem
             {
                 Text = s.Name,
                 Value = s.CategoryId.ToString(),
@@ -34,6 +35,24 @@ namespace AppWebSpa.Helpers
             });
             return List;
 
+        }
+
+        public async Task<IEnumerable<SelectListItem>> GetComboNathivaRolesAsync()
+        {
+        
+            List<SelectListItem> List = await _context.NathivaRoles.Select(r => new SelectListItem
+            {
+                Text = r.Name,
+                Value = r.Id.ToString(),
+
+            }).ToListAsync();
+
+            List.Insert(0, new SelectListItem
+            {
+                Text = "[Seleccione un rol...]",
+                Value = "0"
+            });
+            return List;
         }
     }
 }

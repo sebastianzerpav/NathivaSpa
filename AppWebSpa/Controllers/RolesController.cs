@@ -19,7 +19,7 @@ namespace AppWebSpa.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            IEnumerable<RolesForUser> roles = await _context.rolesForUser.ToListAsync();
+            IEnumerable<NathivaRole> roles = await _context.NathivaRoles.ToListAsync();
             return View(roles);
         }
 
@@ -33,7 +33,7 @@ namespace AppWebSpa.Controllers
             }
             else
             {
-                RolesForUser? role = await _context.rolesForUser.FirstOrDefaultAsync(r => r.IdRol == id);
+                NathivaRole? role = await _context.NathivaRoles.FirstOrDefaultAsync(r => r.Id == id);
                 if (role == null)
                 {
                     return NotFound();
@@ -52,7 +52,7 @@ namespace AppWebSpa.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(RolesForUser rol)
+        public async Task<IActionResult> Create(NathivaRole rol)
         {
             try
             {
@@ -60,7 +60,7 @@ namespace AppWebSpa.Controllers
                 {
                     return View(rol);
                 }
-                await _context.rolesForUser.AddAsync(rol);
+                await _context.NathivaRoles.AddAsync(rol);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -80,7 +80,7 @@ namespace AppWebSpa.Controllers
             }
             else
             {
-                RolesForUser? role = await _context.rolesForUser.FirstOrDefaultAsync(r => r.IdRol == id);
+                NathivaRole? role = await _context.NathivaRoles.FirstOrDefaultAsync(r => r.Id == id);
                 if (role == null)
                 {
                     return NotFound();
@@ -91,7 +91,7 @@ namespace AppWebSpa.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Edit(RolesForUser rol)
+        public async Task<IActionResult> Edit(NathivaRole rol)
         {
             try
             {
@@ -99,7 +99,7 @@ namespace AppWebSpa.Controllers
                 {
                     return View(rol);
                 }
-                _context.rolesForUser.Update(rol);
+                _context.NathivaRoles.Update(rol);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -119,7 +119,7 @@ namespace AppWebSpa.Controllers
             }
             else
             {
-                RolesForUser? role = await _context.rolesForUser.FirstOrDefaultAsync(r => r.IdRol == id);
+                NathivaRole? role = await _context.NathivaRoles.FirstOrDefaultAsync(r => r.Id == id);
                 if (role == null)
                 {
                     return NotFound();
@@ -132,10 +132,10 @@ namespace AppWebSpa.Controllers
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> EffectiveDelete(int id)
         {
-            RolesForUser? role = await _context.rolesForUser.FirstOrDefaultAsync(r => r.IdRol == id);
+            NathivaRole? role = await _context.NathivaRoles.FirstOrDefaultAsync(r => r.Id == id);
             if (role != null)
             {
-                _context.rolesForUser.Remove(role);
+                _context.NathivaRoles.Remove(role);
             }
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -146,7 +146,7 @@ namespace AppWebSpa.Controllers
         public async Task<IActionResult> AssignRole()
         {
             var users = await _context.User.ToListAsync();
-            var roles = await _context.rolesForUser.ToListAsync();
+            var roles = await _context.NathivaRoles.ToListAsync();
 
             var model = new AssignRoleViewModel
             {
@@ -166,8 +166,8 @@ namespace AppWebSpa.Controllers
                 return NotFound("Usuario no encontrado");
             }
 
-            user.IdRol = roleId;
-            _context.Entry(user).Property(u => u.IdRol).IsModified = true;
+            user.NathivaRoleId = roleId;
+            _context.Entry(user).Property(u => u.NathivaRoleId).IsModified = true;
 
             await _context.SaveChangesAsync();
 

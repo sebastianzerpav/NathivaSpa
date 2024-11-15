@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AppWebSpa.Data.Entities.RolesForUser>
+﻿@model IEnumerable<AppWebSpa.Data.Entities.NathivaRole>
 
 @{
     ViewData["Title"] = "Roles";
@@ -145,9 +145,9 @@
                     <td>@Html.DisplayFor(modelItem => item.Name)</td>
                     <td>@Html.DisplayFor(modelItem => item.State)</td>
                     <td class="actions">
-                        <a href="@Url.Action("Edit", new { id = item.IdRol })" class="edit">Editar</a>
-                        <a href="@Url.Action("RolesDetails", new { id = item.IdRol })" class="details">Detalles</a>
-                        <a href="@Url.Action("Delete", new { id = item.IdRol })" class="delete">Eliminar</a> 
+                        <a href="@Url.Action("Edit", new { id = item.Id })" class="edit">Editar</a>
+                        <a href="@Url.Action("RolesDetails", new { id = item.Id })" class="details">Detalles</a>
+                        <a href="@Url.Action("Delete", new { id = item.Id })" class="delete">Eliminar</a> 
                     </td>
                 </tr>
             }

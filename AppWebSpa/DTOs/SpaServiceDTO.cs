@@ -30,7 +30,7 @@ namespace AppWebSpa.DTOs
         [Display(Name = "¿Esta OCulta?")]
         public bool IsHidden { get; set; } = false;
 
-        public CategoryService? CategoryService { get; set; }
+        public Category? CategoryService { get; set; }
 
         [Display(Name = "Categoria")]
         [Required(ErrorMessage = "El campo '{0}' es requerido")]

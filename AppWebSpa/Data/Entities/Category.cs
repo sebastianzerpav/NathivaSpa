@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace AppWebSpa.Data.Entities
 {
-    public class CategoryService
+    public class Category
     {
         [Key]
         public int CategoryId { get; set; }

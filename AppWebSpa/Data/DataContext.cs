@@ -11,30 +11,64 @@ namespace AppWebSpa.Data
         {
         }
         
-        public DbSet<CategoryService> CategoryServices { get; set; }
+        public DbSet<Category> Categories { get; set; }
         public DbSet<User> User { get; set; } = default!;
-
         public DbSet<SpaService> spaService { get; set; }
-        public DbSet<RolesForUser> rolesForUser{ get; set; }
+        public DbSet<NathivaRole> NathivaRoles{ get; set; }
+        public DbSet<Permission> Permissions { get; set; }
+        public DbSet<RolePermission> RolePermissions { get; set; }
 
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+
+        protected override void OnModelCreating(ModelBuilder builder)
         {
+            ConfiguredKeys(builder);
+            ConfigureIndexes(builder);
+
+            base.OnModelCreating(builder);
+
             // PK
-            modelBuilder.Entity<IdentityUserLogin<string>>()
+            builder.Entity<IdentityUserLogin<string>>()
                 .HasKey(x => new { x.LoginProvider, x.ProviderKey });
 
-            modelBuilder.Entity<IdentityUserRole<string>>()
+            builder.Entity<IdentityUserRole<string>>()
                 .HasKey(x => new { x.UserId, x.RoleId });
 
-            modelBuilder.Entity<IdentityUserToken<string>>()
+            builder.Entity<IdentityUserToken<string>>()
                 .HasKey(x => new { x.UserId, x.LoginProvider, x.Name });
 
             // SpaServices
-            modelBuilder.Entity<SpaService>().Property(s => s.Price)
-                .HasColumnType("decimal(38,2)");
+            builder.Entity<SpaService>().Property(s => s.Price)
+                .HasColumnType("decimal(38,0)");
         }
 
+        //Index: son restricciones a las tablas en la base de datos, en este caso campos de las tablas que deben ser unicos
+        private void ConfigureIndexes(ModelBuilder builder)
+        {
+            //Roles
+            builder.Entity<NathivaRole>().HasIndex(r => r.Name).IsUnique();
+
+            //Categories
+            builder.Entity<Category>().HasIndex(c => c.Name).IsUnique();
+
+            //Users
+            builder.Entity<User>().HasIndex(u => u.Document).IsUnique();
+        }
+
+        private void ConfiguredKeys(ModelBuilder builder)
+        {
+            //Role Permissions Clave foranea compuesta
+            builder.Entity<RolePermission>().HasKey(rp => new { rp.RoleId, rp.PermissionId });
+            builder.Entity<RolePermission>().HasOne(rp => rp.Role)
+                                            .WithMany(r => r.RolePermisions)
+                                            .HasForeignKey(rp => rp.RoleId);
+
+            builder.Entity<RolePermission>().HasOne(rp => rp.Permission)
+                                            .WithMany(p => p.RolePermisions)
+                                            .HasForeignKey(rp => rp.PermissionId);
+        }
+
+        
 
     }
 }

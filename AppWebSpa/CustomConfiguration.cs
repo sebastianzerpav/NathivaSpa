@@ -25,8 +25,10 @@ namespace AppWebSpa
             //services
             AddServices(builder);
 
-            // Identity and Access Management
+            // IAM: Identity and Access Management- sistema de autentiticacion y gestion de identidad
             AddIAM(builder);
+
+            //PAM: Privileged access Management
 
             //Toast Notification
             builder.Services.AddNotyf(config => 
@@ -44,6 +46,7 @@ namespace AppWebSpa
             builder.Services.AddIdentity<User, IdentityRole>(conf =>
             {
                 conf.User.RequireUniqueEmail = true;
+                //Seguridad de la contraseña
                 conf.Password.RequireDigit = false;
                 conf.Password.RequiredUniqueChars = 0;
                 conf.Password.RequireLowercase = false;
@@ -53,23 +56,29 @@ namespace AppWebSpa
             }).AddEntityFrameworkStores<DataContext>()
               .AddDefaultTokenProviders();
 
+            //configuracion de Tokens o cookies
             builder.Services.ConfigureApplicationCookie(conf =>
             {
                 conf.Cookie.Name = "Auth";
+                //En cuanto expira la Cookie
                 conf.ExpireTimeSpan = TimeSpan.FromDays(100);
+                //Donde dirigir cuando expira la cookie
                 conf.LoginPath = "/Account/Login";
+                //Ruta para acceso denegado
                 conf.AccessDeniedPath = "/Account/NotAuthorized";
             });
         }
+
         public static void AddServices(WebApplicationBuilder builder)
         {
             //Services
             builder.Services.AddScoped<ISpaServicesService, SpaServicesService>();
             builder.Services.AddScoped<ICategoriesService, CategoriesService>();
-            builder.Services.AddScoped<IUserService, UsersService>();
+            builder.Services.AddScoped<IUsersService, UsersService>();
 
             //SeedDb
             builder.Services.AddTransient<SeedDb>();
+
             //Helpers
             builder.Services.AddScoped<IConverterHelper, ConverterHelper>();
             builder.Services.AddScoped<ICombosHelper, CombosHelper>();
@@ -85,10 +94,12 @@ namespace AppWebSpa
 
         }
 
+        //INYECCION DEL SEEDER- FORMA DE INYECCION EN EL PROGRAM
         private static void SeedData(WebApplication app)
         {
             IServiceScopeFactory scopeFactory = app.Services.GetService<IServiceScopeFactory>();
-            using (IServiceScope scope = scopeFactory!.CreateScope()) { 
+            using (IServiceScope scope = scopeFactory!.CreateScope()) 
+            { 
                 SeedDb service = scope.ServiceProvider.GetService<SeedDb>();
                 service!.SeedAsync().Wait();
             }

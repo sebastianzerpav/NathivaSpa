@@ -1,20 +1,24 @@
-﻿@model IEnumerable<AppWebSpa.Data.Entities.User>
+﻿@model PaginationResponse<User>
 
 @{
     ViewData["Title"] = "Usuarios";
 }
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewData["Title"]</title>
+<div class="pagetitle">
+    <h1>Usuarios</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Inicio</a></li>
+            <li class="breadcrumb-item active">usuarios</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
 
-    <!-- Estilos -->
+<section class="section dashboard">
+
     <style>
         body {
-            background: linear-gradient(135deg, #d1e18a, #eaf3c7);
+            /* background: linear-gradient(135deg, #d1e18a, #eaf3c7); */
             font-family: 'Helvetica Neue', sans-serif;
             margin: 0;
             padding: 20px; /* Añadido padding para más espacio */
@@ -28,7 +32,7 @@
         }
 
         .btn-create {
-            background: linear-gradient(135deg, #b0c876, #d1e18a);
+            /*  background: linear-gradient(135deg, #b0c876, #d1e18a); */
             color: #333;
             font-size: 16px;
             border: none;
@@ -44,7 +48,7 @@
         }
 
             .btn-create:hover {
-                background: linear-gradient(135deg, #a0b76e, #c0d478);
+                /* background: linear-gradient(135deg, #a0b76e, #c0d478); */
                 transform: scale(1.05);
                 box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Sombra más intensa al pasar el ratón */
             }
@@ -69,7 +73,7 @@
             background: #d1e18a;
             color: #333;
             font-size: 14px;
-           /*  text-transform: uppercase; */
+            /*  text-transform: uppercase; */
             letter-spacing: 0.5px;
         }
 
@@ -79,7 +83,7 @@
         }
 
         .actions a {
-            background: linear-gradient(135deg, #d1e18a, #a0b76e);
+            /* background: linear-gradient(135deg, #d1e18a, #a0b76e); */
             color: #fff;
             padding: 10px 15px; /* Ajuste del padding */
             border-radius: 5px;
@@ -121,41 +125,171 @@
             }
     </style>
 
-</head>
-<body>
     <div class="container-title">
-        <h3>Listado de usuarios registrados</h3>
-        <a href="@Url.Action("Create")" class="btn-create">Crear nuevo usuario</a>
+        <h3>Usuarios Registrados</h3>
+        <a asp-action="Create" class="btn-create">Crear usuario</a>
     </div>
 
-    <table>
+    <form class="navbar-search" asp-action="Index" method="GET">
+
+        <input type="hidden" name="Page" value="@Model.CurrentPage" />
+        <input type="hidden" name="RecordsPerPage" value="@Model.RecordsPerPage" />
+
+        <div class="input-group mb-3">
+
+            <input type="text" class="form-control bg-light border-0 small" placeholder="Buscar...." aria-label="serch" asp-form="@Model.Filter" name="Filter" />
+
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="Submit">
+                    <i class="bi bi-search"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+    </form>
+
+    <table class="table table bordered">
         <thead>
             <tr>
-                <th>Nombre</th>
-                <th>Teléfono</th>
-                <th>Fecha de nacimiento</th>
-                <th>Correo electrónico</th>
-                @* <th>@Html.DisplayNameFor(model => model.Password)</th> *@
-                <th>Acciones</th>
+                <th scope="col">Documento</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Telefono</th>
+                <th scope="col">Email</th>
+                <th scope="col">Fecha de Nacimiento</th>
+                <th scope="col">Rol</th>
+
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model) {
+            @foreach (User item in Model.List)
+            {
                 <tr>
-                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                    <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
-                    <td>@Html.DisplayFor(modelItem => item.BirthDate)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                    @* <td>@Html.DisplayFor(modelItem => item.Password)</td> *@
+                    <td>@item.Document</td>
+                    <td>@item.Name</td>
+                    <td>@item.PhoneNumber</td>
+                    <td>@item.Email</td>
+                    <td>@item.BirthDate</td>
+                    <td>@item.NathivaRole.Name</td>
                     <td class="actions">
-                        <a href="@Url.Action("Edit", new { id = item.Id })" class="edit">Editar</a>
-                        <a href="@Url.Action("UserDetails", new { id = item.Id })" class="details">Detalles</a>
-                        <a href="@Url.Action("Delete", new { id = item.Id })" class="delete">Eliminar</a>
+                        
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning"><i class="b bi-pencil"></i></a>
+                        <form asp-action="Delete" asp-route-id="@item.Id" style="display: contents;">
+                            <button class="btn btn-danger btn-sm btnDelete"><i class="bi bi-trash-fill"></i></button>
+                        </form>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 
-</body>
-</html>
+    <nav aria-label="">
+        <ul class="pagination justify-content-center">
+
+            @* primero *@
+            <li class="Page-item">
+                <a class="page-link  @(Model.CurrentPage==1 ? "disabled" : "")"
+                   asp-action="Index"
+                   asp-route-page="1"
+                   asp-route-Filter="@Model.Filter"
+                   asp-route-RecordsPerPage="@Model.RecordsPerPage">
+                    &laquo;
+
+                </a>
+
+            </li>
+
+            @* Anterior *@
+            <li class="Page-item">
+                <a class="page-link  @(!Model.HasPrevious ? "disabled" : "")"
+                   asp-action="Index"
+                   asp-route-page="@(Model.CurrentPage - 1)"
+                   asp-route-Filter="@Model.Filter"
+                   asp-route-RecordsPerPage="@Model.RecordsPerPage">
+                    &lsaquo;
+
+                </a>
+
+            </li>
+
+            @* Paginas *@
+            @foreach (int page in Model.Pages)
+            {
+                <li class="Page-item">
+                    <a class="page-link  @(Model.CurrentPage == page ? "disabled" : "")"
+                       asp-action="Index"
+                       asp-route-page="@(page)"
+                       asp-route-Filter="@Model.Filter"
+                       asp-route-RecordsPerPage="@Model.RecordsPerPage">
+                        @(page)
+
+                    </a>
+
+                </li>
+            }
+
+
+
+            @* Siguiente *@
+            <li class="Page-item">
+                <a class="page-link  @(!Model.HasNext ? "disabled" : "")"
+                   asp-action="Index"
+                   asp-route-page="@(Model.CurrentPage + 1)"
+                   asp-route-Filter="@Model.Filter"
+                   asp-route-RecordsPerPage="@Model.RecordsPerPage">
+                    &rsaquo;
+
+                </a>
+
+            </li>
+
+            @* Ultimo *@
+            <li class="Page-item">
+                <a class="page-link  @(Model.TotalPages==Model.CurrentPage ? "disabled" : "")"
+                   asp-action="Index"
+                   asp-route-page="@(Model.TotalPages)"
+                   asp-route-Filter="@Model.Filter"
+                   asp-route-RecordsPerPage="@Model.RecordsPerPage">
+                    &raquo;
+
+                </a>
+
+            </li>
+
+        </ul>
+    </nav>
+
+</section>
+
+
+@section Scripts {
+
+    <script>
+        $(document).ready(function () {
+
+            $('.btnDelete').click(function (event) {
+
+                event.preventDefault();
+
+                Swal.fire({
+
+                    title: "¿Desea Eliminar el usuario",
+                    text: "No podra revertirlo",
+                    icon: "question",
+                    showCancelButton: true,
+
+                }).then((result) => {
+
+                    if (result.isConfirmed) {
+                        const form = $(this).closest('form');
+                        form.submit();
+                    }
+
+                });
+            });
+        });
+    </script>
+}
+
+

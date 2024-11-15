@@ -1,5 +1,4 @@
-﻿using AppWebSpa.Data.Entities;
-using AppWebSpa.DTOs;
+﻿using AppWebSpa.DTOs;
 using AppWebSpa.Services;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc;
@@ -8,10 +7,10 @@ namespace AppWebSpa.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly IUserService _userService;
+        private readonly IUsersService _userService;
         private readonly INotyfService _notifyService;
 
-        public AccountController(IUserService userService, INotyfService notifyService)
+        public AccountController(IUsersService userService, INotyfService notifyService)
         {
             _userService = userService;
             _notifyService = notifyService;

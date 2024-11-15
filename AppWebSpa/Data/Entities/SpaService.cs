@@ -27,7 +27,7 @@ namespace AppWebSpa.Data.Entities
         [Display(Name = "¿Esta OCulta?")]
         public bool IsHidden { get; set; } = false;
 
-        public CategoryService CategoryService { get; set; }
+        public Category CategoryService { get; set; }
 
         public int CategoryId{ get; set; }
 

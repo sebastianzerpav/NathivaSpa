@@ -1,4 +1,4 @@
-﻿@model AppWebSpa.Data.Entities.RolesForUser
+﻿@model AppWebSpa.Data.Entities.NathivaRole
 
 @{
     ViewData["Title"] = "Editar Rol";
@@ -131,7 +131,7 @@
             <div class="container-form">
                 <form asp-action="Edit">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="IdRol" />
+                    <input type="hidden" asp-for="Id" />
 
                     <div class="form-group">
                         <label asp-for="Name" class="control-label">Nombre</label>

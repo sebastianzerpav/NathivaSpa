@@ -3,7 +3,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
         <li class="nav-item">
-            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString()=="Sections" ? "":"collapsed")"
+            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString()=="Home" ? "":"collapsed")"
                asp-controller="Home"
                asp-action="Index">
                 <i class="bi bi-grid"></i>
@@ -15,7 +15,7 @@
             <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString()=="Categories" ? "":"collapsed")"
                asp-controller="Categories"
                asp-action="Index">
-                <i class="bi bi-people"></i>
+                <i class="bi bi-flower3"></i>
                 <span>Categorias</span>
             </a>
         </li>

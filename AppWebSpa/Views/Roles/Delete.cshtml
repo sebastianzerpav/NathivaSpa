@@ -1,4 +1,4 @@
-﻿@model AppWebSpa.Data.Entities.RolesForUser
+﻿@model AppWebSpa.Data.Entities.NathivaRole
 
 @{
     ViewData["Title"] = "Eliminar Rol";
@@ -135,7 +135,7 @@
             </div>
 
             <form asp-action="Delete" style="margin-top: 1.5rem; text-align:center;">
-                <input type="hidden" asp-for="IdRol" />
+                <input type="hidden" asp-for="Id" />
                 <div class="container-button">
                     <input type="submit" value="Eliminar" class="btn btn-danger" />
                 </div>

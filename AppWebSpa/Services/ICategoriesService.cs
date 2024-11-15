@@ -13,12 +13,12 @@ namespace AppWebSpa.Services
 {
     public interface ICategoriesService
     {
-        public Task<Response<CategoryService>> CreateAsync(CategoryService model);
-        public Task<Response<CategoryService>> DeleteAsync(int categoryId);
-        public Task<Response<CategoryService>> EditAsync(CategoryService model);
-        public Task<Response<PaginationResponse<CategoryService>>> GetListAsync(PaginationRequest request);
-        public Task<Response<CategoryService>> GetOneAsync(int categoryId);
-        public Task<Response<CategoryService>> ToggleAsync(ToggleCategoryStatusRequest request);
+        public Task<Response<Category>> CreateAsync(Category model);
+        public Task<Response<Category>> DeleteAsync(int categoryId);
+        public Task<Response<Category>> EditAsync(Category model);
+        public Task<Response<PaginationResponse<Category>>> GetListAsync(PaginationRequest request);
+        public Task<Response<Category>> GetOneAsync(int categoryId);
+        public Task<Response<Category>> ToggleAsync(ToggleCategoryStatusRequest request);
 
 
     }
@@ -33,75 +33,75 @@ namespace AppWebSpa.Services
 
         }
 
-        public async Task<Response<CategoryService>> CreateAsync(CategoryService model)
+        public async Task<Response<Category>> CreateAsync(Category model)
         {
             try
             {
-                CategoryService categoryService = new CategoryService
+                Category categoryService = new Category
                 {
                     Name = model.Name,
                     Description = model.Description,
                 };
-                await _context.CategoryServices.AddAsync(categoryService);
+                await _context.Categories.AddAsync(categoryService);
                 await _context.SaveChangesAsync();
-                return ResponseHelper<CategoryService>.MakeResponseSuccess(categoryService, "Categoria creada con éxito");
+                return ResponseHelper<Category>.MakeResponseSuccess(categoryService, "Categoria creada con éxito");
             }
             catch (Exception ex)
             {
-                return ResponseHelper<CategoryService>.MakeResponseFail(ex);
+                return ResponseHelper<Category>.MakeResponseFail(ex);
             }
         }
 
-        public async Task<Response<CategoryService>> DeleteAsync(int categoryId)
+        public async Task<Response<Category>> DeleteAsync(int categoryId)
         {
             try
             {
-                Response<CategoryService> response = await GetOneAsync(categoryId);
+                Response<Category> response = await GetOneAsync(categoryId);
 
                 if (!response.IsSuccess)
                 {
                     return response;
                 }
-                _context.CategoryServices.Remove(response.Result);
+                _context.Categories.Remove(response.Result);
                 await _context.SaveChangesAsync();
-                return ResponseHelper<CategoryService>.MakeResponseSuccess(null, "Categoria eliminada con éxito");
+                return ResponseHelper<Category>.MakeResponseSuccess(null, "Categoria eliminada con éxito");
             }
             catch (Exception ex)
             {
-                return ResponseHelper<CategoryService>.MakeResponseFail(ex);
+                return ResponseHelper<Category>.MakeResponseFail(ex);
             }
 
         }
 
-    public async Task<Response<CategoryService>> EditAsync(CategoryService model)
+    public async Task<Response<Category>> EditAsync(Category model)
         {
             try
             {
-                _context.CategoryServices.Update(model);
+                _context.Categories.Update(model);
                 await _context.SaveChangesAsync();
 
-                return ResponseHelper<CategoryService>.MakeResponseSuccess(model, "Categoria editada con éxito");
+                return ResponseHelper<Category>.MakeResponseSuccess(model, "Categoria editada con éxito");
             }
             catch (Exception ex)
             {
-                return ResponseHelper<CategoryService>.MakeResponseFail(ex);
+                return ResponseHelper<Category>.MakeResponseFail(ex);
             }
         }
 
-        public async Task<Response<PaginationResponse<CategoryService>>> GetListAsync(PaginationRequest request)
+        public async Task<Response<PaginationResponse<Category>>> GetListAsync(PaginationRequest request)
         {
             try
             {
-                IQueryable<CategoryService> query = _context.CategoryServices.AsQueryable();
+                IQueryable<Category> query = _context.Categories.AsQueryable();
 
                 if (!string.IsNullOrWhiteSpace(request.Filter))
                 {
                     query = query.Where(s =>s.Name.ToLower().Contains(request.Filter.ToLower())); 
                 }
 
-                PagedList<CategoryService> list =await PagedList<CategoryService>.ToPagedListAsync(query, request);
+                PagedList<Category> list =await PagedList<Category>.ToPagedListAsync(query, request);
 
-                PaginationResponse<CategoryService> result = new PaginationResponse<CategoryService>
+                PaginationResponse<Category> result = new PaginationResponse<Category>
                 {
                     List=list,
                     TotalCount=list.TotalCount,
@@ -112,54 +112,54 @@ namespace AppWebSpa.Services
 
                 };
 
-                return ResponseHelper<PaginationResponse<CategoryService>>.MakeResponseSuccess(result, "Categorias obtenidas con éxito");
+                return ResponseHelper<PaginationResponse<Category>>.MakeResponseSuccess(result, "Categorias obtenidas con éxito");
             }
             catch (Exception ex) 
             {
-                return ResponseHelper<PaginationResponse<CategoryService>>.MakeResponseFail(ex);
+                return ResponseHelper<PaginationResponse<Category>>.MakeResponseFail(ex);
             }
         }
 
-        public async Task<Response<CategoryService>> GetOneAsync(int categoryId)
+        public async Task<Response<Category>> GetOneAsync(int categoryId)
         {
             try
             {
-                CategoryService? categoryService = await _context.CategoryServices.FirstOrDefaultAsync(s => s.CategoryId == categoryId);
+                Category? categoryService = await _context.Categories.FirstOrDefaultAsync(s => s.CategoryId == categoryId);
 
                 if (categoryService is null)
                 {
-                    return ResponseHelper<CategoryService>.MakeResponseFail("la Categoria con el Id indicado no existe");
+                    return ResponseHelper<Category>.MakeResponseFail("la Categoria con el Id indicado no existe");
                 }
 
-                return ResponseHelper<CategoryService>.MakeResponseSuccess(categoryService);
+                return ResponseHelper<Category>.MakeResponseSuccess(categoryService);
             }
             catch (Exception ex)
             {
-                return ResponseHelper<CategoryService>.MakeResponseFail(ex);
+                return ResponseHelper<Category>.MakeResponseFail(ex);
             }
         }
 
-        public async Task<Response<CategoryService>> ToggleAsync(ToggleCategoryStatusRequest request)
+        public async Task<Response<Category>> ToggleAsync(ToggleCategoryStatusRequest request)
         {
             try
             {
-                Response<CategoryService> response = await GetOneAsync(request.CategoryId);
+                Response<Category> response = await GetOneAsync(request.CategoryId);
 
                 if (!response.IsSuccess)
                 {
                     return response;
                 }
-                CategoryService categoryService = response.Result;
+                Category categoryService = response.Result;
 
                 categoryService.IsHidden = request.Hide;
-                _context.CategoryServices.Update(categoryService);
+                _context.Categories.Update(categoryService);
                 await _context.SaveChangesAsync();
 
-                return ResponseHelper<CategoryService>.MakeResponseSuccess(null, "Categoria actualizada con éxito");
+                return ResponseHelper<Category>.MakeResponseSuccess(null, "Categoria actualizada con éxito");
             }
             catch (Exception ex)
             {
-                return ResponseHelper<CategoryService>.MakeResponseFail(ex);
+                return ResponseHelper<Category>.MakeResponseFail(ex);
             }
         }
     }
