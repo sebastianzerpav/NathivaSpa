@@ -14,7 +14,7 @@ namespace AppWebSpa.Data.Seeders
 
         public async Task SeedAsync()
         {
-            List<Permission> permissions = [.. SpaServices(), .. Categories()];
+            List<Permission> permissions = [.. SpaServices(), .. Categories(), .. Users(), .. Roles()];
 
             foreach (Permission permission in permissions)
             {
@@ -34,10 +34,10 @@ namespace AppWebSpa.Data.Seeders
         {
             return new List<Permission>
             {
-                new Permission { Name = "showSpaServices", Description="Ver Servicios", Module="SpaServices"},
-                new Permission { Name = "createSpaServices", Description="Crear Servicios", Module="SpaServices"},
-                new Permission { Name = "editSpaServices", Description="Editar Servicios", Module="SpaServices"},
-                new Permission { Name = "deleteSpaServices", Description="Eliminar Servicios", Module="SpaServices"},
+                new Permission { Name = "showSpaServices", Description="Ver Servicios", Module="Servicios"},
+                new Permission { Name = "createSpaServices", Description="Crear Servicios", Module="Servicios"},
+                new Permission { Name = "updateSpaServices", Description="Editar Servicios", Module="Servicios"},
+                new Permission { Name = "deleteSpaServices", Description="Eliminar Servicios", Module="Servicios"},
             };
         }
 
@@ -45,10 +45,32 @@ namespace AppWebSpa.Data.Seeders
         {
             return new List<Permission>
             {
-                new Permission { Name = "showCategories", Description="Ver Categorias", Module="Categories"},
-                new Permission { Name = "createCategories", Description="Crear Categorias", Module="Categories"},
-                new Permission { Name = "editCategories", Description="Editar Categorias", Module="Categories"},
-                new Permission { Name = "deleteCategories", Description="Eliminar Categorias", Module="Categories"},
+                new Permission { Name = "showCategories", Description="Ver Categorias", Module="Categorias"},
+                new Permission { Name = "createCategories", Description="Crear Categorias", Module="Categorias"},
+                new Permission { Name = "updateCategories", Description="Editar Categorias", Module="Categorias"},
+                new Permission { Name = "deleteCategories", Description="Eliminar Categorias", Module="Categorias"},
+            };
+        }
+
+        private List<Permission> Users()
+        {
+            return new List<Permission>
+            {
+                new Permission { Name = "showUsers", Description="Ver Usuarios", Module="Usuarios"},
+                new Permission { Name = "createUsers", Description="Crear Usuarios", Module="Usuarios"},
+                new Permission { Name = "updateUsers", Description="Editar Usuarios", Module="Usuarios"},
+                new Permission { Name = "deleteUsers", Description="Eliminar Usuarios", Module="Usuarios"},
+            };
+        }
+
+        private List<Permission> Roles()
+        {
+            return new List<Permission>
+            {
+                new Permission { Name = "showRoles", Description="Ver Roles", Module="Roles"},
+                new Permission { Name = "createRoles", Description="Crear Roles", Module="Roles"},
+                new Permission { Name = "updateRoles", Description="Editar Roles", Module="Roles"},
+                new Permission { Name = "deleteRoles", Description="Eliminar Roles", Module="Roles"},
             };
         }
     }

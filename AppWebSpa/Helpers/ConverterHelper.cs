@@ -8,6 +8,8 @@ namespace AppWebSpa.Helpers
 {
     public interface IConverterHelper
     {
+        public NathivaRole ToRole(NathivaRoleDTO dto);
+        public Task<NathivaRoleDTO> ToRoleDTOAsync(NathivaRole role);
         public Task<SpaService> ToSpaService(SpaServiceDTO dto);
         public Task<SpaServiceDTO> ToSpaServiceDTO(SpaService result);
         public User ToUser(UserDTO dto);
@@ -23,6 +25,37 @@ namespace AppWebSpa.Helpers
         {
             _combosHelper = combosHelper;
             _context = context;
+        }
+
+        public NathivaRole ToRole(NathivaRoleDTO dto)
+        {
+            return new NathivaRole
+            {
+                Id = dto.Id,
+                Name = dto.Name,
+
+            };
+        }
+
+        public async Task<NathivaRoleDTO> ToRoleDTOAsync(NathivaRole role)
+        {
+            List<PermissionForDTO> permission = await _context.Permissions.Select(p => new PermissionForDTO
+            {
+                Id = p.Id,
+                Name = p.Name,  
+                Description = p.Description,
+                Module = p.Module,
+                Selected=_context.RolePermissions.Any(rp => rp.PermissionId==p.Id && rp.RoleId==p.Id)
+
+            }).ToListAsync();
+
+            
+            return new NathivaRoleDTO
+            {
+                Id=role.Id,
+                Name=role.Name, 
+                Permissions = permission,
+            };
         }
 
         public async Task<SpaService> ToSpaService(SpaServiceDTO dto)

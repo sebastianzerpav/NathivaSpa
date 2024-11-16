@@ -1,4 +1,5 @@
 ﻿using AppWebSpa.Core;
+using AppWebSpa.Core.Attributes;
 using AppWebSpa.Core.Pagination;
 using AppWebSpa.Data.Entities;
 using AppWebSpa.Request;
@@ -10,7 +11,6 @@ using static System.Collections.Specialized.BitVector32;
 
 namespace AppWebSpa.Controllers
 {
-    [Authorize]
     public class CategoriesController : Controller
     {
         private readonly ICategoriesService _categoriesService;
@@ -22,7 +22,11 @@ namespace AppWebSpa.Controllers
             _notifyService = notyfService;
         }
 
+          
+        
+
         [HttpGet]
+        [CustomAuthorize(permission: "showCategories", module: "Categorias")]
         public async Task<IActionResult> Index([FromQuery] int? RecordsPerPage,
                                                [FromQuery] int? Page,
                                                [FromQuery] string? Filter)
@@ -40,12 +44,14 @@ namespace AppWebSpa.Controllers
         }
 
         [HttpGet]
+        [CustomAuthorize(permission: "createCategories", module: "Categorias")]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [CustomAuthorize(permission: "createCategories", module: "Categorias")]
         public async Task<IActionResult> Create(Category categoryService)
         {
             try
@@ -75,6 +81,7 @@ namespace AppWebSpa.Controllers
         }
 
         [HttpGet]
+        [CustomAuthorize(permission: "updateCategories", module: "Categorias")]
         public async Task<IActionResult> Edit([FromRoute] int id)
         {
             Response<Category> response = await _categoriesService.GetOneAsync(id);
@@ -88,6 +95,7 @@ namespace AppWebSpa.Controllers
         }
 
         [HttpPost]
+        [CustomAuthorize(permission: "updateCategories", module: "Categorias")]
         public async Task<IActionResult> Edit(Category categoryService)
         {
             try
@@ -117,6 +125,7 @@ namespace AppWebSpa.Controllers
 
         }
         [HttpPost]
+        [CustomAuthorize(permission: "deleteCategories", module: "Categorias")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             Response<Category> response = await _categoriesService.DeleteAsync(id);
@@ -135,6 +144,7 @@ namespace AppWebSpa.Controllers
         }
 
         [HttpPost]
+        [CustomAuthorize(permission: "updateCategories", module: "Categorias")]
         public async Task<IActionResult> Toggle(int CategoryId, bool Hide)
         {
             ToggleCategoryStatusRequest request = new ToggleCategoryStatusRequest

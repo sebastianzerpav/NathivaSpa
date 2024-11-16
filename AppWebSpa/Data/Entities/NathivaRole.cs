@@ -14,8 +14,8 @@ namespace AppWebSpa.Data.Entities
 
         public ICollection<RolePermission> RolePermisions { get; set; } 
 
-        [Required(ErrorMessage = "Debe seleccionar el estado")]
-        public int State { get; set; } = 1; //1 activo, 0 inactivo. Por defecto se crea activo 
+      
+        
 
     }
 }

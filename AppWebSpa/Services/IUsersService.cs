@@ -6,8 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using AppWebSpa.Core;
 using AppWebSpa.Core.Pagination;
 using AppWebSpa.Helpers;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
-using Azure.Core;
+//hacer un objeto para evitar conflito
+using ClaimsUser = System.Security.Claims.ClaimsPrincipal;
 
 namespace AppWebSpa.Services
 {
@@ -16,6 +16,7 @@ namespace AppWebSpa.Services
         public Task<IdentityResult> AddUserAsync(User user, string password);
         public Task<IdentityResult> ConfirmEmailAsync(User user, string token);
         public Task<Response<User>> CreateAsync(UserDTO dto);
+        public Task<bool> CurrentUserIsAuthorizedAsync(String Permission, string module);
         public Task<string> GenerateEmailConfirmationTokenAsync(User user);
         public Task<Response<PaginationResponse<User>>> GetListAsync(PaginationRequest request);
         public Task<User> GetUserAsync(string email);
@@ -33,13 +34,15 @@ namespace AppWebSpa.Services
         //clase de manejo de usarios de Identity framework
         private readonly UserManager<User> _userManager;
         private readonly IConverterHelper _converterHelper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UsersService(DataContext context, SignInManager<User> signInManager, UserManager<User> userManager, IConverterHelper converterHelper)
+        public UsersService(DataContext context, SignInManager<User> signInManager, UserManager<User> userManager, IConverterHelper converterHelper, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _signInManager = signInManager;
             _userManager = userManager;
             _converterHelper = converterHelper;
+            _httpContextAccessor = httpContextAccessor;
         }
         public async Task<IdentityResult> AddUserAsync(User user, string password)
         {
@@ -73,6 +76,38 @@ namespace AppWebSpa.Services
             {
                 return ResponseHelper<User>.MakeResponseFail(ex);
             }
+
+        }
+
+        public async Task<bool> CurrentUserIsAuthorizedAsync(string Permission, string module)
+        {
+            //ClaimUser: Usuario en seccion
+            //Se debe acceder al contextAccessor porque estamos por fuera del controlador
+            ClaimsUser? claimUser = _httpContextAccessor.HttpContext?.User;
+
+            //Valida si el usuario esta logeado, si hay seccion
+            if(claimUser == null)
+            {
+                return false;
+
+            }
+
+            string? userName = claimUser.Identity.Name;
+            User? user =await GetUserAsync(userName);
+
+            if(user is null) 
+            { 
+                return false;
+            }
+
+            if(user.NathivaRole.Name == Env.SUPER_ADMIN_ROLE_NAME)
+            {
+                return true;
+            }
+
+            return await _context.Permissions.Include(p => p.RolePermisions)
+                                             .AnyAsync(p => ( p.Module== module && p.Name==Permission)
+                                             && p.RolePermisions.Any(rp => rp.RoleId==user.NathivaRoleId));
 
         }
 

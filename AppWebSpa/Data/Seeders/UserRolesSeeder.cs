@@ -87,6 +87,14 @@ namespace AppWebSpa.Data.Seeders
             {
                 NathivaRole role = new NathivaRole { Name = "Gestor de usuarios" };
                 await _context.NathivaRoles.AddAsync(role);
+
+                List<Permission> permissions = await _context.Permissions.Where(p => p.Module == "Usuarios").ToListAsync();
+
+                foreach (Permission permission in permissions)
+                {
+                    await _context.RolePermissions.AddAsync(new RolePermission { Permission = permission, Role = role });
+                }
+
                 await _context.SaveChangesAsync();
 
             }
@@ -100,6 +108,14 @@ namespace AppWebSpa.Data.Seeders
             {
                 NathivaRole role = new NathivaRole { Name = "Gestor de contenido" };
                 await _context.NathivaRoles.AddAsync(role);
+
+                List<Permission> permissions = await _context.Permissions.Where(p => p.Module == "Categorias" || p.Module == "Servicios").ToListAsync();
+
+                foreach (Permission permission in permissions)
+                {
+                    await _context.RolePermissions.AddAsync(new RolePermission { Permission = permission, Role = role });
+                }
+
                 await _context.SaveChangesAsync();
 
             }

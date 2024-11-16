@@ -1,177 +1,115 @@
 ﻿using AppWebSpa.Data.Entities;
-using AppWebSpa.Data;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using AppWebSpa.Models;
+using AppWebSpa.Services;
+using AspNetCoreHero.ToastNotification.Abstractions;
+using AppWebSpa.Core.Attributes;
+using AppWebSpa.Core.Pagination;
+using AppWebSpa.Core;
+using AppWebSpa.DTOs;
+
+
 
 namespace AppWebSpa.Controllers
 {
     public class RolesController : Controller
     {
-        private readonly DataContext _context;
+        private readonly IRolesService _rolesService;
+        private readonly INotyfService _notifyService;
 
-        public RolesController(DataContext context)
+        public RolesController(IRolesService rolesService, INotyfService notifyService)
         {
-            _context = context;
+            _rolesService = rolesService;
+            _notifyService = notifyService;
         }
 
-        // View Index with list of Roles
         [HttpGet]
-        public async Task<IActionResult> Index()
+        [CustomAuthorize(permission: "showRoles", module: "Roles")]
+        public async Task<IActionResult> Index([FromQuery] int? RecordsPerPage,
+                                               [FromQuery] int? Page,
+                                               [FromQuery] string? Filter)
         {
-            IEnumerable<NathivaRole> roles = await _context.NathivaRoles.ToListAsync();
-            return View(roles);
-        }
+            PaginationRequest request = new PaginationRequest
+            {
+                RecordsPerPage = RecordsPerPage ?? 15,
+                Page = Page ?? 1,
+                Filter = Filter
 
-        // View specific role details
-        [HttpGet]
-        public async Task<IActionResult> RolesDetails(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                NathivaRole? role = await _context.NathivaRoles.FirstOrDefaultAsync(r => r.Id == id);
-                if (role == null)
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    return View(role);
-                }
-            }
-        }
-
-        // View create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create(NathivaRole rol)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    return View(rol);
-                }
-                await _context.NathivaRoles.AddAsync(rol);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            catch (Exception ex)
-            {
-                return RedirectToAction(nameof(Index));
-            }
-        }
-
-        // View edit specific role
-        [HttpGet]
-        public async Task<IActionResult> Edit([FromRoute] int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                NathivaRole? role = await _context.NathivaRoles.FirstOrDefaultAsync(r => r.Id == id);
-                if (role == null)
-                {
-                    return NotFound();
-                }
-                return View(role);
-            }
-        }
-
-
-        [HttpPost]
-        public async Task<IActionResult> Edit(NathivaRole rol)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    return View(rol);
-                }
-                _context.NathivaRoles.Update(rol);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            catch (Exception ex)
-            {
-                return RedirectToAction(nameof(Index));
-            }
-        }
-
-        // View delete specific role
-        [HttpGet]
-        public async Task<IActionResult> Delete([FromRoute] int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                NathivaRole? role = await _context.NathivaRoles.FirstOrDefaultAsync(r => r.Id == id);
-                if (role == null)
-                {
-                    return NotFound();
-                }
-                return View(role);
-            }
-        }
-
-        // Method delete role
-        [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> EffectiveDelete(int id)
-        {
-            NathivaRole? role = await _context.NathivaRoles.FirstOrDefaultAsync(r => r.Id == id);
-            if (role != null)
-            {
-                _context.NathivaRoles.Remove(role);
-            }
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        // Vista para asignar el rol
-        [HttpGet]
-        public async Task<IActionResult> AssignRole()
-        {
-            var users = await _context.User.ToListAsync();
-            var roles = await _context.NathivaRoles.ToListAsync();
-
-            var model = new AssignRoleViewModel
-            {
-                Users = users,
-                Roles = roles
             };
 
-            return View(model);
+            Response<PaginationResponse<NathivaRole>> response = await _rolesService.GetListAsync(request);
+            return View(response.Result);
+        }
+
+        [HttpGet]
+        [CustomAuthorize(permission: "createRoles", module: "Roles")]
+        public async Task<IActionResult> Create()
+        {
+            //1. Traer los permisos
+            Response<IEnumerable<Permission>> response = await _rolesService.GetPermissionsAsync();
+
+            if (!response.IsSuccess)
+            {
+                _notifyService.Error(response.Message);
+                return RedirectToAction(nameof(Index));
+            }
+
+            NathivaRoleDTO dto = new NathivaRoleDTO
+            {
+                Permissions=response.Result.Select(p => new PermissionForDTO
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Description = p.Description,
+                    Module = p.Module,
+                }).ToList()
+                //Select esta formateando la lista estatica
+            };
+
+            return View(dto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AssignRole(int userId, int roleId)
+        [CustomAuthorize(permission: "createRoles", module: "Roles")]
+        public async Task<IActionResult> Create(NathivaRoleDTO dto)
         {
-            var user = await _context.User.FindAsync(userId);
-            if (user == null)
+            if (!ModelState.IsValid)
             {
-                return NotFound("Usuario no encontrado");
+                _notifyService.Error("Debe ajustar los erreres de validacion");
+
+                Response<IEnumerable<Permission>> response1 = await _rolesService.GetPermissionsAsync();
+
+                dto.Permissions = response1.Result.Select(p => new PermissionForDTO
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Description = p.Description,
+                    Module = p.Module,
+                }).ToList();
+
+                return View(dto);
             }
 
-            user.NathivaRoleId = roleId;
-            _context.Entry(user).Property(u => u.NathivaRoleId).IsModified = true;
+            Response<NathivaRole> createResponse = await _rolesService.CreateAsync(dto);
 
-            await _context.SaveChangesAsync();
+            if (createResponse.IsSuccess)
+            {
+                _notifyService.Success(createResponse.Message);
+                return RedirectToAction(nameof(Index));
 
-            return RedirectToAction(nameof(Index));
+            }
+            _notifyService.Error(createResponse.Message);
+
+            Response<IEnumerable<Permission>> response = await _rolesService.GetPermissionsAsync();
+            dto.Permissions = response.Result.Select(p => new PermissionForDTO
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Description = p.Description,
+                Module = p.Module,
+            }).ToList();
+
+            return View(dto);
         }
+
     }
 }

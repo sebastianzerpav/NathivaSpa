@@ -8,6 +8,7 @@ using AppWebSpa.Request;
 using AppWebSpa.DTOs;
 using AppWebSpa.Core.Pagination;
 using Microsoft.AspNetCore.Authorization;
+using AppWebSpa.Core.Attributes;
 
 
 
@@ -30,6 +31,7 @@ namespace AppWebSpa.Controllers
             _converterHelper = converterHelper;
         }
         [HttpGet]
+        [CustomAuthorize(permission: "showSpaServices", module: "Servicios")]
         public async Task<IActionResult> Index([FromQuery] int? RecordsPerPage,
                                               [FromQuery] int? Page,
                                               [FromQuery] string? Filter)
@@ -49,6 +51,7 @@ namespace AppWebSpa.Controllers
 
         // View Create
         [HttpGet]
+        [CustomAuthorize(permission: "createSpaServices", module: "Servicios")]
         public async Task<IActionResult> Create()
         {
             SpaServiceDTO dto = new SpaServiceDTO
@@ -61,6 +64,7 @@ namespace AppWebSpa.Controllers
 
         //Method Create
         [HttpPost]
+        [CustomAuthorize(permission: "createSpaServices", module: "Servicios")]
         public async Task<IActionResult> Create(SpaServiceDTO dto)
         {
             
@@ -89,6 +93,7 @@ namespace AppWebSpa.Controllers
 
         // View Edit
         [HttpGet]
+        [CustomAuthorize(permission: "updateSpaServices", module: "Servicios")]
         public async Task<IActionResult> Edit([FromRoute] int id)
         {
             Response<SpaService> response = await _spaServicesService.GetOneAsync(id);
@@ -105,6 +110,7 @@ namespace AppWebSpa.Controllers
 
         //Method Edit
         [HttpPost]
+        [CustomAuthorize(permission: "updateSpaServices", module: "Servicios")]
         public async Task<IActionResult> Edit(SpaServiceDTO dto)
         {
             try
@@ -137,6 +143,7 @@ namespace AppWebSpa.Controllers
 
         // Delete
         [HttpPost]
+        [CustomAuthorize(permission: "deleteSpaServices", module: "Servicios")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             Response<SpaService> response = await _spaServicesService.DeleteAsync(id);
@@ -156,6 +163,7 @@ namespace AppWebSpa.Controllers
         }
 
         [HttpPost]
+        [CustomAuthorize(permission: "updateSpaServices", module: "Servicios")]
         public async Task<IActionResult> Toggle(int SpaServiceId, bool Hide)
         {
             ToggleSpaServiceStatusRequest request = new ToggleSpaServiceStatusRequest

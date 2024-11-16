@@ -8,6 +8,7 @@ using AspNetCoreHero.ToastNotification.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace AppWebSpa
 {
     public static class CustomConfiguration
@@ -21,6 +22,9 @@ namespace AppWebSpa
 
             }
             );
+
+            //servicio especial, valida si los usuarios tienen permiso para cierta funcion
+            builder.Services.AddHttpContextAccessor();
 
             //services
             AddServices(builder);
@@ -74,7 +78,10 @@ namespace AppWebSpa
             //Services
             builder.Services.AddScoped<ISpaServicesService, SpaServicesService>();
             builder.Services.AddScoped<ICategoriesService, CategoriesService>();
+            builder.Services.AddScoped<IRolesService, RolesService>();
             builder.Services.AddScoped<IUsersService, UsersService>();
+            
+        
 
             //SeedDb
             builder.Services.AddTransient<SeedDb>();

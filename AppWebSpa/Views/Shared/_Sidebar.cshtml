@@ -1,4 +1,6 @@
-﻿<aside id="sidebar" class="sidebar">
+﻿@inject AppWebSpa.Services.IUsersService _usersService
+
+<aside id="sidebar" class="sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
 
@@ -11,42 +13,55 @@
             </a>
         </li>
 
-        <li class="nav-item">
-            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString()=="Categories" ? "":"collapsed")"
+        @if (await _usersService.CurrentUserIsAuthorizedAsync("showCategories", "Categorias"))
+        {
+
+            <li class="nav-item">
+                <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString()=="Categories" ? "":"collapsed")"
                asp-controller="Categories"
                asp-action="Index">
                 <i class="bi bi-flower3"></i>
                 <span>Categorias</span>
-            </a>
-        </li>
+                </a>
+            </li>
+        }
         
-        <li class="nav-item">
-            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString()=="SpaServices" ? "":"collapsed")"
-               asp-controller="SpaServices" 
-            asp-action="Index">
-                <i class="bi bi-flower3"></i>
-                <span>Servicios</span>
-            </a>
-        </li>
+        @if (await _usersService.CurrentUserIsAuthorizedAsync("showServices", "Servicios"))
+        {
+            <li class="nav-item">
+                <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString()=="SpaServices" ? "":"collapsed")"
+                   asp-controller="SpaServices"
+                   asp-action="Index">
+                    <i class="bi bi-flower3"></i>
+                    <span>Servicios</span>
+                </a>
+            </li>
+        }
+        @if (await _usersService.CurrentUserIsAuthorizedAsync("showUsers", "Usuarios"))
+        {
+            <li class="nav-item">
+                <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString()=="Users" ? "":"collapsed")"
+                   asp-controller="Users"
+                   asp-action="Index">
+                    <i class="bi bi-people"></i>
+                    <span>Usuarios</span>
+                </a>
+            </li>
+        }
 
-        <li class="nav-item" >
-            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString()=="Users" ? "":"collapsed")"
-               asp-controller="Users" 
-            asp-action="Index">
-                <i class="bi bi-people"></i>
-                <span>Usuarios</span>
-            </a>
-        </li>
 
-        <li class="nav-item">
-            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString()=="Roles" ? "":"collapsed")"
-               asp-controller="Roles"
-               asp-action="Index">
-                <i class="bi bi-people"></i>
-                <span>Creación de roles</span>
-            </a>
-        </li>
-        
+        @if (await _usersService.CurrentUserIsAuthorizedAsync("showRoles", "Roles"))
+        {
+
+            <li class="nav-item">
+                    <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString()=="Roles" ? "":"collapsed")"
+                   asp-controller="Roles"
+                   asp-action="Index">
+                    <i class="bi bi-people"></i>
+                    <span>Roles</span>
+                </a>
+            </li>
+        }
 
     </ul>
 
