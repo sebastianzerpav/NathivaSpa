@@ -1,8 +1,8 @@
 ﻿@model NathivaRoleDTO
 
 @{
-    ViewData["Title"] = "Nuevo Rol";
-    
+    ViewData["Title"] = "Editar Rol";
+
 }
 
 <div class="pagetitle">
@@ -11,7 +11,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Dashboard">Dashboard</a></li>
             <li class="breadcrumb-item active"><a asp-action="Index">Roles</a></li>
-            <li class="breadcrumb-item active">Nuevo Rol</li>
+            <li class="breadcrumb-item active">Editar Rol</li>
         </ol>
     </nav>
 </div>
@@ -24,8 +24,9 @@
             <h3 class="card-title">Nuevo Rol</h3>
 
 
-            <form class="row g-3" asp-action="Create" method="POST" id="frmCreate">
+            <form class="row g-3" asp-action="Edit" method="POST" id="frmUpdate">
 
+                <input type="hidden" asp-for="Id" />
                 <partial name="_Role" />
 
             </form>
@@ -38,7 +39,7 @@
 
 
     <div class="text-center">
-        <button type="submit" class="btn btn-primary" form="frmCreate" id="btnCreate">Guardar</button>
+        <button type="submit" class="btn btn-primary" form="frmUpdate" id="btnSave">Guardar</button>
         <a asp-action="Index" class="btn btn-secondary">Volver</a>
     </div>
 
@@ -52,7 +53,7 @@
     <script>
 
         $(document).ready(function () {
-            $('#btnCreate').click(function (event) {
+            $('#btnSave').click(function (event) {
                 const permissions = $('.permission:checked');
                 let permissionIds = [];
 

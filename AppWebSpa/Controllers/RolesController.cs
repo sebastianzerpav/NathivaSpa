@@ -44,7 +44,6 @@ namespace AppWebSpa.Controllers
         [CustomAuthorize(permission: "createRoles", module: "Roles")]
         public async Task<IActionResult> Create()
         {
-            //1. Traer los permisos
             Response<IEnumerable<Permission>> response = await _rolesService.GetPermissionsAsync();
 
             if (!response.IsSuccess)
@@ -62,7 +61,6 @@ namespace AppWebSpa.Controllers
                     Description = p.Description,
                     Module = p.Module,
                 }).ToList()
-                //Select esta formateando la lista estatica
             };
 
             return View(dto);
@@ -107,6 +105,51 @@ namespace AppWebSpa.Controllers
                 Description = p.Description,
                 Module = p.Module,
             }).ToList();
+
+            return View(dto);
+        }
+
+        [HttpGet]
+        [CustomAuthorize(permission: "updateRoles", module: "Roles")]
+        public async Task<IActionResult> Edit(int id)
+        {
+            Response<NathivaRoleDTO> response = await _rolesService.GetOneAsync(id);
+
+            if (!response.IsSuccess)
+            {
+                _notifyService.Error(response.Message);
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(response.Result);
+        }
+
+        [HttpPost]
+        [CustomAuthorize(permission: "updateRoles", module: "Roles")]
+        public async Task<IActionResult> Edit(NathivaRoleDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                _notifyService.Error("Debe ajustar los erreres de validacion");
+
+                Response<IEnumerable<PermissionForDTO>> permissionByRolResponse = await _rolesService.GetPermissionsByRoleAsync(dto.Id);
+
+                dto.Permissions = permissionByRolResponse.Result.ToList();
+                return View(dto);
+            }
+
+            Response<NathivaRole> editResponse = await _rolesService.EditAsync(dto);
+
+            if (editResponse.IsSuccess)
+            {
+                _notifyService.Success(editResponse.Message);
+                return RedirectToAction(nameof(Index));
+
+            }
+            _notifyService.Error(editResponse.Message);
+
+            Response<IEnumerable<PermissionForDTO>> permissionByRolResponse2 = await _rolesService.GetPermissionsByRoleAsync(dto.Id);
+            dto.Permissions = permissionByRolResponse2.Result.ToList();
 
             return View(dto);
         }

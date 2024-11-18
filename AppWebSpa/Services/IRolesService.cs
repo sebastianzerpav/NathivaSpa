@@ -8,6 +8,8 @@ using AppWebSpa.DTOs;
 using AppWebSpa.Core.Pagination;
 using Microsoft.EntityFrameworkCore.Storage;
 using Newtonsoft.Json;
+using System.Data;
+using System.Collections.Generic;
 
 namespace AppWebSpa.Services
 {
@@ -15,9 +17,13 @@ namespace AppWebSpa.Services
     public interface IRolesService
     {
         public Task<Response<NathivaRole>> CreateAsync(NathivaRoleDTO dto);
+        public Task<Response<NathivaRole>> EditAsync(NathivaRoleDTO dto);
+
         public Task<Response<PaginationResponse<NathivaRole>>> GetListAsync(PaginationRequest request);
         public Task<Response<NathivaRoleDTO>> GetOneAsync(int id);
-        Task<Response<IEnumerable<Permission>>> GetPermissionsAsync();
+        public Task<Response<IEnumerable<Permission>>> GetPermissionsAsync();
+        public Task<Response<IEnumerable<PermissionForDTO>>> GetPermissionsByRoleAsync(int id);
+
     }
 
     public class RolesService : IRolesService
@@ -33,8 +39,6 @@ namespace AppWebSpa.Services
 
         public async Task<Response<NathivaRole>> CreateAsync(NathivaRoleDTO dto)
         {
-            //requiere una transaccion de bases de datos: crear el role, extraer el id del rol y asignar ese id al permiso
-            //scope espacio sensible de trabajo para hacer operacion que necesitan un unico entorno
 
             using (IDbContextTransaction transaction = await _context.Database.BeginTransactionAsync())
             {
@@ -53,8 +57,6 @@ namespace AppWebSpa.Services
 
                     if (!string.IsNullOrWhiteSpace(dto.PermissionIds))
                     {
-                        //desserializar: accion de convertir un string a un objeto
-                        //Serializar:converti de un objeto a un string
                         permissionIds = JsonConvert.DeserializeObject<List<int>>(dto.PermissionIds);
                     }
 
@@ -69,8 +71,6 @@ namespace AppWebSpa.Services
                         await _context.RolePermissions.AddAsync(rolePermission);
                     }
                     await _context.SaveChangesAsync();
-
-                    //para finalizar una transaccion se hace commit
                     transaction.Commit();
                     return ResponseHelper<NathivaRole>.MakeResponseSuccess(role, "Rol creado con éxito");
                 }
@@ -82,6 +82,52 @@ namespace AppWebSpa.Services
             }
         }
 
+        public async Task<Response<NathivaRole>> EditAsync(NathivaRoleDTO dto)
+        {
+            try
+            {
+                if(dto.Name== Env.SUPER_ADMIN_ROLE_NAME)
+                {
+                    return ResponseHelper<NathivaRole>.MakeResponseFail($"El role '{Env.SUPER_ADMIN_ROLE_NAME}' no puede ser editado!!");
+                }
+
+                List<int> permissionIds = new List<int>();
+
+                if (!string.IsNullOrWhiteSpace(dto.PermissionIds))
+                {
+                    permissionIds = JsonConvert.DeserializeObject<List<int>>(dto.PermissionIds);
+                }
+
+                //Elimina el permiso antiguo 
+                List<RolePermission> oldRolePermissions = await _context.RolePermissions.Where(rp => rp.RoleId == dto.Id).ToListAsync();
+                _context.RolePermissions.RemoveRange(oldRolePermissions);
+
+                // se inserta nuevos permisos
+                foreach (int permissionId in permissionIds)
+                {
+                    RolePermission rolePermission = new RolePermission
+                    {
+                        RoleId = dto.Id,
+                        PermissionId = permissionId
+                    };
+
+                    await _context.RolePermissions.AddAsync(rolePermission);  
+                }
+
+                //actualizacion de rol
+                NathivaRole model = _converterHelper.ToRole(dto);
+                _context.NathivaRoles.Update(model);
+
+                await _context.SaveChangesAsync();
+
+                return ResponseHelper<NathivaRole>.MakeResponseSuccess(model, "Rol actualizado exitosamente!!");
+           
+
+            }
+            catch (Exception ex) {
+                return ResponseHelper<NathivaRole>.MakeResponseFail(ex);
+            }
+        }
 
         public async Task<Response<PaginationResponse<NathivaRole>>> GetListAsync(PaginationRequest request)
         {
@@ -147,6 +193,26 @@ namespace AppWebSpa.Services
 
             }
 
+        }
+
+        public async Task<Response<IEnumerable<PermissionForDTO>>> GetPermissionsByRoleAsync(int id)
+        {
+            try
+            {
+                Response<NathivaRoleDTO> response = await GetOneAsync(id);
+
+                if (!response.IsSuccess)
+                {
+                    return ResponseHelper<IEnumerable<PermissionForDTO>>.MakeResponseFail(response.Message);
+                }
+
+                List<PermissionForDTO> permissions = response.Result.Permissions;
+                return ResponseHelper<IEnumerable<PermissionForDTO>>.MakeResponseSuccess(permissions);
+            }
+            catch (Exception ex)
+            {
+                return ResponseHelper<IEnumerable<PermissionForDTO>>.MakeResponseFail(ex);
+            }
         }
     }
         

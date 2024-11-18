@@ -39,13 +39,13 @@ namespace AppWebSpa.Helpers
 
         public async Task<NathivaRoleDTO> ToRoleDTOAsync(NathivaRole role)
         {
-            List<PermissionForDTO> permission = await _context.Permissions.Select(p => new PermissionForDTO
+            List<PermissionForDTO> permissions = await _context.Permissions.Select(p => new PermissionForDTO
             {
                 Id = p.Id,
                 Name = p.Name,  
                 Description = p.Description,
                 Module = p.Module,
-                Selected=_context.RolePermissions.Any(rp => rp.PermissionId==p.Id && rp.RoleId==p.Id)
+                Selected=_context.RolePermissions.Any(rp => rp.PermissionId==p.Id && rp.RoleId==role.Id)
 
             }).ToListAsync();
 
@@ -54,7 +54,7 @@ namespace AppWebSpa.Helpers
             {
                 Id=role.Id,
                 Name=role.Name, 
-                Permissions = permission,
+                Permissions = permissions,
             };
         }
 
