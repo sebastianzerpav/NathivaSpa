@@ -9,14 +9,17 @@ namespace AppWebSpa.DTOs
         //Properties with DataAnnotations
         public int Id { get; set; }
 
-        [Display(Name = "Nombre del rol")]
+        [Display(Name = "Rol")]
         [Required(ErrorMessage = "Debe ingresar un nombre para el rol")]
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
         
         public List<PermissionForDTO>? Permissions { get; set; }
+        public List<CategoryForDTO>? Categories { get; set; }
 
         public string? PermissionIds { get; set; }
+
+        public string? CategoryIds { get; set; }
 
 
     }

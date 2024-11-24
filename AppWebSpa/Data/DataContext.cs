@@ -17,6 +17,7 @@ namespace AppWebSpa.Data
         public DbSet<NathivaRole> NathivaRoles{ get; set; }
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<RolePermission> RolePermissions { get; set; }
+        public DbSet<RoleCategory> RoleCategories { get; set; }
 
 
 
@@ -66,6 +67,16 @@ namespace AppWebSpa.Data
             builder.Entity<RolePermission>().HasOne(rp => rp.Permission)
                                             .WithMany(p => p.RolePermisions)
                                             .HasForeignKey(rp => rp.PermissionId);
+
+            //RoleCategories
+            builder.Entity<RoleCategory>().HasKey(rs => new { rs.RoleId, rs.CategoryId });
+            builder.Entity<RoleCategory>().HasOne(rs => rs.Role)
+                                            .WithMany(r => r.RoleCategories)
+                                            .HasForeignKey(rp => rp.RoleId);
+
+            builder.Entity<RoleCategory>().HasOne(rs => rs.Category)
+                                            .WithMany(p => p.RoleCategories)
+                                            .HasForeignKey(rs => rs.CategoryId);
         }
 
         

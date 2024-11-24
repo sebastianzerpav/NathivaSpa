@@ -18,7 +18,8 @@ namespace AppWebSpa.Services
     {
         public Task<Response<NathivaRole>> CreateAsync(NathivaRoleDTO dto);
         public Task<Response<NathivaRole>> EditAsync(NathivaRoleDTO dto);
-
+        public Task<Response<IEnumerable<Category>>> GetCategoriesAsync();
+        public Task<Response<IEnumerable<CategoryForDTO>>> GetCategoriesByRoleAsync(int id);
         public Task<Response<PaginationResponse<NathivaRole>>> GetListAsync(PaginationRequest request);
         public Task<Response<NathivaRoleDTO>> GetOneAsync(int id);
         public Task<Response<IEnumerable<Permission>>> GetPermissionsAsync();
@@ -50,9 +51,9 @@ namespace AppWebSpa.Services
                     await _context.NathivaRoles.AddAsync(role);
                     await _context.SaveChangesAsync();
 
-                    // insercion de permiso
                     int roleId = role.Id;
-
+                    
+                    // insercion de permiso
                     List<int> permissionIds = new List<int>();
 
                     if (!string.IsNullOrWhiteSpace(dto.PermissionIds))
@@ -69,6 +70,25 @@ namespace AppWebSpa.Services
                         };
 
                         await _context.RolePermissions.AddAsync(rolePermission);
+                    }
+
+                    // insercion de categorias
+                     List<int> categoryIds = new List<int>();
+
+                    if (!string.IsNullOrWhiteSpace(dto.CategoryIds))
+                    {
+                        categoryIds = JsonConvert.DeserializeObject<List<int>>(dto.CategoryIds);
+                    }
+
+                    foreach (int categoryId in categoryIds)
+                    {
+                        RoleCategory roleCategory= new RoleCategory
+                        {
+                            RoleId = roleId,
+                            CategoryId = categoryId
+                        };
+
+                        await _context.RoleCategories.AddAsync(roleCategory);
                     }
                     await _context.SaveChangesAsync();
                     transaction.Commit();
@@ -91,6 +111,7 @@ namespace AppWebSpa.Services
                     return ResponseHelper<NathivaRole>.MakeResponseFail($"El role '{Env.SUPER_ADMIN_ROLE_NAME}' no puede ser editado!!");
                 }
 
+                //permisos
                 List<int> permissionIds = new List<int>();
 
                 if (!string.IsNullOrWhiteSpace(dto.PermissionIds))
@@ -114,6 +135,30 @@ namespace AppWebSpa.Services
                     await _context.RolePermissions.AddAsync(rolePermission);  
                 }
 
+                //Categorias
+                List<int> categoryIds = new List<int>();
+
+                if (!string.IsNullOrWhiteSpace(dto.CategoryIds))
+                {
+                    categoryIds = JsonConvert.DeserializeObject<List<int>>(dto.CategoryIds);
+                }
+
+                //Elimina categorias antiguo 
+                List<RoleCategory> oldRoleCategories = await _context.RoleCategories.Where(rp => rp.RoleId == dto.Id).ToListAsync();
+                _context.RoleCategories.RemoveRange(oldRoleCategories);
+
+                // se inserta nuevas categorias
+                foreach (int categoryId in categoryIds)
+                {
+                    RoleCategory roleCategory = new RoleCategory
+                    {
+                        RoleId = dto.Id,
+                        CategoryId = categoryId
+                    };
+
+                    await _context.RoleCategories.AddAsync(roleCategory);
+                }
+
                 //actualizacion de rol
                 NathivaRole model = _converterHelper.ToRole(dto);
                 _context.NathivaRoles.Update(model);
@@ -126,6 +171,42 @@ namespace AppWebSpa.Services
             }
             catch (Exception ex) {
                 return ResponseHelper<NathivaRole>.MakeResponseFail(ex);
+            }
+        }
+
+        public async Task<Response<IEnumerable<Category>>> GetCategoriesAsync()
+        {
+            try
+            {
+                IEnumerable<Category> categories = await _context.Categories.ToListAsync();
+
+                return ResponseHelper<IEnumerable<Category>>.MakeResponseSuccess(categories);
+            }
+            catch (Exception ex)
+            {
+                return ResponseHelper<IEnumerable<Category>>.MakeResponseFail(ex);
+
+            }
+        }
+
+        public async Task<Response<IEnumerable<CategoryForDTO>>> GetCategoriesByRoleAsync(int id)
+        {
+            try
+            {
+                Response<NathivaRoleDTO> response = await GetOneAsync(id);
+
+                if (!response.IsSuccess)
+                {
+                    return ResponseHelper<IEnumerable<CategoryForDTO>>.MakeResponseFail(response.Message);
+                }
+
+                List<CategoryForDTO> categories = response.Result.Categories;
+
+                return ResponseHelper<IEnumerable<CategoryForDTO>>.MakeResponseSuccess(categories);
+            }
+            catch (Exception ex)
+            {
+                return ResponseHelper<IEnumerable<CategoryForDTO>>.MakeResponseFail(ex);
             }
         }
 

@@ -21,6 +21,7 @@ namespace AppWebSpa.Data.Entities
         [Display(Name = "Esta oculta")]
         public bool IsHidden { get; set; }
 
+        public ICollection<RoleCategory>? RoleCategories { get; set; }
 
     }
 }

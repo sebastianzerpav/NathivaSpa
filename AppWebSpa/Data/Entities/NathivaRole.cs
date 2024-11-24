@@ -12,10 +12,11 @@ namespace AppWebSpa.Data.Entities
         [Required(ErrorMessage = "Debe ingresar un nombre de rol")]
         public string Name { get; set; } = null!;
 
-        public ICollection<RolePermission> RolePermisions { get; set; } 
+        public ICollection<RolePermission>? RolePermisions { get; set; }
+        public ICollection<RoleCategory>? RoleCategories { get; set; }
 
-      
-        
+
+
 
     }
 }

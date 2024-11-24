@@ -49,12 +49,22 @@ namespace AppWebSpa.Helpers
 
             }).ToListAsync();
 
-            
+            List<CategoryForDTO> categories = await _context.Categories.Select(p => new CategoryForDTO
+            {
+                CategoryId = p.CategoryId,
+                Name = p.Name,
+                Description = p.Description,
+                Selected = _context.RoleCategories.Any(rs => rs.CategoryId == p.CategoryId && rs.RoleId == role.Id)
+
+            }).ToListAsync();
+
+
             return new NathivaRoleDTO
             {
                 Id=role.Id,
                 Name=role.Name, 
                 Permissions = permissions,
+                Categories = categories
             };
         }
 

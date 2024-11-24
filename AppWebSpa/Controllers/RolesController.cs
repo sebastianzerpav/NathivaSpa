@@ -9,6 +9,7 @@ using AppWebSpa.DTOs;
 
 
 
+
 namespace AppWebSpa.Controllers
 {
     public class RolesController : Controller
@@ -44,23 +45,38 @@ namespace AppWebSpa.Controllers
         [CustomAuthorize(permission: "createRoles", module: "Roles")]
         public async Task<IActionResult> Create()
         {
-            Response<IEnumerable<Permission>> response = await _rolesService.GetPermissionsAsync();
+            Response<IEnumerable<Permission>> permissionResponse = await _rolesService.GetPermissionsAsync();
 
-            if (!response.IsSuccess)
+            if (!permissionResponse.IsSuccess)
             {
-                _notifyService.Error(response.Message);
+                _notifyService.Error(permissionResponse.Message);
+                return RedirectToAction(nameof(Index));
+            }
+
+            Response<IEnumerable<Category>> categoriesResponse = await _rolesService.GetCategoriesAsync();
+
+            if (!categoriesResponse.IsSuccess)
+            {
+                _notifyService.Error(categoriesResponse.Message);
                 return RedirectToAction(nameof(Index));
             }
 
             NathivaRoleDTO dto = new NathivaRoleDTO
             {
-                Permissions=response.Result.Select(p => new PermissionForDTO
+                Permissions=permissionResponse.Result.Select(p => new PermissionForDTO
                 {
                     Id = p.Id,
                     Name = p.Name,
                     Description = p.Description,
                     Module = p.Module,
-                }).ToList()
+                }).ToList(),
+
+                 Categories = categoriesResponse.Result.Select(p => new CategoryForDTO
+                 {
+                     CategoryId = p.CategoryId,
+                     Name = p.Name,
+                     Description = p.Description,
+                 }).ToList()
             };
 
             return View(dto);
@@ -74,14 +90,23 @@ namespace AppWebSpa.Controllers
             {
                 _notifyService.Error("Debe ajustar los erreres de validacion");
 
-                Response<IEnumerable<Permission>> response1 = await _rolesService.GetPermissionsAsync();
+                Response<IEnumerable<Permission>> permissionResponse1 = await _rolesService.GetPermissionsAsync();
 
-                dto.Permissions = response1.Result.Select(p => new PermissionForDTO
+                dto.Permissions = permissionResponse1.Result.Select(p => new PermissionForDTO
                 {
                     Id = p.Id,
                     Name = p.Name,
                     Description = p.Description,
                     Module = p.Module,
+                }).ToList();
+
+                Response<IEnumerable<Category>> categoriesResponse1 = await _rolesService.GetCategoriesAsync();
+
+                dto.Categories = categoriesResponse1.Result.Select(p => new CategoryForDTO
+                {
+                    CategoryId = p.CategoryId,
+                    Name = p.Name,
+                    Description = p.Description,
                 }).ToList();
 
                 return View(dto);
@@ -97,13 +122,23 @@ namespace AppWebSpa.Controllers
             }
             _notifyService.Error(createResponse.Message);
 
-            Response<IEnumerable<Permission>> response = await _rolesService.GetPermissionsAsync();
-            dto.Permissions = response.Result.Select(p => new PermissionForDTO
+            Response<IEnumerable<Permission>> permissionResponse2 = await _rolesService.GetPermissionsAsync();
+            Response<IEnumerable<Category>> categoriesResponse2 = await _rolesService.GetCategoriesAsync();
+
+            
+            dto.Permissions = permissionResponse2.Result.Select(p => new PermissionForDTO
             {
                 Id = p.Id,
                 Name = p.Name,
                 Description = p.Description,
                 Module = p.Module,
+            }).ToList();
+
+            dto.Categories = categoriesResponse2.Result.Select(p => new CategoryForDTO
+            {
+                CategoryId = p.CategoryId,
+                Name = p.Name,
+                Description = p.Description,
             }).ToList();
 
             return View(dto);
@@ -133,8 +168,9 @@ namespace AppWebSpa.Controllers
                 _notifyService.Error("Debe ajustar los erreres de validacion");
 
                 Response<IEnumerable<PermissionForDTO>> permissionByRolResponse = await _rolesService.GetPermissionsByRoleAsync(dto.Id);
-
+                Response<IEnumerable<CategoryForDTO>> categoriesByRolResponse = await _rolesService.GetCategoriesByRoleAsync(dto.Id);
                 dto.Permissions = permissionByRolResponse.Result.ToList();
+                dto.Categories = categoriesByRolResponse.Result.ToList();
                 return View(dto);
             }
 
@@ -149,7 +185,9 @@ namespace AppWebSpa.Controllers
             _notifyService.Error(editResponse.Message);
 
             Response<IEnumerable<PermissionForDTO>> permissionByRolResponse2 = await _rolesService.GetPermissionsByRoleAsync(dto.Id);
+            Response<IEnumerable<CategoryForDTO>> categoryByRolResponse2 = await _rolesService.GetCategoriesByRoleAsync(dto.Id);
             dto.Permissions = permissionByRolResponse2.Result.ToList();
+            dto.Categories = categoryByRolResponse2.Result.ToList();
 
             return View(dto);
         }

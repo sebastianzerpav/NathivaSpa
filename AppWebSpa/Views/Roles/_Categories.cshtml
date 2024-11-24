@@ -1,0 +1,30 @@
+﻿@using AppWebSpa.Core.Extensions
+@model NathivaRoleDTO
+
+<div class="card shadow mb-4">
+    <div class="card-body">
+
+        <h3 class="card-title">Categorias</h3>
+
+        <div class="row">
+
+            @foreach (var module in Model.Categories.GroupByItemsNumber(5))
+            {
+                <div class="col-md-3 mt-3">
+                    @foreach (var item in module)
+                    {
+                        <div class="form-check form-switch">
+                            <input class="form-check-input category"
+                                   type="checkbox"
+                                   data-category-id="@item.CategoryId"
+                                   id="category_@item.CategoryId"
+                            @(item.Selected ? "checked" : "")>
+
+                            <label class="form-check-label" for="category_@item.CategoryId">@item.Name</label>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>

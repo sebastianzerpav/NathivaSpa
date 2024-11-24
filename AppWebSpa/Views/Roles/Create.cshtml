@@ -9,7 +9,7 @@
     <h1>Nuevo Rol</h1>
     <nav>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Dashboard">Dashboard</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Dashboard">Inicio</a></li>
             <li class="breadcrumb-item active"><a asp-action="Index">Roles</a></li>
             <li class="breadcrumb-item active">Nuevo Rol</li>
         </ol>
@@ -33,6 +33,9 @@
         </div>
     </div>
 
+     @* Categorias *@
+    <partial name="_Categories" />
+
     @* Permisos *@
     <partial name="_Permissions" />
 
@@ -52,6 +55,7 @@
     <script>
 
         $(document).ready(function () {
+
             $('#btnCreate').click(function (event) {
                 const permissions = $('.permission:checked');
                 let permissionIds = [];
@@ -61,7 +65,18 @@
                     permissionIds.push(permissionId);
                 });
 
-                    $('#permissionIds').val(JSON.stringify(permissionIds));
+                $('#permissionIds').val(JSON.stringify(permissionIds));
+                
+                   //Categorias
+                    const categories = $('.Category:checked');
+                    let categoryIds = [];
+
+                    categories.each(function () {
+                        const categoryId = $(this).data('category-id');
+                        categoryIds.push(categoryId);
+                    });
+
+                    $('#categoryIds').val(JSON.stringify(categoryIds));
             });
 
         });
