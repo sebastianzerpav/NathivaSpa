@@ -78,6 +78,7 @@ namespace AppWebSpa
             //Services
             builder.Services.AddScoped<ISpaServicesService, SpaServicesService>();
             builder.Services.AddScoped<ICategoriesService, CategoriesService>();
+            builder.Services.AddScoped<IHomeService, HomeService>();
             builder.Services.AddScoped<IRolesService, RolesService>();
             builder.Services.AddScoped<IUsersService, UsersService>();
             
