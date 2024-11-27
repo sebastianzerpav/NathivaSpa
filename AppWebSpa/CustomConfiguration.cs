@@ -80,8 +80,8 @@ namespace AppWebSpa
             builder.Services.AddScoped<ICategoriesService, CategoriesService>();
             builder.Services.AddScoped<IRolesService, RolesService>();
             builder.Services.AddScoped<IUsersService, UsersService>();
-            
-        
+            builder.Services.AddScoped<IHomeService, HomeService>();
+
 
             //SeedDb
             builder.Services.AddTransient<SeedDb>();

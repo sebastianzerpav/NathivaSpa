@@ -17,6 +17,8 @@ namespace AppWebSpa.Services
         public Task<IdentityResult> ConfirmEmailAsync(User user, string token);
         public Task<Response<User>> CreateAsync(UserDTO dto);
         public Task<bool> CurrentUserIsAuthorizedAsync(String Permission, string module);
+
+        public Task<bool> CurrentUserIsSuperAdmin();
         public Task<string> GenerateEmailConfirmationTokenAsync(User user);
         public Task<Response<PaginationResponse<User>>> GetListAsync(PaginationRequest request);
         public Task<User> GetUserAsync(string email);
@@ -109,6 +111,26 @@ namespace AppWebSpa.Services
                                              .AnyAsync(p => ( p.Module== module && p.Name==Permission)
                                              && p.RolePermisions.Any(rp => rp.RoleId==user.NathivaRoleId));
 
+        }
+
+        public async Task<bool> CurrentUserIsSuperAdmin()
+        {
+            ClaimsUser? claimUser = _httpContextAccessor?.HttpContext.User;
+            if (claimUser is null)
+            {
+                return false;
+            }
+
+            string userName = claimUser.Identity.Name;
+
+            User? user = await GetUserAsync(userName);
+
+            if (user is null)
+            {
+                return false;
+            }
+
+            return user.NathivaRole.Name == Env.SUPER_ADMIN_ROLE_NAME;
         }
 
         public async Task<string> GenerateEmailConfirmationTokenAsync(User user)
