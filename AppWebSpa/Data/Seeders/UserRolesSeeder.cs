@@ -46,6 +46,7 @@ namespace AppWebSpa.Data.Seeders
                 await _usersService.ConfirmEmailAsync(user, token);
             }
 
+
             //Content Manager
             user = await _usersService.GetUserAsync("saul@yopmail.com");
 
@@ -69,6 +70,7 @@ namespace AppWebSpa.Data.Seeders
                 string token = await _usersService.GenerateEmailConfirmationTokenAsync(user);
                 await _usersService.ConfirmEmailAsync(user, token);
             }
+
         }
 
         private async Task CheckRoles()
