@@ -63,7 +63,7 @@ namespace AppWebSpa.Services
                 User user = _converterHelper.ToUser(dto);
                 //Generacion de Guid aleatorio
                 Guid id= Guid.NewGuid();
-                user.Id.ToString();
+                user.Id = id.ToString();
 
                 IdentityResult result = await AddUserAsync(user, dto.Document);
 
@@ -115,7 +115,7 @@ namespace AppWebSpa.Services
 
         public async Task<bool> CurrentUserIsSuperAdmin()
         {
-            ClaimsUser? claimUser = _httpContextAccessor?.HttpContext.User;
+            ClaimsUser? claimUser = _httpContextAccessor?.HttpContext?.User;
             if (claimUser is null)
             {
                 return false;

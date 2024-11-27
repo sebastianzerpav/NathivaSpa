@@ -16,16 +16,18 @@ namespace AppWebSpa.Controllers
     [Authorize]
     public class UsersController : Controller
     {
+        private readonly DataContext _context;
         private readonly ICombosHelper _combosHelper;
         private readonly INotyfService _notifyService;
         private readonly IUsersService _userService;
         private readonly IConverterHelper _converterHelper;
-        public UsersController(IUsersService userService, ICombosHelper combosHelper, INotyfService notifyService, IConverterHelper converterHelper)
+        public UsersController(IUsersService userService, ICombosHelper combosHelper, INotyfService notifyService, IConverterHelper converterHelper, DataContext dataContext)
         {
             _userService = userService;
             _combosHelper = combosHelper;
             _notifyService = notifyService;
             _converterHelper = converterHelper;
+            _context = dataContext;
         }
 
         //View Index with list of Users
@@ -43,6 +45,12 @@ namespace AppWebSpa.Controllers
             };
 
             Response<PaginationResponse<User>> response = await _userService.GetListAsync(request);
+
+            if (response.Result.List.Any(user => string.IsNullOrEmpty(user.Id)))
+            {
+                throw new Exception("ID vacío detectado.");
+            }
+
             return View(response.Result);
         }
 
@@ -133,5 +141,37 @@ namespace AppWebSpa.Controllers
 
 
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            if (Guid.Empty.Equals(id))
+            {
+                _notifyService.Error("El ID no es válido.");
+                return RedirectToAction(nameof(Index));
+            }
+
+            User user = await _userService.GetUserAsync(id);
+            if (user == null)
+            {
+                _notifyService.Error("Usuario no encontrado.");
+                return RedirectToAction(nameof(Index));
+            }
+
+            try
+            {
+                _context.User.Remove(user);
+                await _context.SaveChangesAsync();
+                _notifyService.Success("Usuario eliminado con éxito.");
+            }
+            catch (Exception)
+            {
+                _notifyService.Error("Error al eliminar el usuario.");
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }
