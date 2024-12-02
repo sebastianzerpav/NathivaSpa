@@ -28,16 +28,6 @@ namespace AppWebSpa.Data
 
             base.OnModelCreating(builder);
 
-            // PK
-            builder.Entity<IdentityUserLogin<string>>()
-                .HasKey(x => new { x.LoginProvider, x.ProviderKey });
-
-            builder.Entity<IdentityUserRole<string>>()
-                .HasKey(x => new { x.UserId, x.RoleId });
-
-            builder.Entity<IdentityUserToken<string>>()
-                .HasKey(x => new { x.UserId, x.LoginProvider, x.Name });
-
             // SpaServices
             builder.Entity<SpaService>().Property(s => s.Price)
                 .HasColumnType("decimal(38,0)");

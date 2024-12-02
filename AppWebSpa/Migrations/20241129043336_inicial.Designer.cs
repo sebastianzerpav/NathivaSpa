@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppWebSpa.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20241124052017_AddRoleCategoryTable")]
-    partial class AddRoleCategoryTable
+    [Migration("20241129043336_inicial")]
+    partial class inicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

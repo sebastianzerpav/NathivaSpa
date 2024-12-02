@@ -35,7 +35,7 @@ namespace AppWebSpa.Services
             try
             {
                 ClaimsUser? claimuser = _httpContextAccesor.HttpContext?.User;
-                String? userName = claimuser.Identity.Name;
+                string? userName = claimuser.Identity.Name;
                 User user = await _userService.GetUserAsync(userName);
 
                 IQueryable<Category> query = _context.Categories.Include(c => c.RoleCategories)
@@ -45,7 +45,7 @@ namespace AppWebSpa.Services
                     query = query.Where(c => c.RoleCategories.Any(rc => rc.RoleId == user.NathivaRoleId));
                 }
 
-                if (!String.IsNullOrWhiteSpace(request.Filter))
+                if (!string.IsNullOrWhiteSpace(request.Filter))
                 {
                     query = query.Where(c => c.Name.ToLower().Contains(request.Filter.ToLower()));
                 }
@@ -88,7 +88,7 @@ namespace AppWebSpa.Services
                 }
 
                 ClaimsUser? claimuser = _httpContextAccesor.HttpContext?.User;
-                String? userName = claimuser.Identity.Name;
+                string? userName = claimuser.Identity.Name;
                 User user = await _userService.GetUserAsync(userName);
 
                 bool isAuthorized = true;
@@ -105,7 +105,7 @@ namespace AppWebSpa.Services
 
                 IQueryable<SpaService> query = _context.spaService.Where(s => s.CategoryId == category.CategoryId);
 
-                if (!String.IsNullOrWhiteSpace(request.Filter))
+                if (!string.IsNullOrWhiteSpace(request.Filter))
                 {
                     query = query.Where(c => c.Name.ToLower().Contains(request.Filter.ToLower()));
                 }
@@ -135,7 +135,7 @@ namespace AppWebSpa.Services
                 {
                     CategoryId = category.CategoryId,
                     Name = category.Name,
-                    PaginatedCategories = paginatedServicesResponse
+                    PaginatedServices = paginatedServicesResponse
                 };
 
                 return ResponseHelper<CategoryDTO>.MakeResponseSuccess(dto);

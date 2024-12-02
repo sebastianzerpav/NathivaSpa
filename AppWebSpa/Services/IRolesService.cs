@@ -169,7 +169,8 @@ namespace AppWebSpa.Services
            
 
             }
-            catch (Exception ex) {
+            catch (Exception ex) 
+            {
                 return ResponseHelper<NathivaRole>.MakeResponseFail(ex);
             }
         }

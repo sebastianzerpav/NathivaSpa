@@ -26,7 +26,7 @@
             </li>
         }
         
-        @if (await _usersService.CurrentUserIsAuthorizedAsync("showServices", "Servicios"))
+        @if (await _usersService.CurrentUserIsAuthorizedAsync("showSpaServices", "Servicios"))
         {
             <li class="nav-item">
                 <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString()=="SpaServices" ? "":"collapsed")"

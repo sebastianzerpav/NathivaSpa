@@ -5,6 +5,6 @@ namespace AppWebSpa.DTOs
 {
     public class CategoryDTO : Category
     {
-        public PaginationResponse<SpaService> PaginatedCategories { get; set; }
+        public PaginationResponse<SpaService> PaginatedServices { get; set; }
     }
 }

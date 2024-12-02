@@ -11,6 +11,7 @@ using static System.Collections.Specialized.BitVector32;
 
 namespace AppWebSpa.Controllers
 {
+    [Authorize]
     public class CategoriesController : Controller
     {
         private readonly ICategoriesService _categoriesService;

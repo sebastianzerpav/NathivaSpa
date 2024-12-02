@@ -53,7 +53,7 @@ namespace AppWebSpa.Helpers
             {
                 CategoryId = p.CategoryId,
                 Name = p.Name,
-                Description = p.Description,
+                Description=p.Description,
                 Selected = _context.RoleCategories.Any(rs => rs.CategoryId == p.CategoryId && rs.RoleId == role.Id)
 
             }).ToListAsync();

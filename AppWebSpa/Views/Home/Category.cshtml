@@ -11,7 +11,7 @@
     <h1>Inicio</h1>
     <nav>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a asp-action="Dashboard">Inicio</a></li>
+            <li class="breadcrumb-item"><a asp-action="index">Inicio</a></li>
             <li class="breadcrumb-item active">Categoria</li>
         </ol>
     </nav>
@@ -24,12 +24,12 @@
         <h1>@Model.Name</h1>
 
         <form class="" asp-action="Dashboard" method="GET">
-            <input type="hidden" name="Page" value="@Model.PaginatedCategories.CurrentPage" />
-            <input type="hidden" name="RecordsPerPage" value="@Model.PaginatedCategories.RecordsPerPage" />
+            <input type="hidden" name="Page" value="@Model.PaginatedServices.CurrentPage" />
+            <input type="hidden" name="RecordsPerPage" value="@Model.PaginatedServices.RecordsPerPage" />
 
             <div class="input-group mb-3">
 
-                <input type="text" class="form-control border-0 small" placeholder="Buscar.." aria-label="Search" asp-for="@Model.PaginatedCategories.Filter" name="Filter">
+                <input type="text" class="form-control border-0 small" placeholder="Buscar.." aria-label="Search" asp-for="@Model.PaginatedServices.Filter" name="Filter">
 
                 <div class="input-group-append">
                     <button class="btn btn-primary" type="submit">
@@ -40,7 +40,7 @@
 
         </form>
         <div class="row">
-            @foreach (var item in Model.PaginatedCategories.List)
+            @foreach (var item in Model.PaginatedServices.List)
             {
                 <div class="col-md-5 m-2">
                     <a asp-action="SpaService" asp-route-id="@item.IdSpaService" class="btn btn-outline-success form-control">@item.Name</a>
@@ -53,36 +53,36 @@
 
                 @*Primero*@
                 <li class="page-item">
-                    <a class="page-link @(Model.PaginatedCategories.CurrentPage == 1 ? "disabled" : "" )"
+                    <a class="page-link @(Model.PaginatedServices.CurrentPage == 1 ? "disabled" : "" )"
                        asp-action="Index"
                        asp-route-Page="1"
-                       asp-route-Filter="@Model.PaginatedCategories.Filter"
-                       asp-route-RecordsPerPage="@Model.PaginatedCategories.RecordsPerPage">
+                       asp-route-Filter="@Model.PaginatedServices.Filter"
+                       asp-route-RecordsPerPage="@Model.PaginatedServices.RecordsPerPage">
                         &laquo;
                     </a>
                 </li>
 
                 @*Anterior*@
                 <li class="page-item">
-                    <a class="page-link @(!Model.PaginatedCategories.HasPrevious ? "disabled" : "" )"
+                    <a class="page-link @(!Model.PaginatedServices.HasPrevious ? "disabled" : "" )"
                        asp-action="Index"
-                       asp-route-Filter="@Model.PaginatedCategories.Filter"
-                       asp-route-Page="@(Model.PaginatedCategories.CurrentPage - 1)"
-                       asp-route-RecordsPerPage="@Model.PaginatedCategories.RecordsPerPage">
+                       asp-route-Filter="@Model.PaginatedServices.Filter"
+                       asp-route-Page="@(Model.PaginatedServices.CurrentPage - 1)"
+                       asp-route-RecordsPerPage="@Model.PaginatedServices.RecordsPerPage">
                         &lsaquo;
                     </a>
                 </li>
 
                 @*Paginas*@
-                @foreach (int page in Model.PaginatedCategories.Pages)
+                @foreach (int page in Model.PaginatedServices.Pages)
                 {
 
                     <li class="page-item">
-                        <a class="page-link @(Model.PaginatedCategories.CurrentPage == page ? "active" : "" )"
+                        <a class="page-link @(Model.PaginatedServices.CurrentPage == page ? "active" : "" )"
                            asp-action="Index"
-                           asp-route-Filter="@Model.PaginatedCategories.Filter"
+                           asp-route-Filter="@Model.PaginatedServices.Filter"
                            asp-route-Page="@(page)"
-                           asp-route-RecordsPerPage="@Model.PaginatedCategories.RecordsPerPage">
+                           asp-route-RecordsPerPage="@Model.PaginatedServices.RecordsPerPage">
                             @(page)
                         </a>
                     </li>
@@ -90,22 +90,22 @@
 
                 @*Siguiente*@
                 <li class="page-item">
-                    <a class="page-link @(!Model.PaginatedCategories.HasNext ? "disabled" : "" )"
+                    <a class="page-link @(!Model.PaginatedServices.HasNext ? "disabled" : "" )"
                        asp-action="Index"
-                       asp-route-Filter="@Model.PaginatedCategories.Filter"
-                       asp-route-Page="@(Model.PaginatedCategories.CurrentPage + 1)"
-                       asp-route-RecordsPerPage="@Model.PaginatedCategories.RecordsPerPage">
+                       asp-route-Filter="@Model.PaginatedServices.Filter"
+                       asp-route-Page="@(Model.PaginatedServices.CurrentPage + 1)"
+                       asp-route-RecordsPerPage="@Model.PaginatedServices.RecordsPerPage">
                         &rsaquo;
                     </a>
                 </li>
 
                 @*Último*@
                 <li class="page-item">
-                    <a class="page-link @(Model.PaginatedCategories.TotalPages == Model.PaginatedCategories.CurrentPage ? "disabled" : "" )"
+                    <a class="page-link @(Model.PaginatedServices.TotalPages == Model.PaginatedServices.CurrentPage ? "disabled" : "" )"
                        asp-action="Index"
-                       asp-route-Filter="@Model.PaginatedCategories.Filter"
-                       asp-route-Page="@Model.PaginatedCategories.TotalPages"
-                       asp-route-RecordsPerPage="@Model.PaginatedCategories.RecordsPerPage">
+                       asp-route-Filter="@Model.PaginatedServices.Filter"
+                       asp-route-Page="@Model.PaginatedServices.TotalPages"
+                       asp-route-RecordsPerPage="@Model.PaginatedServices.RecordsPerPage">
                         &raquo;
                     </a>
                 </li>

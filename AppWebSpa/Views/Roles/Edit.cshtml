@@ -6,7 +6,7 @@
 }
 
 <div class="pagetitle">
-    <h1>Nuevo Rol</h1>
+    <h1>Editar Rol</h1>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Dashboard">Inicio</a></li>
@@ -71,7 +71,7 @@
                 $('#permissionIds').val(JSON.stringify(permissionIds));
 
                 //Categorias
-                const categories = $('.Category:checked');
+                const categories = $('.category:checked');
                 let categoryIds = [];
 
                 categories.each(function () {

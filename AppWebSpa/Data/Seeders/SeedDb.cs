@@ -13,8 +13,9 @@ namespace AppWebSpa.Data.Seeders
             _userService = userService;
         }
 
-        public async Task SeedAsync() {
-
+        public async Task SeedAsync() 
+        {
+            await new CategoriesSeeder(_context).SeedAsync();
             await new PermissionsSeeder(_context).SeedAsync();
             await new UserRolesSeeder(_context, _userService).SeedAsync();
 

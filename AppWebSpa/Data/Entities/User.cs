@@ -7,13 +7,13 @@ namespace AppWebSpa.Data.Entities
     public class User : IdentityUser
     {
         [Display(Name = "Documento")]
-        [MaxLength(32, ErrorMessage ="El campo {0} debe tener maximo {1} carateres")]
+        [MaxLength(32, ErrorMessage = "El campo {0} debe tener maximo {1} carateres")]
         [Required(ErrorMessage = "El campo {0} es requerido")]
-        public string Document { get; set; }
+        public string Document { get; set; } = null!;
 
         [Display(Name= "Nombre")]
         [Required(ErrorMessage = "El campo {0} es requerido")]
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
         [Display(Name = "Fecha de nacimiento")]
         [Required(ErrorMessage = "El campo {0} es requerido")]

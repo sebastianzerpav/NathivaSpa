@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AppWebSpa.Migrations
 {
     /// <inheritdoc />
-    public partial class Squema : Migration
+    public partial class inicial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -46,8 +46,7 @@ namespace AppWebSpa.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    State = table.Column<int>(type: "int", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -144,6 +143,30 @@ namespace AppWebSpa.Migrations
                     table.ForeignKey(
                         name: "FK_AspNetUsers_NathivaRoles_NathivaRoleId",
                         column: x => x.NathivaRoleId,
+                        principalTable: "NathivaRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RoleCategories",
+                columns: table => new
+                {
+                    RoleId = table.Column<int>(type: "int", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RoleCategories", x => new { x.RoleId, x.CategoryId });
+                    table.ForeignKey(
+                        name: "FK_RoleCategories_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "CategoryId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RoleCategories_NathivaRoles_RoleId",
+                        column: x => x.RoleId,
                         principalTable: "NathivaRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -321,6 +344,11 @@ namespace AppWebSpa.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_RoleCategories_CategoryId",
+                table: "RoleCategories",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_RolePermissions_PermissionId",
                 table: "RolePermissions",
                 column: "PermissionId");
@@ -348,6 +376,9 @@ namespace AppWebSpa.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "RoleCategories");
 
             migrationBuilder.DropTable(
                 name: "RolePermissions");

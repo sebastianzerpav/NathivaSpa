@@ -67,16 +67,16 @@
 
                 $('#permissionIds').val(JSON.stringify(permissionIds));
                 
-                   //Categorias
-                    const categories = $('.Category:checked');
-                    let categoryIds = [];
+                //Categorias
+                const permissions = $('.category:checked');
+                let permissionIds = [];
 
-                    categories.each(function () {
-                        const categoryId = $(this).data('category-id');
-                        categoryIds.push(categoryId);
-                    });
+                permissions.each(function () {
+                    const permissionId = $(this).data('category-id');
+                    permissionIds.push(permissionId);
+                });
 
-                    $('#categoryIds').val(JSON.stringify(categoryIds));
+                $('#categoryIds').val(JSON.stringify(permissionIds));
             });
 
         });

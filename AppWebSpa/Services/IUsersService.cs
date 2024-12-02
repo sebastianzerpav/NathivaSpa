@@ -62,7 +62,7 @@ namespace AppWebSpa.Services
                 User user = _converterHelper.ToUser(dto);
                 //Generacion de Guid aleatorio
                 Guid id= Guid.NewGuid();
-                user.Id.ToString();
+                user.Id=id.ToString();
 
                 IdentityResult result = await AddUserAsync(user, dto.Document);
 
@@ -180,8 +180,7 @@ namespace AppWebSpa.Services
 
         public async Task<User> GetUserAsync(string email)
         {
-            User? user =
-                await _context.User.Include(u=> u.NathivaRole)
+            User? user = await _context.User.Include(u=> u.NathivaRole)
                                    .FirstOrDefaultAsync(u => u.Email == email);
 
             return user;

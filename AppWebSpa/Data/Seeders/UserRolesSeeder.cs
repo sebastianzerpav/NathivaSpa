@@ -63,7 +63,7 @@ namespace AppWebSpa.Data.Seeders
                     NathivaRole = contentManagerRole
                 };
 
-                //var result = await _usersService.AddUserAsync(user, "admin");
+               
                 await _usersService.AddUserAsync(user, "12345");
 
                 string token = await _usersService.GenerateEmailConfirmationTokenAsync(user);
